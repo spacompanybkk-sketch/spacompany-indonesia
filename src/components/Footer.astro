@@ -1,12 +1,16 @@
 ---
+import { getLangFromUrl, t, localizedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+
 const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/service' },
-  { label: 'Book', href: '/book' },
-  { label: 'Contact', href: '/contact' },
-  { label: 'Get a Quote', href: '/get-a-quote' },
-  { label: 'Legal', href: '/s-legal' },
-];
+  { key: 'nav.home', href: '/' },
+  { key: 'nav.services', href: '/services' },
+  { key: 'nav.jobs', href: '/jobs' },
+  { key: 'nav.about', href: '/about' },
+  { key: 'nav.getQuote', href: '/get-a-quote' },
+  { key: 'nav.contact', href: '/contact' },
+] as const;
 ---
 
 <footer class="bg-gray-900 text-gray-300">
@@ -15,22 +19,22 @@ const navLinks = [
 
       <!-- Brand -->
       <div>
-        <a href="/" class="inline-block mb-4">
-          <img src="/images/spa-company-logo-horizontal.png" alt="Spa Company Bangkok" class="h-12 object-contain brightness-0 invert" />
+        <a href={localizedPath(lang, '/')} class="inline-block mb-4">
+          <img src="/images/spa-company-indonesia-logo.png" alt="Spa Company Indonesia" class="h-12 object-contain brightness-0 invert" />
         </a>
         <p class="text-sm text-gray-400 leading-relaxed">
-          Thailand's easiest Thai therapist recruiting portal. Find verified, experienced massage therapists for your spa.
+          {t(lang, 'footer.description')}
         </p>
       </div>
 
       <!-- Navigation -->
       <div>
-        <h3 class="text-white font-semibold mb-4">Navigation</h3>
+        <h3 class="text-white font-semibold mb-4">{t(lang, 'footer.navigation')}</h3>
         <ul class="space-y-2">
-          {navLinks.map(({ label, href }) => (
+          {navLinks.map(({ key, href }) => (
             <li>
-              <a href={href} class="text-sm text-gray-400 hover:text-[#4a7c3f] transition-colors">
-                {label}
+              <a href={localizedPath(lang, href)} class="text-sm text-gray-400 hover:text-[#4a7c3f] transition-colors">
+                {t(lang, key)}
               </a>
             </li>
           ))}
@@ -39,22 +43,22 @@ const navLinks = [
 
       <!-- Contact -->
       <div>
-        <h3 class="text-white font-semibold mb-4">Get in Touch</h3>
+        <h3 class="text-white font-semibold mb-4">{t(lang, 'footer.getInTouch')}</h3>
         <ul class="space-y-2 text-sm text-gray-400">
-          <li>Bangkok, Thailand</li>
+          <li>{t(lang, 'footer.location')}</li>
           <li>
-            <a href="mailto:info@spa-company.com" class="hover:text-[#4a7c3f] transition-colors">
-              info@spa-company.com
+            <a href="mailto:info@spacompany-indonesia.com" class="hover:text-[#4a7c3f] transition-colors">
+              info@spacompany-indonesia.com
             </a>
           </li>
           <li>
             <a
-              href="https://www.facebook.com/spacompany/"
+              href="https://wa.me/628211519986"
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-[#4a7c3f] transition-colors"
             >
-              Facebook
+              WhatsApp
             </a>
           </li>
         </ul>
@@ -62,7 +66,7 @@ const navLinks = [
     </div>
 
     <div class="mt-10 pt-6 border-t border-gray-700 text-center text-sm text-gray-500">
-      &copy; {new Date().getFullYear()} Spa Company Bangkok — All Rights Reserved
+      &copy; {new Date().getFullYear()} {t(lang, 'footer.copyright')}
     </div>
   </div>
 </footer>

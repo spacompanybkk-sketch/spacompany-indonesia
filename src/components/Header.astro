@@ -1,15 +1,23 @@
 ---
+import { getLangFromUrl, t, localizedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const otherLang = lang === 'en' ? 'id' : 'en';
+
 const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/service' },
-  { label: 'Therapists', href: '/therapists' },
-  { label: 'Get a Quote', href: '/get-a-quote' },
-  { label: 'Book', href: '/book' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
-];
+  { key: 'nav.home', href: '/' },
+  { key: 'nav.services', href: '/services' },
+  { key: 'nav.jobs', href: '/jobs' },
+  { key: 'nav.about', href: '/about' },
+  { key: 'nav.getQuote', href: '/get-a-quote' },
+  { key: 'nav.blog', href: '/blog' },
+  { key: 'nav.contact', href: '/contact' },
+] as const;
 
 const pathname = Astro.url.pathname;
+
+// Build the same path in the other language
+const langToggleHref = '/' + otherLang + pathname.replace(/^\/(en|id)/, '') || '/';
 ---
 
 <header class="sticky top-0 z-50 bg-white shadow-md">
@@ -17,44 +25,50 @@ const pathname = Astro.url.pathname;
     <div class="flex items-center justify-between h-16">
 
       <!-- Logo -->
-      <a href="/" class="shrink-0">
-        <img src="/images/spa-company-logo-horizontal.png" alt="Spa Company Bangkok" class="h-10 object-contain" />
+      <a href={localizedPath(lang, '/')} class="shrink-0">
+        <img src="/images/spa-company-indonesia-logo.png" alt="Spa Company Indonesia" class="h-10 object-contain" />
       </a>
 
       <!-- Desktop Nav -->
       <nav class="hidden md:flex items-center gap-6">
-        {navLinks.map(({ label, href }) => {
-          const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+        {navLinks.map(({ key, href }) => {
+          const localHref = localizedPath(lang, href);
+          const isActive = href === '/' ? pathname === localHref : pathname.startsWith(localHref);
           return (
             <a
-              href={href}
+              href={localHref}
               class={`text-sm font-medium transition-colors ${
                 isActive
                   ? 'text-[#4a7c3f] border-b-2 border-[#4a7c3f] pb-0.5'
                   : 'text-gray-600 hover:text-[#4a7c3f]'
               }`}
             >
-              {label}
+              {t(lang, key)}
             </a>
           );
         })}
       </nav>
 
-      <!-- CTA Buttons -->
+      <!-- CTA Buttons + Language Toggle -->
       <div class="hidden md:flex items-center gap-2">
         <a
-          href="https://spa-company.com/search-therapists/"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={localizedPath(lang, '/jobs')}
           class="px-4 py-2 text-sm font-medium rounded-full bg-[#4a7c3f] text-white hover:bg-[#2d5a27] transition-colors"
         >
-          For Therapists
+          {t(lang, 'nav.forCandidates')}
         </a>
         <a
-          href="/contact"
+          href={localizedPath(lang, '/contact')}
           class="px-4 py-2 text-sm font-medium rounded-full bg-[#ababab] text-white hover:bg-gray-500 transition-colors"
         >
-          Post a Job
+          {t(lang, 'nav.postJob')}
+        </a>
+        <a
+          href={langToggleHref}
+          class="ml-2 px-3 py-1.5 text-sm font-semibold rounded-full border border-[#4a7c3f] text-[#4a7c3f] hover:bg-[#4a7c3f] hover:text-white transition-colors"
+          aria-label={`Switch to ${otherLang === 'en' ? 'English' : 'Indonesian'}`}
+        >
+          {otherLang.toUpperCase()}
         </a>
       </div>
 
@@ -75,35 +89,42 @@ const pathname = Astro.url.pathname;
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
     <nav class="flex flex-col px-4 py-3 gap-1">
-      {navLinks.map(({ label, href }) => {
-        const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+      {navLinks.map(({ key, href }) => {
+        const localHref = localizedPath(lang, href);
+        const isActive = href === '/' ? pathname === localHref : pathname.startsWith(localHref);
         return (
           <a
-            href={href}
+            href={localHref}
             class={`px-3 py-2 rounded-md text-sm font-medium ${
               isActive
                 ? 'bg-[#4a7c3f]/10 text-[#4a7c3f]'
                 : 'text-gray-600 hover:bg-gray-50 hover:text-[#4a7c3f]'
             }`}
           >
-            {label}
+            {t(lang, key)}
           </a>
         );
       })}
       <div class="flex gap-2 mt-3 pt-3 border-t border-gray-100">
         <a
-          href="https://spa-company.com/search-therapists/"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={localizedPath(lang, '/jobs')}
           class="flex-1 text-center px-4 py-2 text-sm font-medium rounded-full bg-[#4a7c3f] text-white"
         >
-          For Therapists
+          {t(lang, 'nav.forCandidates')}
         </a>
         <a
-          href="/contact"
+          href={localizedPath(lang, '/contact')}
           class="flex-1 text-center px-4 py-2 text-sm font-medium rounded-full bg-[#ababab] text-white"
         >
-          Post a Job
+          {t(lang, 'nav.postJob')}
+        </a>
+      </div>
+      <div class="mt-2 pt-2 border-t border-gray-100">
+        <a
+          href={langToggleHref}
+          class="block text-center px-3 py-2 text-sm font-semibold rounded-md border border-[#4a7c3f] text-[#4a7c3f] hover:bg-[#4a7c3f] hover:text-white transition-colors"
+        >
+          {otherLang === 'en' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'}
         </a>
       </div>
     </nav>
