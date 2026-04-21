@@ -42,7 +42,7 @@ const ratingFields = [
       <div id="tab-add">
 
       <div id="success-msg" class="hidden bg-green-50 border border-green-200 text-green-800 rounded-xl px-5 py-4 mb-6 text-sm font-medium">
-        Profile saved! <a href="/therapists" class="underline">View on search page →</a>
+        Profile saved! <a href="/en/therapists" class="underline">View on search page →</a>
       </div>
       <div id="error-msg" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-xl px-5 py-4 mb-6 text-sm font-medium"></div>
 
@@ -72,8 +72,8 @@ const ratingFields = [
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Indonesian City *</label>
-              <input name="location" required type="text" placeholder="e.g. Jakarta"
+              <label class="block text-sm font-medium text-gray-700 mb-1">City / Region *</label>
+              <input name="location" required type="text" placeholder="e.g. Bali, Jakarta"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
             </div>
             <div>
@@ -416,7 +416,7 @@ const ratingFields = [
         <tr data-id="${t.id}" data-added-by="${t.addedBy || ''}">
           <td class="px-4 py-3 font-mono text-xs text-gray-500">${scNum}</td>
           <td class="px-4 py-3 font-medium text-gray-900">
-            <a href="/therapist?id=${scNum !== '—' ? scNum : t.id}" target="_blank" class="hover:text-[#4a7c3f] hover:underline">${t.name}</a>
+            <a href="/en/therapist?id=${scNum !== '—' ? scNum : t.id}" target="_blank" class="hover:text-[#4a7c3f] hover:underline">${t.name}</a>
             <div class="text-xs text-gray-400">by ${addedBy}</div>
           </td>
           <td class="px-4 py-3 text-gray-600">${t.age}</td>
@@ -795,7 +795,7 @@ const ratingFields = [
       }
 
       const successEl = document.getElementById('success-msg')!;
-      successEl.innerHTML = `Profile saved as <strong>SC-${nextScNum}</strong>! ${pushToNotion ? '(Also created in Notion) ' : ''}<a href="/therapists" class="underline">View on search page →</a>`;
+      successEl.innerHTML = `Profile saved as <strong>SC-${nextScNum}</strong>! ${pushToNotion ? '(Also created in Notion) ' : ''}<a href="/en/therapists" class="underline">View on search page →</a>`;
       successEl.classList.remove('hidden');
       form.reset();
       document.getElementById('photo-previews')!.innerHTML = '';
