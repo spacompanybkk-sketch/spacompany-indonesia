@@ -1,0 +1,181 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const posts = [
+  {
+    slug: 'spa-industry-trends',
+    title: 'Spa Industry Trends That Will Shape Your Business',
+    hook: 'Sustainability, AI-powered massage robots, wellness destination trips — the spa industry is evolving fast. Are you keeping up or falling behind?',
+    excerpt: 'From personalised treatments and therapy tech to the rise of naturopathy and organic products, the next decade will reshape how spas operate. The businesses that adapt early will dominate. Those that don\'t will become the next Kodak.',
+    chapter: 'Trends',
+    img: '/images/blog/trends.jpg',
+  },
+  {
+    slug: 'defining-spa-industry',
+    title: 'What Really Defines the Spa Industry?',
+    hook: 'Most spa owners can\'t answer this question clearly — and it\'s costing them money.',
+    excerpt: 'Understanding the bigger picture of your industry helps you make rational decisions on a smaller scale. What are the primary market drivers? Why do people use your services? Is the industry growing or are we about to be replaced?',
+    chapter: 'Defining the Industry',
+    img: '/images/blog/defining-industry.jpg',
+  },
+  {
+    slug: 'find-your-why',
+    title: 'Find Your "Why" Before You Open a Spa',
+    hook: 'The number one reason spas fail isn\'t bad location or pricing — it\'s that the owner never figured out why they\'re doing it.',
+    excerpt: 'Your "why" is the foundation everything else is built on. Without it, every tough decision becomes a coin flip. With it, you have a compass that guides pricing, hiring, marketing, and growth.',
+    chapter: 'Find Your Why',
+    img: '/images/blog/find-your-why.jpg',
+  },
+  {
+    slug: 'spa-overall-strategy',
+    title: 'Building a Spa Strategy That Actually Works',
+    hook: 'Strategy isn\'t a 50-page document nobody reads. It\'s the handful of decisions that determine whether you\'ll thrive or close in 18 months.',
+    excerpt: 'Position your brand, set your pricing model, choose your target market, and define what makes you different. Most spa owners skip this step and spend years reacting instead of leading.',
+    chapter: 'Overall Strategy',
+    img: '/images/blog/strategy.jpg',
+  },
+  {
+    slug: 'spa-business-lifecycle',
+    title: 'The Spa Business Life Cycle: Where Are You?',
+    hook: 'Every spa goes through predictable stages. Knowing which stage you\'re in changes everything about what you should focus on.',
+    excerpt: 'From the excitement of launch to the grind of growth to the plateau that kills most businesses — each stage has different priorities, different dangers, and different opportunities.',
+    chapter: 'Life Cycle',
+    img: '/images/blog/lifecycle.jpg',
+  },
+  {
+    slug: 'winning-mindset-spa',
+    title: 'The Winning Mindset Every Spa Owner Needs',
+    hook: 'Your spa will never outgrow your mindset. If you think small, your business stays small.',
+    excerpt: 'The difference between a thriving spa and a struggling one often isn\'t location or capital — it\'s the owner\'s mindset. Adopt the entrepreneurial mentality that separates winners from the rest.',
+    chapter: 'Winning Mindset',
+    img: '/images/blog/winning-mindset.jpg',
+  },
+  {
+    slug: 'spa-menu-design',
+    title: 'How to Design a Spa Menu That Sells',
+    hook: 'Your menu is your silent salesperson. Most spa menus are confusing, too long, and leave money on the table.',
+    excerpt: 'The right menu structure, treatment naming, and product list can increase average ticket size by 20-30%. Learn what to include, what to cut, and how to present it.',
+    chapter: 'Spa Menu & Product List',
+    img: '/images/blog/spa-menu.jpg',
+  },
+  {
+    slug: 'spa-pricing-strategy',
+    title: 'Spa Pricing: Stop Undercharging and Start Profiting',
+    hook: 'If you\'re competing on price, you\'ve already lost. Here\'s how to price smart and grow margins.',
+    excerpt: 'Discounting is the most abused tool in the spa industry. Learn when to discount, when to hold firm, and how to structure pricing that reflects your value without scaring away clients.',
+    chapter: 'Pricing and Discounting',
+    img: '/images/blog/pricing.jpg',
+  },
+  {
+    slug: 'spa-marketing-that-works',
+    title: 'Marketing Your Spa: What Actually Brings Bookings',
+    hook: 'You don\'t need a huge budget — you need the right channels and the right message.',
+    excerpt: 'From social media and Google to referral programs and local partnerships, discover which marketing channels deliver real results for spas and which ones are just burning cash.',
+    chapter: 'Marketing & Promotion',
+    img: '/images/blog/marketing.png',
+  },
+  {
+    slug: 'spa-human-resources',
+    title: 'Hiring and Keeping Great Therapists',
+    hook: 'Your therapists ARE your product. Hire wrong and no amount of marketing will save you.',
+    excerpt: 'Recruitment, training, motivation, and retention — the complete guide to building a team that delivers consistent, exceptional service. Including how to handle the therapist who\'s "good but difficult."',
+    chapter: 'Human Resources',
+    img: '/images/blog/human-resources.jpg',
+  },
+  {
+    slug: 'spa-finances-profitability',
+    title: 'Spa Finances: Where Your Profit Is Hiding',
+    hook: 'Revenue is vanity, profit is sanity. Most spa owners don\'t know their real numbers.',
+    excerpt: 'Control costs, understand your break-even, track the metrics that matter, and stop leaking money on things that don\'t drive bookings. Simple financial principles that transform spa profitability.',
+    chapter: 'Finances and Profitability',
+    img: '/images/blog/finances.jpg',
+  },
+  {
+    slug: 'wowing-spa-clients',
+    title: 'How to Turn First-Time Visitors Into Loyal Regulars',
+    hook: 'The "wow" happens in the first 30 seconds and the last 30 seconds. Everything in between is expected.',
+    excerpt: 'Creating memorable experiences isn\'t about spending more money — it\'s about attention to detail. Small touches that cost nothing but make clients tell their friends about you.',
+    chapter: 'Wowing the Client',
+    img: '/images/blog/wowing-clients.jpg',
+  },
+  {
+    slug: 'handling-customer-complaints',
+    title: 'Customer Complaints: Your Secret Growth Tool',
+    hook: 'A complaint handled well creates a more loyal customer than one who never had a problem.',
+    excerpt: 'Most spa owners dread complaints. Smart ones welcome them. Learn the system for turning angry clients into advocates and preventing the same issues from recurring.',
+    chapter: 'Customer Complaints',
+    img: '/images/blog/complaints.jpg',
+  },
+  {
+    slug: 'spa-operational-hacks',
+    title: '10 Operational Hacks That Save Hours Every Week',
+    hook: 'You\'re probably doing 5 things manually that could be automated or eliminated entirely.',
+    excerpt: 'From scheduling and inventory to daily checklists and shift handovers — operational shortcuts that free up your time to focus on growing the business instead of running it.',
+    chapter: 'Operational Hacks',
+    img: '/images/blog/operational.jpg',
+  },
+  {
+    slug: 'growing-spa-business',
+    title: 'Ready to Open a Second Location? Read This First.',
+    hook: 'Scaling a spa is not the same as running one. The skills that got you here won\'t get you there.',
+    excerpt: 'When is the right time to expand? How do you maintain quality across locations? What systems need to be in place before you sign that second lease? Lessons from scaling spa businesses.',
+    chapter: 'Growing the Business',
+    img: '/images/blog/growing.jpg',
+  },
+];
+---
+
+<Layout
+  title="Blog — Spa Company Bangkok"
+  description="Expert insights on running a spa business — marketing, hiring, pricing, operations, and growth strategies from Spa Company Bangkok."
+>
+
+  <!-- Hero -->
+  <section class="bg-[#a9cf54] py-14 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl font-bold text-white mb-3">Spa Business Insights</h1>
+      <p class="text-white/85 text-lg">Expert tips on running, growing, and profiting from your spa business.</p>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <article class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+            <div class="aspect-[16/9] overflow-hidden">
+              <img src={post.img} alt={post.title} class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="text-xs font-bold text-[#a9cf54] uppercase tracking-wide mb-2">{post.chapter}</div>
+              <h2 class="text-lg font-bold text-gray-900 mb-2 leading-snug">{post.title}</h2>
+              <p class="text-sm text-gray-800 font-medium italic mb-3">{post.hook}</p>
+              <p class="text-sm text-gray-500 leading-relaxed flex-1">{post.excerpt}</p>
+              <div class="mt-4 pt-4 border-t border-gray-100">
+                <a href="/book" class="text-sm font-semibold text-[#a9cf54] hover:text-[#588f27] transition-colors">
+                  Read the full chapter in the book →
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Book CTA -->
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <img src="/images/book-cover.png" alt="How to Run a Spa" class="max-h-64 mx-auto mb-6 drop-shadow-xl" />
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Want the Full Playbook?</h2>
+      <p class="text-gray-600 mb-6">
+        These articles are just a taste. <em>How to Run a Spa</em> covers 23 chapters of proven strategies across 170+ pages — from opening day to scaling to multiple locations.
+      </p>
+      <a href="/book" class="inline-block px-8 py-3 rounded-full bg-[#e86a2a] text-white font-bold hover:bg-[#c9561e] transition-colors">
+        Get the Book
+      </a>
+    </div>
+  </section>
+
+</Layout>

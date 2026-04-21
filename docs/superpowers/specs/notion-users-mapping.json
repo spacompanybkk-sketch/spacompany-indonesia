@@ -1,0 +1,28 @@
+{
+  "users": [
+    { "name": "Nati", "email": "natalia@spa-company.com", "notionUserId": "user-504" },
+    { "name": "Denis", "email": "denis@spa-company.com", "notionUserId": "user-505" },
+    { "name": "Bew", "email": "nuttha@spa-company.com", "notionUserId": "user-506" },
+    { "name": "Heart", "email": "nonthawat@spa-company.com", "notionUserId": "user-507" },
+    { "name": "Lubo", "email": "lubo@spa-company.com", "notionUserId": "user-508" },
+    { "name": "Radka", "email": "radka@spa-company.com", "notionUserId": "user-509" },
+    { "name": "Lucy", "email": "lucy@spa-company.com", "notionUserId": "user-510" },
+    { "name": "Anisha", "email": "anisha@spa-company.com", "notionUserId": "user-511" },
+    { "name": "Kanomjeen", "email": "sitanan@spa-company.com", "notionUserId": "user-512" },
+    { "name": "Bow", "email": "bow@spa-company.com", "notionUserId": "user-513" },
+    { "name": "Dada", "email": "dadda@spa-company.com", "notionUserId": "user-514" },
+    { "name": "Dagmar", "email": "dagmar@spa-company.com", "notionUserId": "user-515" },
+    { "name": "Lanicha Natt", "email": "lanicha@spa-company.com", "notionUserId": "user-516" },
+    { "name": "Michaglio", "email": "michal@spa-company.com", "notionUserId": "user-345" },
+    { "name": "Lia Morarova", "email": "coordinator@spa-company.com", "notionUserId": "user-517" },
+    { "name": "Phung", "email": "phung@spa-company.com", "notionUserId": "user-518" },
+    { "name": "Andrea Gondeková", "email": "andreag@spa-company.com", "notionUserId": "user-519" },
+    { "name": "Andrea Verecká", "email": "payroll@spa-company.com", "notionUserId": "user-520" },
+    { "name": "Daniela", "email": "daniela@spa-company.com", "notionUserId": "user-521" },
+    { "name": "Alžbeta Arpášová", "email": "alzbeta@spa-company.com", "notionUserId": "user-522" },
+    { "name": "Andrea", "email": "andrea@spa-company.com", "notionUserId": "user-523" },
+    { "name": "Petr", "email": "petr@spa-company.com", "notionUserId": "user-524" },
+    { "name": "Jakub", "email": "jakub@dmjeurope.com", "notionUserId": "user-529" },
+    { "name": "Anna Chovanova", "email": "anna@dmjeurope.com", "notionUserId": "user-530" }
+  ]
+}

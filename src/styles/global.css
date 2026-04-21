@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-green: #a9cf54;
+  --color-brand-dark-green: #588f27;
+  --color-brand-gray: #ababab;
+  --color-brand-cyan: #04bfbf;
+  --color-body: #404040;
+  --font-family-sans: 'Prompt', sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-family-sans);
+    color: var(--color-body);
+  }
+}

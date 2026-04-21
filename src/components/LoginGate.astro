@@ -1,0 +1,217 @@
+---
+// LoginGate.astro — Email code authentication gate for internal intake tools
+// Allowed domains: @spa-company.com, @dmjeurope.com
+---
+
+<div id="login-gate" class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm">
+    <div class="text-center mb-6">
+      <div class="w-12 h-12 bg-[#a9cf54] rounded-xl flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold text-gray-900">Staff Access</h2>
+      <p class="text-sm text-gray-500 mt-1">Enter your company email to receive a login code.</p>
+    </div>
+
+    <!-- Step 1: Email input -->
+    <div id="step-email">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+      <input
+        id="login-email"
+        type="email"
+        placeholder="you@spa-company.com"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]"
+        autofocus
+      />
+      <p id="email-error" class="text-red-500 text-xs mb-3 hidden"></p>
+      <button
+        id="send-code-btn"
+        class="w-full bg-[#a9cf54] text-white font-semibold py-2 rounded-lg hover:bg-[#588f27] transition-colors disabled:opacity-50"
+      >
+        Send Code
+      </button>
+    </div>
+
+    <!-- Step 2: Code input -->
+    <div id="step-code" class="hidden">
+      <p class="text-sm text-gray-600 mb-4">
+        We sent a 6-digit code to <strong id="sent-to-email"></strong>. Check your inbox.
+      </p>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Login code</label>
+      <input
+        id="login-code"
+        type="text"
+        inputmode="numeric"
+        maxlength="6"
+        placeholder="123456"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-3 tracking-widest text-center text-lg focus:outline-none focus:ring-2 focus:ring-[#a9cf54]"
+        autofocus
+      />
+      <p id="code-error" class="text-red-500 text-xs mb-3 hidden"></p>
+      <button
+        id="verify-code-btn"
+        class="w-full bg-[#a9cf54] text-white font-semibold py-2 rounded-lg hover:bg-[#588f27] transition-colors disabled:opacity-50"
+      >
+        Verify Code
+      </button>
+      <button id="back-to-email-btn" class="w-full text-sm text-gray-500 mt-2 hover:text-gray-700">
+        &larr; Use a different email
+      </button>
+    </div>
+
+    <!-- Loading state -->
+    <div id="step-loading" class="hidden text-center py-4">
+      <svg class="animate-spin w-8 h-8 text-[#a9cf54] mx-auto" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <p class="text-sm text-gray-500 mt-2" id="loading-msg">Sending code…</p>
+    </div>
+  </div>
+</div>
+
+<!-- Protected content (hidden until authenticated) -->
+<div id="authenticated-content" class="hidden">
+  <slot />
+</div>
+
+<script>
+  import { callFunction } from '../lib/firebase.js';
+
+  const ALLOWED_DOMAINS = ['spa-company.com', 'dmjeurope.com'];
+  const SESSION_KEY = 'intake_session';
+
+  const gateEl = document.getElementById('login-gate')!;
+  const contentEl = document.getElementById('authenticated-content')!;
+  const stepEmail = document.getElementById('step-email')!;
+  const stepCode = document.getElementById('step-code')!;
+  const stepLoading = document.getElementById('step-loading')!;
+  const emailInput = document.getElementById('login-email') as HTMLInputElement;
+  const codeInput = document.getElementById('login-code') as HTMLInputElement;
+  const sendBtn = document.getElementById('send-code-btn') as HTMLButtonElement;
+  const verifyBtn = document.getElementById('verify-code-btn') as HTMLButtonElement;
+  const backBtn = document.getElementById('back-to-email-btn')!;
+  const emailError = document.getElementById('email-error')!;
+  const codeError = document.getElementById('code-error')!;
+  const sentToEl = document.getElementById('sent-to-email')!;
+  const loadingMsg = document.getElementById('loading-msg')!;
+
+  function showLoading(msg: string) {
+    stepEmail.classList.add('hidden');
+    stepCode.classList.add('hidden');
+    stepLoading.classList.remove('hidden');
+    loadingMsg.textContent = msg;
+  }
+
+  function showStep(step: 'email' | 'code') {
+    stepLoading.classList.add('hidden');
+    if (step === 'email') {
+      stepEmail.classList.remove('hidden');
+      stepCode.classList.add('hidden');
+    } else {
+      stepEmail.classList.add('hidden');
+      stepCode.classList.remove('hidden');
+    }
+  }
+
+  function authenticate(email: string) {
+    window.__intakeUserEmail = email;
+    gateEl.classList.add('hidden');
+    contentEl.classList.remove('hidden');
+    document.dispatchEvent(new CustomEvent('intake-authenticated', { detail: { email } }));
+  }
+
+  // Check existing session on page load
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (raw) {
+      const session = JSON.parse(raw);
+      if (session.token && session.expiresAt && session.expiresAt > Date.now()) {
+        authenticate(session.email);
+      } else {
+        localStorage.removeItem(SESSION_KEY);
+      }
+    }
+  } catch (_) {
+    localStorage.removeItem(SESSION_KEY);
+  }
+
+  // Send login code
+  sendBtn.addEventListener('click', async () => {
+    const email = emailInput.value.trim().toLowerCase();
+    emailError.classList.add('hidden');
+
+    const domain = email.split('@')[1];
+    if (!email || !ALLOWED_DOMAINS.includes(domain)) {
+      emailError.textContent = 'Please use a @spa-company.com or @dmjeurope.com email address.';
+      emailError.classList.remove('hidden');
+      return;
+    }
+
+    sendBtn.disabled = true;
+    showLoading('Sending code…');
+
+    try {
+      await callFunction('sendLoginCode', { email });
+      sentToEl.textContent = email;
+      showStep('code');
+      codeInput.focus();
+    } catch (err) {
+      emailError.textContent = `Failed to send code: ${(err as Error).message}`;
+      emailError.classList.remove('hidden');
+      showStep('email');
+    } finally {
+      sendBtn.disabled = false;
+    }
+  });
+
+  emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendBtn.click(); });
+
+  // Verify login code
+  verifyBtn.addEventListener('click', async () => {
+    const email = emailInput.value.trim().toLowerCase();
+    const code = codeInput.value.trim();
+    codeError.classList.add('hidden');
+
+    if (!code || code.length < 6) {
+      codeError.textContent = 'Please enter the 6-digit code.';
+      codeError.classList.remove('hidden');
+      return;
+    }
+
+    verifyBtn.disabled = true;
+    showLoading('Verifying…');
+
+    try {
+      const result = await callFunction('verifyLoginCode', { email, code }) as { data: { sessionToken: string; expiresAt: number } };
+      const { sessionToken, expiresAt } = result.data;
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ email, token: sessionToken, expiresAt }));
+      authenticate(email);
+    } catch (err) {
+      codeError.textContent = `Invalid or expired code. Please try again.`;
+      codeError.classList.remove('hidden');
+      showStep('code');
+      codeInput.value = '';
+      codeInput.focus();
+    } finally {
+      verifyBtn.disabled = false;
+    }
+  });
+
+  codeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') verifyBtn.click(); });
+
+  backBtn.addEventListener('click', () => {
+    codeError.classList.add('hidden');
+    emailError.classList.add('hidden');
+    codeInput.value = '';
+    showStep('email');
+    emailInput.focus();
+  });
+</script>
+
+<script is:inline>
+  // Extend window type for intake user email
+  window.__intakeUserEmail = window.__intakeUserEmail || '';
+</script>

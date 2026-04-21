@@ -1,0 +1,609 @@
+---
+// CandidateForm.astro — Full candidate intake form with OCR auto-fill and Notion submission
+// Hidden initially; shown when `ocr-complete` event fires
+---
+
+<div id="candidate-form-wrapper" class="hidden">
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+
+    <!-- OCR notice banner -->
+    <div id="ocr-banner" class="hidden mb-5 flex items-start gap-3 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+      <svg class="w-5 h-5 text-green-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p class="text-sm text-green-800">
+        <strong>AI extraction complete.</strong> Green-highlighted fields were filled automatically. Please review all fields before submitting.
+      </p>
+    </div>
+
+    <h2 class="font-semibold text-gray-900 text-lg mb-1">Candidate Profile</h2>
+    <p class="text-sm text-gray-500 mb-6">Complete all required fields. Sections can be collapsed.</p>
+
+    <!-- Error / success messages -->
+    <div id="form-error" class="hidden mb-4 bg-red-50 border border-red-200 text-red-800 rounded-xl px-4 py-3 text-sm"></div>
+    <div id="form-success" class="hidden mb-4 bg-green-50 border border-green-200 text-green-800 rounded-xl px-4 py-3 text-sm"></div>
+
+    <form id="candidate-form" class="space-y-4" novalidate>
+
+      <!-- ── A: Identity ── -->
+      <details open class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>A — Identity</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-medium text-gray-600 mb-1">Full Name *</label>
+            <input name="fullName" type="text" required
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Date of Birth</label>
+            <input name="dateOfBirth" type="date"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Place of Birth</label>
+            <input name="placeOfBirth" type="text"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Nationality</label>
+            <input name="nationality" type="text"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Country of Origin</label>
+            <input name="originCountry" type="text"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Gender</label>
+            <select name="gender"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>Female</option>
+              <option>Male</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Marital Status</label>
+            <select name="maritalStatus"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>Single</option>
+              <option>Married</option>
+              <option>Divorced</option>
+              <option>Widowed</option>
+              <option>Separated</option>
+            </select>
+          </div>
+        </div>
+      </details>
+
+      <!-- ── B: Contact ── -->
+      <details open class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>B — Contact</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Email</label>
+            <input name="email" type="email"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+            <input name="phone" type="tel"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Alternate Phone</label>
+            <input name="alternatePhone" type="tel"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">WhatsApp</label>
+            <input name="whatsapp" type="tel"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-medium text-gray-600 mb-1">LINE / Facebook</label>
+            <input name="lineFacebook" type="text" placeholder="LINE ID or Facebook URL"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+        </div>
+      </details>
+
+      <!-- ── C: Address ── -->
+      <details class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>C — Address</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Origin Address (English)</label>
+            <textarea name="originAddress" rows="2"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Origin Address (Local language)</label>
+            <textarea name="originAddressLocal" rows="2"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+          </div>
+        </div>
+      </details>
+
+      <!-- ── D: Professional ── -->
+      <details class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>D — Professional</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Job Position *</label>
+            <select name="jobPosition" required
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>Massage</option>
+              <option>Chef</option>
+              <option>Housekeeping</option>
+              <option>Factory</option>
+              <option>Portier</option>
+              <option>License Holder</option>
+              <option>Agency Employee</option>
+              <option>Hybrid</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Experience</label>
+            <input name="experience" type="text" placeholder="e.g. 5 years"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Education</label>
+            <input name="education" type="text"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">English Level</label>
+            <select name="englishLevel"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>None</option>
+              <option>Basic</option>
+              <option>Conversational</option>
+              <option>Fluent</option>
+              <option>Native</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-medium text-gray-600 mb-1">Skills</label>
+            <input name="skills" type="text" placeholder="e.g. Thai massage, Oil massage, Reflexology"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-medium text-gray-600 mb-1">Bio / Notes</label>
+            <textarea name="bio" rows="3"
+              class="ocr-field w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+          </div>
+        </div>
+      </details>
+
+      <!-- ── E: Recruitment ── -->
+      <details class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>E — Recruitment</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Recruiting Source</label>
+            <input name="recruitingSource" type="text" placeholder="e.g. Facebook, referral"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Target Country</label>
+            <input name="targetCountry" type="text"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Would Like to Go</label>
+            <input name="wouldLikeToGo" type="text" placeholder="Countries of interest"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div class="flex items-center gap-3 pt-5">
+            <input name="fiveStarHotelSpa" type="checkbox" id="fiveStarCheck" class="w-4 h-4 accent-[#a9cf54]" />
+            <label for="fiveStarCheck" class="text-sm text-gray-700">5-star hotel / spa experience</label>
+          </div>
+        </div>
+      </details>
+
+      <!-- ── F: Employment ── -->
+      <details class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>F — Employment</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Candidate Status</label>
+            <select name="candidateStatus"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>New</option>
+              <option>In Review</option>
+              <option>Approved</option>
+              <option>Rejected</option>
+              <option>On Hold</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Employment Status</label>
+            <select name="employmentStatus"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>Employed</option>
+              <option>Unemployed</option>
+              <option>Self-employed</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Employment Type</label>
+            <select name="employmentType"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>Full-time</option>
+              <option>Part-time</option>
+              <option>Contract</option>
+              <option>Freelance</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Leasing Number</label>
+            <input name="leasingNumber" type="text"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Leasing Company</label>
+            <select name="leasingCompany"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>TBD</option>
+              <option>Spa Company Slovakia</option>
+              <option>Prachuap Khiri Khan</option>
+              <option>Borisad Farang</option>
+              <option>Sabai Bratislava</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Contract Under</label>
+            <select name="contractUnder"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="">Select…</option>
+              <option>TBD</option>
+              <option>Prachuap Khiri Khan</option>
+              <option>Spa Company Slovakia s.ro.</option>
+              <option>DMJ Europe</option>
+              <option>RM2 Ventures</option>
+              <option>Borisad</option>
+              <option>Saithong</option>
+              <option>Portinter</option>
+              <option>7Leelawadee</option>
+            </select>
+          </div>
+        </div>
+      </details>
+
+      <!-- ── G: Dates ── -->
+      <details class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>G — Dates</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Date Applied</label>
+            <input name="dateApplied" type="date"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Interview Date</label>
+            <input name="interviewDate" type="date"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Client Approval Date</label>
+            <input name="clientApprovalDate" type="date"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Date of Embassy</label>
+            <input name="dateOfEmbassy" type="date"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Start Date (Social Insurance)</label>
+            <input name="startDateBySocialInsurance" type="date"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">OCP Date</label>
+            <input name="ocpDate" type="date"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+        </div>
+      </details>
+
+      <!-- ── H: Relations ── -->
+      <details class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>H — Relations</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Assigned To</label>
+            <input name="assignedTo" type="text"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Recruiter Email</label>
+            <input name="recruiterEmail" type="email" readonly
+              class="w-full border border-gray-200 bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-500 cursor-not-allowed" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Client Page URL</label>
+            <input name="clientPageUrl" type="url"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Location Page URL</label>
+            <input name="locationPageUrl" type="url"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+        </div>
+      </details>
+
+      <!-- ── I: Notes ── -->
+      <details class="border border-gray-200 rounded-xl overflow-hidden">
+        <summary class="px-5 py-4 font-semibold text-gray-800 cursor-pointer bg-gray-50 hover:bg-gray-100 select-none flex items-center justify-between">
+          <span>I — Notes</span>
+          <svg class="w-4 h-4 text-gray-400 transition-transform details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-5">
+          <textarea name="notes" rows="4" placeholder="Internal notes, observations, or context…"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+        </div>
+      </details>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        id="submit-candidate-btn"
+        class="w-full py-4 bg-[#a9cf54] text-white font-bold text-base rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Submit Candidate Profile
+      </button>
+
+    </form>
+
+    <!-- Success screen -->
+    <div id="success-screen" class="hidden text-center py-12">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-2">Candidate Submitted!</h3>
+      <p class="text-gray-500 text-sm mb-6">The profile has been saved and sent to Notion for review.</p>
+      <div id="success-links" class="flex flex-col gap-3 items-center">
+        <a id="notion-link" href="#" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm text-[#588f27] hover:underline font-medium hidden">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          Open in Notion
+        </a>
+      </div>
+      <button id="new-candidate-btn" class="mt-8 px-6 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+        Add Another Candidate
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  import { collection, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
+  import { db, callFunction } from '../lib/firebase.js';
+
+  const wrapper = document.getElementById('candidate-form-wrapper')!;
+  const form = document.getElementById('candidate-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-candidate-btn') as HTMLButtonElement;
+  const formError = document.getElementById('form-error')!;
+  const formSuccess = document.getElementById('form-success')!;
+  const successScreen = document.getElementById('success-screen')!;
+  const ocrBanner = document.getElementById('ocr-banner')!;
+  const notionLink = document.getElementById('notion-link') as HTMLAnchorElement;
+  const newCandidateBtn = document.getElementById('new-candidate-btn')!;
+
+  // Set today's date on dateApplied
+  const dateAppliedInput = form.querySelector<HTMLInputElement>('[name="dateApplied"]');
+  if (dateAppliedInput) {
+    dateAppliedInput.value = new Date().toISOString().slice(0, 10);
+  }
+
+  // Auto-fill recruiterEmail from auth event
+  document.addEventListener('intake-authenticated', (e: Event) => {
+    const evt = e as CustomEvent<{ email: string }>;
+    const recruiterInput = form.querySelector<HTMLInputElement>('[name="recruiterEmail"]');
+    if (recruiterInput) recruiterInput.value = evt.detail.email;
+  });
+
+  // If already authenticated (page reload with session), pull from window
+  if (window.__intakeUserEmail) {
+    const recruiterInput = form.querySelector<HTMLInputElement>('[name="recruiterEmail"]');
+    if (recruiterInput) recruiterInput.value = window.__intakeUserEmail;
+  }
+
+  // OCR complete: show form and fill fields
+  document.addEventListener('ocr-complete', (e: Event) => {
+    const evt = e as CustomEvent<Record<string, string>>;
+    const data = evt.detail;
+
+    wrapper.classList.remove('hidden');
+    ocrBanner.classList.remove('hidden');
+
+    // Fill fields that have values from OCR
+    const ocrFields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('.ocr-field');
+    ocrFields.forEach(field => {
+      const fieldName = field.name;
+      if (fieldName && data[fieldName] !== undefined && data[fieldName] !== null && data[fieldName] !== '') {
+        if (field.tagName === 'SELECT') {
+          const select = field as HTMLSelectElement;
+          const opt = Array.from(select.options).find(o => o.value.toLowerCase() === String(data[fieldName]).toLowerCase());
+          if (opt) {
+            select.value = opt.value;
+            field.classList.add('border-green-400', 'bg-green-50');
+          }
+        } else {
+          field.value = String(data[fieldName]);
+          field.classList.add('border-green-400', 'bg-green-50');
+        }
+      }
+    });
+
+    // Scroll to form
+    wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Form submit
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.classList.add('hidden');
+    formSuccess.classList.add('hidden');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    try {
+      const fd = new FormData(form);
+
+      const payload: Record<string, unknown> = {
+        fullName: fd.get('fullName') as string,
+        dateOfBirth: fd.get('dateOfBirth') as string,
+        placeOfBirth: fd.get('placeOfBirth') as string,
+        nationality: fd.get('nationality') as string,
+        originCountry: fd.get('originCountry') as string,
+        gender: fd.get('gender') as string,
+        maritalStatus: fd.get('maritalStatus') as string,
+        email: fd.get('email') as string,
+        phone: fd.get('phone') as string,
+        alternatePhone: fd.get('alternatePhone') as string,
+        whatsapp: fd.get('whatsapp') as string,
+        lineFacebook: fd.get('lineFacebook') as string,
+        originAddress: fd.get('originAddress') as string,
+        originAddressLocal: fd.get('originAddressLocal') as string,
+        jobPosition: fd.get('jobPosition') as string,
+        experience: fd.get('experience') as string,
+        education: fd.get('education') as string,
+        englishLevel: fd.get('englishLevel') as string,
+        skills: fd.get('skills') as string,
+        bio: fd.get('bio') as string,
+        recruitingSource: fd.get('recruitingSource') as string,
+        targetCountry: fd.get('targetCountry') as string,
+        wouldLikeToGo: fd.get('wouldLikeToGo') as string,
+        fiveStarHotelSpa: fd.get('fiveStarHotelSpa') === 'on',
+        candidateStatus: fd.get('candidateStatus') as string,
+        employmentStatus: fd.get('employmentStatus') as string,
+        employmentType: fd.get('employmentType') as string,
+        leasingNumber: fd.get('leasingNumber') as string,
+        leasingCompany: fd.get('leasingCompany') as string,
+        contractUnder: fd.get('contractUnder') as string,
+        dateApplied: fd.get('dateApplied') as string,
+        interviewDate: fd.get('interviewDate') as string,
+        clientApprovalDate: fd.get('clientApprovalDate') as string,
+        dateOfEmbassy: fd.get('dateOfEmbassy') as string,
+        startDateBySocialInsurance: fd.get('startDateBySocialInsurance') as string,
+        ocpDate: fd.get('ocpDate') as string,
+        assignedTo: fd.get('assignedTo') as string,
+        recruiterEmail: fd.get('recruiterEmail') as string,
+        clientPageUrl: fd.get('clientPageUrl') as string,
+        locationPageUrl: fd.get('locationPageUrl') as string,
+        notes: fd.get('notes') as string,
+        status: 'draft',
+        createdAt: serverTimestamp(),
+      };
+
+      // Gather document URLs
+      const storageUrls = window.__storageUrls || { passport: '', cv: '', photos: [] };
+      const documents = [
+        ...(storageUrls.passport ? [{ type: 'passport', url: storageUrls.passport }] : []),
+        ...(storageUrls.cv ? [{ type: 'cv', url: storageUrls.cv }] : []),
+        ...(storageUrls.photos || []).map((url: string) => ({ type: 'photo', url })),
+      ];
+
+      // 1. Write to Firestore
+      submitBtn.textContent = 'Saving to database…';
+      const docRef = await addDoc(collection(db, 'candidates'), payload);
+
+      // 2. Submit to Notion
+      submitBtn.textContent = 'Syncing to Notion…';
+      const notionResult = await callFunction('submitToNotion', {
+        ...payload,
+        firestoreId: docRef.id,
+        documents,
+        createdAt: new Date().toISOString(),
+      }) as { data: { notionCandidateUrl?: string } };
+
+      // 3. Update Firestore with Notion URL
+      if (notionResult.data?.notionCandidateUrl) {
+        await updateDoc(doc(db, 'candidates', docRef.id), {
+          notionCandidateUrl: notionResult.data.notionCandidateUrl,
+        });
+        notionLink.href = notionResult.data.notionCandidateUrl;
+        notionLink.classList.remove('hidden');
+      }
+
+      // Show success screen
+      form.classList.add('hidden');
+      successScreen.classList.remove('hidden');
+      ocrBanner.classList.add('hidden');
+
+    } catch (err) {
+      formError.textContent = `Submission failed: ${(err as Error).message}`;
+      formError.classList.remove('hidden');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Candidate Profile';
+      formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+
+  // New candidate: reload page
+  newCandidateBtn.addEventListener('click', () => {
+    window.location.reload();
+  });
+</script>

@@ -1,0 +1,608 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PasswordOverlay from '../components/PasswordOverlay.astro';
+
+const skills = [
+  'Aroma Massage','Body Massage','Deep Tissue Massage','Facial Massage',
+  'Foot Massage','Foot Reflexology','Foot Spa','Herbal Massage',
+  'Hot Stone Massage','Oil Massage','Scrub Massage','Slimming Massage',
+  'Thai Foot Spa and Massage','Traditional Thai Massage','Herbal Compress',
+  'Body Scrub','Bamboo Massage','Body & Foot Scrub',
+  'Thai Herbal Compress Massage',
+];
+const ratingFields = [
+  ['communication','Communication'],
+  ['appearance','Appearance'],
+  ['proactivity','Pro Activity'],
+  ['experience','Experience'],
+  ['massageSkills','Massage Skills'],
+];
+---
+
+<Layout title="Admin — Spa Company Staff">
+  <PasswordOverlay />
+
+  <section class="py-10 bg-gray-50 min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+      <h1 class="text-2xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
+
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-200 mb-6">
+        <button class="admin-tab px-5 py-3 text-sm font-semibold border-b-2 border-[#a9cf54] text-[#588f27]" data-tab="therapists">
+          Therapists
+        </button>
+        <button class="admin-tab px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="orders">
+          Book Orders
+        </button>
+        <button class="admin-tab px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="jobs">
+          Job Posts
+        </button>
+        <button class="admin-tab px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="messages">
+          Messages
+        </button>
+      </div>
+
+      <!-- Therapists Panel -->
+      <div id="panel-therapists">
+        <div id="loading" class="text-center text-gray-400 py-16">Loading…</div>
+        <div id="empty" class="hidden text-center text-gray-400 py-16">No profiles found.</div>
+
+        <div class="overflow-x-auto rounded-2xl shadow-sm border border-gray-200">
+          <table class="w-full text-sm bg-white">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Name</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Age</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Location</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Added</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Status</th>
+                <th class="px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body" class="divide-y divide-gray-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Orders Panel -->
+      <div id="panel-orders" class="hidden">
+        <div id="orders-loading" class="text-center text-gray-400 py-16">Loading orders…</div>
+        <div id="orders-empty" class="hidden text-center text-gray-400 py-16">No orders yet.</div>
+
+        <div id="orders-table-wrap" class="hidden overflow-x-auto rounded-2xl shadow-sm border border-gray-200">
+          <table class="w-full text-sm bg-white">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Fulfilled</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Customer</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Product</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Amount</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Payment</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Status</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Date</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body" class="divide-y divide-gray-100"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Jobs Panel -->
+      <div id="panel-jobs" class="hidden">
+        <div id="jobs-loading" class="text-center text-gray-400 py-16">Loading job posts…</div>
+        <div id="jobs-empty" class="hidden text-center text-gray-400 py-16">No job posts yet.</div>
+        <div id="jobs-list" class="space-y-4"></div>
+      </div>
+
+      <!-- Messages Panel -->
+      <div id="panel-messages" class="hidden">
+        <div id="messages-loading" class="text-center text-gray-400 py-16">Loading messages…</div>
+        <div id="messages-empty" class="hidden text-center text-gray-400 py-16">No messages yet.</div>
+        <div id="messages-list" class="space-y-4"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="hidden fixed inset-0 z-50 flex items-start justify-center bg-black/50 overflow-y-auto py-10">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl mx-4 relative">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <h2 class="text-lg font-bold text-gray-900">Edit Therapist</h2>
+        <button id="edit-close" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+      </div>
+      <form id="edit-form" class="p-6 space-y-5 max-h-[75vh] overflow-y-auto">
+        <input type="hidden" name="docId" />
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <input name="name" required type="text"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+            <input name="age" required type="number" min="18" max="65"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+            <select name="gender" required
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+            <input name="location" required type="text"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Experience (years)</label>
+            <input name="experience" required type="number" min="0" max="40"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Desired Work Location</label>
+            <input name="desiredWorkLocation" required type="text"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Skills</label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {skills.map(skill => (
+              <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <input type="checkbox" name="skills" value={skill} class="rounded accent-[#a9cf54]" />
+                {skill}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">YouTube Video URL</label>
+          <input name="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..."
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        </div>
+
+        <!-- Bio -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Biography</label>
+          <textarea name="bio" rows="3"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+        </div>
+
+        <!-- Ratings -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-3">Assessment (0-20 each)</label>
+          <div class="space-y-3">
+            {ratingFields.map(([key, label]) => (
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm text-gray-600">{label}</span>
+                  <span class="text-sm text-gray-500" id={`edit-rating-display-${key}`}>0</span>
+                </div>
+                <input type="range" name={`rating-${key}`} min="0" max="20" value="0"
+                  class="w-full accent-[#a9cf54]"
+                  data-display={`edit-rating-display-${key}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div id="edit-error" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm"></div>
+
+        <button type="submit" id="edit-save-btn"
+          class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50">
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { collection, getDocs, doc, getDoc, updateDoc, orderBy, query } from 'firebase/firestore';
+  import { db } from '../lib/firebase.js';
+
+  const EBOOK_URL = 'https://firebasestorage.googleapis.com/v0/b/spa-company-4ae61.firebasestorage.app/o/ebooks%2FHTRS_ebook.pdf?alt=media&token=ca2c5a0a-b2cd-4548-adbd-c4c71116a36d';
+
+  type Ratings = {
+    communication: number; appearance: number; proactivity: number;
+    experience: number; massageSkills: number;
+  };
+  type Therapist = {
+    id: string; name: string; age: number; gender: string; location: string;
+    experience: number; desiredWorkLocation: string; bio: string;
+    youtubeUrl?: string; skills: string[]; ratings: Ratings;
+    status: string; createdAt?: { toDate: () => Date };
+  };
+  type Order = {
+    id: string;
+    customer: { name: string; email: string; address: string };
+    formatLabel: string; amount: number; currency: string;
+    paymentMethod: string; paymentId: string;
+    status: string; fulfilled: boolean;
+    createdAt?: { toDate: () => Date };
+  };
+
+  // Admin tab switching
+  const panels = ['therapists', 'orders', 'jobs', 'messages'];
+  const loaded: Record<string, boolean> = {};
+  document.querySelectorAll('.admin-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.admin-tab').forEach(b => {
+        b.classList.remove('border-[#a9cf54]', 'text-[#588f27]');
+        b.classList.add('border-transparent', 'text-gray-500');
+      });
+      btn.classList.add('border-[#a9cf54]', 'text-[#588f27]');
+      btn.classList.remove('border-transparent', 'text-gray-500');
+      const tab = (btn as HTMLElement).dataset.tab!;
+      for (const p of panels) {
+        document.getElementById(`panel-${p}`)!.classList.toggle('hidden', tab !== p);
+      }
+      if (tab === 'orders' && !loaded.orders) { loadOrders(); loaded.orders = true; }
+      if (tab === 'jobs' && !loaded.jobs) { loadJobs(); loaded.jobs = true; }
+      if (tab === 'messages' && !loaded.messages) { loadMessages(); loaded.messages = true; }
+    });
+  });
+
+  // ===== ORDERS =====
+  async function loadOrders() {
+    const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    const orders: Order[] = snap.docs.map(d => ({ id: d.id, ...d.data() } as Order));
+
+    document.getElementById('orders-loading')?.classList.add('hidden');
+
+    if (orders.length === 0) {
+      document.getElementById('orders-empty')?.classList.remove('hidden');
+      return;
+    }
+
+    document.getElementById('orders-table-wrap')?.classList.remove('hidden');
+    const tbody = document.getElementById('orders-table-body')!;
+    tbody.innerHTML = orders.map(o => {
+      const date = o.createdAt?.toDate?.().toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+      }) ?? '—';
+      const isPaid = o.status === 'paid';
+      const isFulfilled = o.fulfilled;
+      return `
+        <tr data-order-id="${o.id}" class="${isFulfilled ? 'bg-green-50/50' : ''}">
+          <td class="px-4 py-3 text-center">
+            <input type="checkbox" class="fulfill-checkbox rounded accent-[#a9cf54] w-4 h-4 cursor-pointer"
+              data-id="${o.id}" ${isFulfilled ? 'checked' : ''} />
+          </td>
+          <td class="px-4 py-3">
+            <div class="font-medium text-gray-900">${o.customer?.name || '—'}</div>
+            <div class="text-xs text-gray-500">${o.customer?.email || '—'}</div>
+            ${o.customer?.address ? `<div class="text-xs text-gray-400 mt-0.5">${o.customer.address}</div>` : ''}
+          </td>
+          <td class="px-4 py-3 text-gray-700">${o.formatLabel}</td>
+          <td class="px-4 py-3 font-semibold text-gray-900">$${o.amount?.toFixed(2)}</td>
+          <td class="px-4 py-3">
+            <span class="text-xs font-medium ${o.paymentMethod === 'paypal' ? 'text-blue-600' : 'text-amber-600'}">
+              ${o.paymentMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'}
+            </span>
+            ${o.paymentId ? `<div class="text-xs text-gray-400 font-mono">${o.paymentId.slice(0, 12)}…</div>` : ''}
+          </td>
+          <td class="px-4 py-3">
+            <span class="order-status px-2.5 py-1 rounded-full text-xs font-semibold ${isPaid ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">
+              ${isPaid ? 'Paid' : 'Pending'}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-gray-500 text-xs whitespace-nowrap">${date}</td>
+        </tr>
+      `;
+    }).join('');
+
+    // Fulfill checkbox handler
+    tbody.addEventListener('change', async (e) => {
+      const cb = (e.target as HTMLElement).closest<HTMLInputElement>('.fulfill-checkbox');
+      if (!cb) return;
+      const orderId = cb.dataset.id!;
+      const fulfilled = cb.checked;
+      cb.disabled = true;
+
+      await updateDoc(doc(db, 'orders', orderId), { fulfilled, status: fulfilled ? 'paid' : 'pending' });
+
+      const row = tbody.querySelector(`tr[data-order-id="${orderId}"]`)!;
+      row.classList.toggle('bg-green-50/50', fulfilled);
+      const badge = row.querySelector('.order-status')!;
+      badge.textContent = fulfilled ? 'Paid' : 'Pending';
+      badge.className = `order-status px-2.5 py-1 rounded-full text-xs font-semibold ${fulfilled ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`;
+
+      cb.disabled = false;
+    });
+  }
+
+  // ===== JOBS =====
+  async function loadJobs() {
+    const q = query(collection(db, 'jobs'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    const jobs = snap.docs.map(d => ({ id: d.id, ...d.data() } as any));
+
+    document.getElementById('jobs-loading')?.classList.add('hidden');
+
+    if (jobs.length === 0) {
+      document.getElementById('jobs-empty')?.classList.remove('hidden');
+      return;
+    }
+
+    const list = document.getElementById('jobs-list')!;
+    list.innerHTML = jobs.map(j => {
+      const date = j.createdAt?.toDate?.().toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+      }) ?? '—';
+      const fields = [
+        ['Company', j.company],
+        ['Address', j.address],
+        ['Country', j.country],
+        ['Phone', j.phone],
+        ['Email', j.email],
+        ['Website', j.website],
+        ['Therapists', j.numTherapists],
+        ['Gender', j.gender],
+        ['Age Range', j.ageRange],
+        ['Experience', j.experience ? `${j.experience} yrs` : ''],
+        ['Salary', j.salary],
+        ['Contract', j.contractLength],
+        ['Commission', j.commission],
+        ['Tips', j.tips],
+        ['Food', j.food],
+        ['Accommodation', j.accommodation],
+        ['Flight', j.flight],
+        ['Bonus', j.bonus],
+        ['Hours/Week', j.hours],
+        ['Working Week', j.workingWeek],
+        ['Description', j.description],
+        ['Message', j.message],
+      ].filter(([, v]) => v);
+
+      return `
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <div class="font-bold text-gray-900">${j.contactName || '—'}</div>
+              <div class="text-sm text-gray-500">${j.company || 'No company'} — ${j.country || ''}</div>
+            </div>
+            <div class="text-xs text-gray-400 whitespace-nowrap">${date}</div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
+            ${fields.map(([label, val]) => `
+              <div class="flex gap-2 py-1 border-b border-gray-50">
+                <span class="text-gray-500 shrink-0 w-28">${label}</span>
+                <span class="text-gray-900">${val}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ===== MESSAGES =====
+  async function loadMessages() {
+    const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    const messages = snap.docs.map(d => ({ id: d.id, ...d.data() } as any));
+
+    document.getElementById('messages-loading')?.classList.add('hidden');
+
+    if (messages.length === 0) {
+      document.getElementById('messages-empty')?.classList.remove('hidden');
+      return;
+    }
+
+    const list = document.getElementById('messages-list')!;
+    list.innerHTML = messages.map(m => {
+      const date = m.createdAt?.toDate?.().toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+      }) ?? '—';
+
+      return `
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <div class="font-bold text-gray-900">${m.name || '—'}</div>
+              <div class="text-sm text-gray-500">${m.email || '—'}${m.phone ? ` — ${m.phone}` : ''}</div>
+            </div>
+            <div class="text-xs text-gray-400 whitespace-nowrap">${date}</div>
+          </div>
+          ${m.subject ? `<div class="text-xs font-semibold text-[#a9cf54] uppercase tracking-wide mb-2">${m.subject}</div>` : ''}
+          <p class="text-sm text-gray-700 whitespace-pre-wrap">${m.message || '—'}</p>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ===== THERAPISTS =====
+
+  // Range slider live display
+  document.querySelectorAll<HTMLInputElement>('#edit-form input[type="range"]').forEach(input => {
+    const displayId = input.dataset.display;
+    if (displayId) {
+      input.addEventListener('input', () => {
+        document.getElementById(displayId)!.textContent = input.value;
+      });
+    }
+  });
+
+  // Modal open/close
+  const modal = document.getElementById('edit-modal')!;
+  const form = document.getElementById('edit-form') as HTMLFormElement;
+
+  document.getElementById('edit-close')?.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+  async function openEdit(id: string) {
+    const snap = await getDoc(doc(db, 'therapists', id));
+    if (!snap.exists()) return;
+    const t = snap.data() as Omit<Therapist, 'id'>;
+
+    (form.querySelector('[name="docId"]') as HTMLInputElement).value = id;
+    (form.querySelector('[name="name"]') as HTMLInputElement).value = t.name || '';
+    (form.querySelector('[name="age"]') as HTMLInputElement).value = String(t.age || '');
+    (form.querySelector('[name="gender"]') as HTMLSelectElement).value = t.gender || 'Female';
+    (form.querySelector('[name="location"]') as HTMLInputElement).value = t.location || '';
+    (form.querySelector('[name="experience"]') as HTMLInputElement).value = String(t.experience || '');
+    (form.querySelector('[name="desiredWorkLocation"]') as HTMLInputElement).value = t.desiredWorkLocation || '';
+    (form.querySelector('[name="youtubeUrl"]') as HTMLInputElement).value = t.youtubeUrl || '';
+    (form.querySelector('[name="bio"]') as HTMLTextAreaElement).value = t.bio || '';
+
+    // Skills checkboxes
+    form.querySelectorAll<HTMLInputElement>('[name="skills"]').forEach(cb => {
+      cb.checked = (t.skills || []).includes(cb.value);
+    });
+
+    // Ratings
+    const r = t.ratings || {} as Ratings;
+    const ratingKeys: (keyof Ratings)[] = ['communication', 'appearance', 'proactivity', 'experience', 'massageSkills'];
+    for (const key of ratingKeys) {
+      const input = form.querySelector(`[name="rating-${key}"]`) as HTMLInputElement;
+      input.value = String(r[key] || 0);
+      const display = document.getElementById(`edit-rating-display-${key}`);
+      if (display) display.textContent = String(r[key] || 0);
+    }
+
+    document.getElementById('edit-error')?.classList.add('hidden');
+    modal.classList.remove('hidden');
+  }
+
+  // Save edit
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('edit-save-btn') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    document.getElementById('edit-error')?.classList.add('hidden');
+
+    try {
+      const data = new FormData(form);
+      const docId = data.get('docId') as string;
+
+      await updateDoc(doc(db, 'therapists', docId), {
+        name: data.get('name') as string,
+        age: parseInt(data.get('age') as string),
+        gender: data.get('gender') as string,
+        location: data.get('location') as string,
+        experience: parseInt(data.get('experience') as string),
+        desiredWorkLocation: data.get('desiredWorkLocation') as string,
+        youtubeUrl: (data.get('youtubeUrl') as string) || '',
+        bio: data.get('bio') as string,
+        skills: data.getAll('skills') as string[],
+        ratings: {
+          communication: parseInt(data.get('rating-communication') as string),
+          appearance: parseInt(data.get('rating-appearance') as string),
+          proactivity: parseInt(data.get('rating-proactivity') as string),
+          experience: parseInt(data.get('rating-experience') as string),
+          massageSkills: parseInt(data.get('rating-massageSkills') as string),
+        },
+      });
+
+      modal.classList.add('hidden');
+      // Update table row in place
+      const row = document.querySelector(`tr[data-id="${docId}"]`);
+      if (row) {
+        const nameLink = row.querySelector('td:first-child a')!;
+        nameLink.textContent = data.get('name') as string;
+        row.querySelectorAll('td')[1].textContent = data.get('age') as string;
+        row.querySelectorAll('td')[2].textContent = data.get('location') as string;
+      }
+    } catch (err) {
+      const errEl = document.getElementById('edit-error')!;
+      errEl.textContent = `Error: ${(err as Error).message}`;
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Save Changes';
+    }
+  });
+
+  async function loadAll() {
+    const q = query(collection(db, 'therapists'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    const therapists: Therapist[] = snap.docs.map(d => ({ id: d.id, ...d.data() } as Therapist));
+
+    document.getElementById('loading')?.classList.add('hidden');
+
+    if (therapists.length === 0) {
+      document.getElementById('empty')?.classList.remove('hidden');
+      return;
+    }
+
+    const tbody = document.getElementById('admin-table-body')!;
+    tbody.innerHTML = therapists.map(t => {
+      const date = t.createdAt?.toDate?.().toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric',
+      }) ?? '—';
+      const isActive = t.status === 'active';
+      return `
+        <tr data-id="${t.id}">
+          <td class="px-4 py-3 font-medium text-gray-900">
+            <a href="/therapist?id=${t.id}" target="_blank" class="hover:text-[#a9cf54] hover:underline">${t.name}</a>
+          </td>
+          <td class="px-4 py-3 text-gray-600">${t.age}</td>
+          <td class="px-4 py-3 text-gray-600">${t.location}</td>
+          <td class="px-4 py-3 text-gray-500">${date}</td>
+          <td class="px-4 py-3">
+            <span class="status-badge px-2.5 py-1 rounded-full text-xs font-semibold ${isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}">
+              ${isActive ? 'Active' : 'Placed'}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-right space-x-2">
+            <button class="edit-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-blue-300 text-blue-600 hover:bg-blue-50 transition-colors"
+              data-id="${t.id}">
+              Edit
+            </button>
+            <button class="toggle-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors
+              ${isActive ? 'border-gray-300 text-gray-600 hover:bg-gray-50' : 'border-[#a9cf54] text-[#588f27] hover:bg-[#a9cf54]/10'}"
+              data-id="${t.id}" data-status="${t.status}">
+              ${isActive ? 'Mark Placed' : 'Reactivate'}
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    tbody.addEventListener('click', async (e) => {
+      // Edit button
+      const editBtn = (e.target as HTMLElement).closest<HTMLButtonElement>('.edit-btn');
+      if (editBtn) {
+        openEdit(editBtn.dataset.id!);
+        return;
+      }
+
+      // Toggle status button
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.toggle-btn');
+      if (!btn) return;
+
+      const id = btn.dataset.id!;
+      const currentStatus = btn.dataset.status!;
+      const newStatus = currentStatus === 'active' ? 'placed' : 'active';
+
+      btn.disabled = true;
+      btn.textContent = '…';
+
+      await updateDoc(doc(db, 'therapists', id), { status: newStatus });
+
+      const row = tbody.querySelector(`tr[data-id="${id}"]`)!;
+      const badge = row.querySelector('.status-badge')!;
+      const isNowActive = newStatus === 'active';
+
+      badge.textContent = isNowActive ? 'Active' : 'Placed';
+      badge.className = `status-badge px-2.5 py-1 rounded-full text-xs font-semibold ${isNowActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`;
+
+      btn.dataset.status = newStatus;
+      btn.textContent = isNowActive ? 'Mark Placed' : 'Reactivate';
+      btn.className = `toggle-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${isNowActive ? 'border-gray-300 text-gray-600 hover:bg-gray-50' : 'border-[#a9cf54] text-[#588f27] hover:bg-[#a9cf54]/10'}`;
+      btn.disabled = false;
+    });
+  }
+
+  loadAll();
+</script>

@@ -1,0 +1,310 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const formats: Record<string, { label: string; price: number; description: string }> = {
+  print: { label: 'Print Book', price: 19.99, description: 'Premium paperback, ships internationally' },
+  digital: { label: 'Digital (PDF)', price: 14.99, description: 'Instant download after payment' },
+  bundle: { label: 'Bundle (Print + Digital)', price: 27.99, description: 'Print book + instant PDF download' },
+};
+---
+
+<Layout
+  title="Checkout — How to Run a Spa"
+  description="Complete your purchase of How to Run a Spa."
+>
+  <section class="py-12 bg-gray-50 min-h-screen">
+    <div class="max-w-xl mx-auto px-4">
+      <a href="/book" class="text-[#a9cf54] text-sm hover:underline mb-6 inline-block">← Back to book</a>
+
+      <!-- Order Summary -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <h1 class="text-2xl font-bold text-gray-900 mb-4">Order Summary</h1>
+        <div id="order-summary" class="flex items-center justify-between">
+          <div>
+            <div id="format-label" class="font-semibold text-gray-900">—</div>
+            <div id="format-desc" class="text-sm text-gray-500">—</div>
+          </div>
+          <div id="format-price" class="text-2xl font-bold text-gray-900">$0</div>
+        </div>
+      </div>
+
+      <!-- Customer Info -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <h2 class="font-semibold text-gray-900 text-lg mb-4">Your Details</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+            <input id="customer-email" type="email" required placeholder="you@example.com"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            <p class="text-xs text-gray-400 mt-1">Your order confirmation and download link will be sent here.</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+            <input id="customer-name" type="text" required placeholder="Your name"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div id="shipping-fields" class="hidden space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Shipping Address *</label>
+              <textarea id="customer-address" rows="3" placeholder="Street, city, postal code, country"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Method Tabs -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <h2 class="font-semibold text-gray-900 text-lg mb-4">Payment Method</h2>
+        <div class="flex border-b border-gray-200 mb-6">
+          <button id="tab-paypal" class="tab-btn px-4 py-2 text-sm font-semibold border-b-2 border-[#a9cf54] text-[#588f27]" data-tab="paypal">
+            PayPal
+          </button>
+          <button id="tab-transfer" class="tab-btn px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="transfer">
+            Bank Transfer
+          </button>
+        </div>
+
+        <!-- PayPal -->
+        <div id="panel-paypal">
+          <div id="paypal-validation-msg" class="hidden bg-amber-50 border border-amber-200 text-amber-800 rounded-lg px-4 py-3 text-sm mb-4">
+            Please fill in your email and name above before paying.
+          </div>
+          <div id="paypal-button-container"></div>
+        </div>
+
+        <!-- Bank Transfer -->
+        <div id="panel-transfer" class="hidden">
+          <p class="text-sm text-gray-600 mb-4">
+            Transfer the exact amount shown above to one of our bank accounts. Include your email in the payment reference.
+            We'll confirm your order and send the download link within 24 hours.
+          </p>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+              <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">EU Bank Account</div>
+              <div class="text-sm text-gray-700 space-y-1">
+                <div><span class="text-gray-500">IBAN:</span> <span class="font-mono font-medium">SK87 0200 0000 0049 3335 1257</span></div>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+              <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Thailand Bank Account</div>
+              <div class="text-sm text-gray-700 space-y-1">
+                <div><span class="text-gray-500">Bank:</span> Kasikorn Bank</div>
+                <div><span class="text-gray-500">Account:</span> <span class="font-mono font-medium">022-3-87408-8</span></div>
+              </div>
+            </div>
+          </div>
+          <button id="transfer-confirm-btn"
+            class="mt-6 w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50">
+            I've Made the Transfer
+          </button>
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div id="success-section" class="hidden">
+        <div class="bg-green-50 rounded-2xl border-2 border-green-200 p-8 text-center">
+          <div class="text-4xl mb-3">&#10003;</div>
+          <h2 class="text-2xl font-bold text-green-800 mb-2">Payment Successful!</h2>
+          <p class="text-green-700 mb-6">Thank you for your purchase. Your download is ready.</p>
+          <a id="download-link" href="#" target="_blank"
+            class="inline-block px-8 py-3 bg-[#a9cf54] text-white font-bold rounded-full hover:bg-[#588f27] transition-colors">
+            Download Your eBook (PDF)
+          </a>
+          <p class="text-sm text-green-600 mt-4">A copy of this link has also been saved to your order.</p>
+        </div>
+      </div>
+
+      <!-- Transfer Pending State -->
+      <div id="transfer-pending" class="hidden">
+        <div class="bg-blue-50 rounded-2xl border-2 border-blue-200 p-8 text-center">
+          <div class="text-4xl mb-3">&#9993;</div>
+          <h2 class="text-2xl font-bold text-blue-800 mb-2">Order Received!</h2>
+          <p class="text-blue-700 mb-4">
+            We've recorded your order. Once we confirm your bank transfer, we'll send the download link to your email.
+          </p>
+          <p class="text-sm text-blue-600">
+            Order reference: <span id="transfer-order-id" class="font-mono font-bold">—</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script is:inline src={`https://www.paypal.com/sdk/js?client-id=${import.meta.env.PUBLIC_PAYPAL_CLIENT_ID}&currency=USD`}></script>
+</Layout>
+
+<script>
+  import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+  import { db } from '../lib/firebase.js';
+
+  const EBOOK_URL = 'https://firebasestorage.googleapis.com/v0/b/spa-company-4ae61.firebasestorage.app/o/ebooks%2FHTRS_ebook.pdf?alt=media&token=ca2c5a0a-b2cd-4548-adbd-c4c71116a36d';
+
+  const formats: Record<string, { label: string; price: number; description: string }> = {
+    print: { label: 'Print Book', price: 19.99, description: 'Premium paperback, ships internationally' },
+    digital: { label: 'Digital (PDF)', price: 14.99, description: 'Instant download after payment' },
+    bundle: { label: 'Bundle (Print + Digital)', price: 27.99, description: 'Print book + instant PDF download' },
+  };
+
+  // Read format from URL
+  const params = new URLSearchParams(window.location.search);
+  const formatKey = params.get('format') || 'digital';
+  const format = formats[formatKey] || formats.digital;
+  const needsShipping = formatKey === 'print' || formatKey === 'bundle';
+
+  // Populate order summary
+  document.getElementById('format-label')!.textContent = format.label;
+  document.getElementById('format-desc')!.textContent = format.description;
+  document.getElementById('format-price')!.textContent = `$${format.price.toFixed(2)}`;
+
+  // Show shipping fields if physical product
+  if (needsShipping) {
+    document.getElementById('shipping-fields')?.classList.remove('hidden');
+  }
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('border-[#a9cf54]', 'text-[#588f27]');
+        b.classList.add('border-transparent', 'text-gray-500');
+      });
+      btn.classList.add('border-[#a9cf54]', 'text-[#588f27]');
+      btn.classList.remove('border-transparent', 'text-gray-500');
+
+      const tab = (btn as HTMLElement).dataset.tab!;
+      document.getElementById('panel-paypal')!.classList.toggle('hidden', tab !== 'paypal');
+      document.getElementById('panel-transfer')!.classList.toggle('hidden', tab !== 'transfer');
+    });
+  });
+
+  function validateCustomer(): boolean {
+    const email = (document.getElementById('customer-email') as HTMLInputElement).value.trim();
+    const name = (document.getElementById('customer-name') as HTMLInputElement).value.trim();
+    if (!email || !name) return false;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return false;
+    if (needsShipping) {
+      const address = (document.getElementById('customer-address') as HTMLTextAreaElement)?.value.trim();
+      if (!address) return false;
+    }
+    return true;
+  }
+
+  function getCustomerData() {
+    return {
+      email: (document.getElementById('customer-email') as HTMLInputElement).value.trim(),
+      name: (document.getElementById('customer-name') as HTMLInputElement).value.trim(),
+      address: (document.getElementById('customer-address') as HTMLTextAreaElement)?.value?.trim() || '',
+    };
+  }
+
+  async function saveOrder(paymentMethod: string, paymentId: string, status: string) {
+    const customer = getCustomerData();
+    const orderRef = await addDoc(collection(db, 'orders'), {
+      customer,
+      format: formatKey,
+      formatLabel: format.label,
+      amount: format.price,
+      currency: 'USD',
+      paymentMethod,
+      paymentId,
+      status,
+      fulfilled: false,
+      createdAt: serverTimestamp(),
+    });
+
+    // Notify author via FormSubmit (free email relay)
+    try {
+      await fetch('https://formsubmit.co/ajax/info@spa-company.com,dadda@spa-company.com,michal@spa-company.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `New Book Order: ${format.label} — $${format.price.toFixed(2)}`,
+          'Order ID': orderRef.id,
+          'Product': format.label,
+          'Amount': `$${format.price.toFixed(2)} USD`,
+          'Payment Method': paymentMethod === 'paypal' ? `PayPal (${paymentId})` : 'Bank Transfer (pending)',
+          'Customer Name': customer.name,
+          'Customer Email': customer.email,
+          'Shipping Address': customer.address || 'N/A (digital only)',
+          'Status': status === 'paid' ? 'PAID - ready to fulfill' : 'PENDING - awaiting bank transfer',
+        }),
+      });
+    } catch (_) { /* notification is best-effort */ }
+
+    return orderRef;
+  }
+
+  function showSuccess() {
+    // Hide everything except success
+    document.querySelectorAll('.bg-white.rounded-2xl').forEach(el => (el as HTMLElement).style.display = 'none');
+    const hasDigital = formatKey === 'digital' || formatKey === 'bundle';
+    if (hasDigital) {
+      (document.getElementById('download-link') as HTMLAnchorElement).href = EBOOK_URL;
+    } else {
+      document.getElementById('download-link')!.textContent = 'Your print book will be shipped soon';
+      (document.getElementById('download-link') as HTMLAnchorElement).removeAttribute('href');
+      (document.getElementById('download-link') as HTMLAnchorElement).classList.remove('hover:bg-[#588f27]');
+    }
+    document.getElementById('success-section')?.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // PayPal Buttons
+  const paypalSdk = (window as any).paypal;
+  if (paypalSdk) {
+    paypalSdk.Buttons({
+      style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+
+      onClick(_data: any, actions: any) {
+        if (!validateCustomer()) {
+          document.getElementById('paypal-validation-msg')?.classList.remove('hidden');
+          return actions.reject();
+        }
+        document.getElementById('paypal-validation-msg')?.classList.add('hidden');
+        return actions.resolve();
+      },
+
+      createOrder(_data: any, actions: any) {
+        return actions.order.create({
+          purchase_units: [{
+            description: `How to Run a Spa — ${format.label}`,
+            amount: { currency_code: 'USD', value: format.price.toFixed(2) },
+          }],
+        });
+      },
+
+      onApprove(_data: any, actions: any) {
+        return actions.order.capture().then(async (details: any) => {
+          await saveOrder('paypal', details.id, 'paid');
+          showSuccess();
+        });
+      },
+
+      onError(err: any) {
+        console.error('PayPal error:', err);
+        alert('Payment failed. Please try again.');
+      },
+    }).render('#paypal-button-container');
+  }
+
+  // Bank Transfer
+  document.getElementById('transfer-confirm-btn')?.addEventListener('click', async () => {
+    if (!validateCustomer()) {
+      alert('Please fill in your email and name above.');
+      return;
+    }
+    const btn = document.getElementById('transfer-confirm-btn') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+
+    const orderRef = await saveOrder('bank_transfer', '', 'pending');
+
+    // Hide everything, show pending
+    document.querySelectorAll('.bg-white.rounded-2xl').forEach(el => (el as HTMLElement).style.display = 'none');
+    document.getElementById('transfer-order-id')!.textContent = orderRef.id;
+    document.getElementById('transfer-pending')?.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>

@@ -1,0 +1,221 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const learns = [
+  { label: 'Analyze Industry Trends', body: 'Spot opportunities in the spa & wellness market and stay ahead of the curve.' },
+  { label: 'Marketing that Works', body: 'Campaign ideas, promos, and channels that actually bring bookings.' },
+  { label: 'Finance & Profitability', body: 'Control costs, price smart, and grow margins sustainably.' },
+  { label: 'Define Clear Strategy', body: 'Position your brand, set pricing, and choose the right business model.' },
+  { label: 'Lead & Grow Your Team', body: 'Hire, train, and motivate therapists and front-desk staff like a pro.' },
+  { label: 'Create WOW Experiences', body: 'Turn first-time visitors into loyal fans with memorable service.' },
+];
+
+const testimonials = [
+  {
+    quote: '"This book transformed the way I manage my spa. Michal\'s strategies helped me attract more high-end clients and keep them coming back. It\'s like having a personal mentor guiding you step-by-step."',
+    name: 'Layla',
+    title: 'Owner, Luxury Spas in UAE',
+    avatar: '/images/1.png',
+  },
+  {
+    quote: '"I\'ve worked in the spa industry for over 12 years, and this is the most practical guide I\'ve read. The sections on team management and service excellence are worth the price alone."',
+    name: 'Abdullah',
+    title: 'Spa Manager, 5-Star Hotel',
+    avatar: '/images/2.png',
+  },
+  {
+    quote: '"I run a busy Thai massage spa in Zagreb, and the marketing tips in this book gave us a big boost in bookings. Every spa owner should have a copy on their desk. It\'s a must-read for spa business growth."',
+    name: 'Marko',
+    title: 'Owner, Massage Spa in Croatia',
+    avatar: '/images/3.png',
+  },
+];
+
+const formats = [
+  {
+    label: 'Print Book',
+    sub: 'Premium paperback, matte cover',
+    price: '$19.99',
+    features: ['~170+ pages', 'Ships internationally', 'Includes a bonus PDF checklist'],
+    highlight: false,
+    key: 'print',
+  },
+  {
+    label: 'Digital (PDF)',
+    sub: 'Instant download',
+    price: '$14.99',
+    features: ['Download immediately', 'Read on any device', 'Includes bonus checklist'],
+    highlight: true,
+    key: 'digital',
+  },
+  {
+    label: 'Bundle',
+    sub: 'Print + Digital',
+    price: '$27.99',
+    features: ['Best value', 'Print + instant PDF', 'All bonus materials'],
+    highlight: false,
+    key: 'bundle',
+  },
+];
+---
+
+<Layout
+  title="How to Run a Spa — Spa Company Bangkok"
+  description="A practical management book for spa and wellness operators by Michal Masiar, founder of Spa Company. Boost profits, retain clients, and build sustainable operations."
+>
+
+  <!-- Hero -->
+  <section
+    class="relative min-h-[400px] flex items-center justify-center text-center bg-cover bg-center"
+    style="background-image: url('/images/spa-massage-hero.jpg');"
+  >
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative z-10 px-4 max-w-3xl mx-auto">
+      <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">How to Run a Spa</h1>
+      <p class="text-xl text-white/85 mb-2 font-medium">
+        Your Guide to Owning a Spa with Higher Profits, a Loyal Client Base, and Professional Business Management.
+      </p>
+      <p class="text-white/70 mb-8">Learn from the global spa experience of Spa Company's CEO.</p>
+      <a
+        href="#formats"
+        class="inline-block px-8 py-3 rounded-full bg-[#e86a2a] text-white font-semibold hover:bg-[#c9561e] transition-colors"
+      >
+        Purchase Now
+      </a>
+    </div>
+  </section>
+
+  <!-- Book Cover Showcase -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+      <div class="md:w-1/2 flex justify-center">
+        <img
+          src="/images/book-cover.png"
+          alt="How to Run a Spa — Book Cover"
+          class="max-h-[500px] object-contain drop-shadow-2xl"
+        />
+      </div>
+      <div class="md:w-1/2">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">About the Book</h2>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          <em>How to Run a Spa</em> is more than just a book — it's your roadmap to success in the spa and wellness industry, packed with strategies you can implement right away.
+        </p>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          Inside, you'll gain practical insights into business strategy, marketing, team management, pricing, creating exceptional customer experiences, and boosting profitability for long-term growth.
+        </p>
+        <p class="text-gray-600 leading-relaxed">
+          Perfect for both first-time founders and seasoned owners ready to scale with confidence.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What You'll Learn -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">What You'll Learn</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {learns.map((item) => (
+          <div class="flex items-start gap-3">
+            <span class="mt-1 w-5 h-5 rounded-full bg-[#e86a2a] flex items-center justify-center shrink-0">
+              <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <div>
+              <div class="font-semibold text-gray-800 text-sm">{item.label}</div>
+              <div class="text-gray-500 text-sm">{item.body}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About the Author -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-2/5 flex justify-center">
+          <img
+            src="/images/author-michal.jpg"
+            alt="Michal Masiar — Author"
+            class="w-72 h-72 rounded-2xl object-cover shadow-lg"
+          />
+        </div>
+        <div class="md:w-3/5">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">About the Author</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            <em>Michal Masiar</em>, Director of Spa Company, has spent more than a decade helping spas and hotels — from boutique parlors to multi-location brands — boost profits, attract loyal clients, and build sustainable operations.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Drawing on hands-on experience in consulting, recruitment, and daily management, <span class="text-[#e86a2a] font-medium">How to Run a Spa</span> distills his proven strategies into practical steps you can apply immediately to grow your business and stand out in the competitive wellness industry.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">What Readers Say</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonials.map((t) => (
+          <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 flex flex-col">
+            <p class="text-gray-600 italic leading-relaxed flex-1 mb-6">{t.quote}</p>
+            <div class="flex items-center gap-3">
+              <img src={t.avatar} alt={t.name} class="w-12 h-12 rounded-full object-cover" />
+              <div>
+                <div class="font-semibold text-gray-800 text-sm">{t.name}</div>
+                <div class="text-gray-500 text-xs">{t.title}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Formats / Pricing -->
+  <section id="formats" class="py-16 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Choose Your Format</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {formats.map((f) => (
+          <div class={`rounded-2xl border-2 p-8 flex flex-col ${f.highlight ? 'border-[#e86a2a] shadow-lg' : 'border-gray-200 bg-white'}`}>
+            {f.highlight && (
+              <div class="text-xs font-bold text-[#e86a2a] uppercase tracking-widest mb-2">Most Popular</div>
+            )}
+            <h3 class="text-xl font-bold text-gray-900 mb-1">{f.label}</h3>
+            <p class="text-gray-500 text-sm mb-4">{f.sub}</p>
+            <div class="text-4xl font-bold text-gray-900 mb-6">{f.price}</div>
+            <ul class="space-y-2 mb-8 flex-1">
+              {f.features.map((feat) => (
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <span class="w-4 h-4 rounded-full bg-[#e86a2a] flex items-center justify-center shrink-0">
+                    <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  {feat}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={`/checkout?format=${f.key}`}
+              class={`block text-center py-3 rounded-full font-semibold transition-colors ${
+                f.highlight
+                  ? 'bg-[#e86a2a] text-white hover:bg-[#c9561e]'
+                  : 'border-2 border-[#e86a2a] text-[#e86a2a] hover:bg-[#e8642a] hover:text-white'
+              }`}
+            >
+              Purchase Now
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>

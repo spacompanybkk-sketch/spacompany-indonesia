@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "workspace": "Spa Company Enterprise",
+    "database": {
+      "name": "📄 Documents",
+      "databaseUrl": "https://www.notion.so/300792677686803ba3b6e466a750b828",
+      "dataSourceUrl": "collection://30079267-7686-8054-966c-000bac2e09f0",
+      "createPageParent": { "type": "dataSource", "url": "collection://30079267-7686-8054-966c-000bac2e09f0" }
+    },
+    "notes": [
+      "Property names are case-sensitive and must match Notion exactly.",
+      "Date properties must be written using expanded keys: date:<Property>:start/end/is_datetime.",
+      "Select/Status values must match existing option names in Notion.",
+      "Relations must be written as Notion page URLs (not names).",
+      "Rollup/Formula/Created time/Last edited time/Created by fields are read-only and should not be written."
+    ]
+  },
+
+  "fields": {
+    "document_name": {
+      "notionProperty": "Name",
+      "type": "title",
+      "required": true,
+      "write": { "path": ["properties", "Name"] },
+      "transform": { "kind": "string" },
+      "example": "Passport"
+    },
+
+    "type": {
+      "notionProperty": "Type",
+      "type": "select",
+      "required": true,
+      "write": { "path": ["properties", "Type"] },
+      "transform": {
+        "kind": "selectName",
+        "allowedValues": [
+          "Flight Ticket",
+          "Dummy Flight",
+          "Passport",
+          "Country ID Card",
+          "Visa",
+          "Birth Certificate",
+          "(?) Police Report",
+          "(?) House of Registration",
+          "(?) Name Change",
+          "Labour (OEC / Mandiri)",
+          "CV / Resume",
+          "Profession Certificate",
+          "Employment Certificate",
+          "Contracts",
+          "Relocation Contract",
+          "Power of Attorney (PoA)",
+          "Placement Documents",
+          "Labour Office Permit (SK)",
+          "Slovak ID Card",
+          "Residence Permit (OCP)",
+          "Residency Document",
+          "Accommodation Letter",
+          "Medical Check-up",
+          "Insurance",
+          "Client Documents",
+          "Other",
+          "Page Comments",
+          "Employment Contract",
+          "Thai Documents",
+          "CID + MFA",
+          "Power of Attorney",
+          "Therapist Photos",
+          "Profile Picture",
+          "Scanned Contracts",
+          "Origin Country Documents",
+          "Visa Application"
+        ]
+      },
+      "example": "Passport"
+    },
+
+    "status": {
+      "notionProperty": "Status",
+      "type": "status",
+      "required": false,
+      "write": { "path": ["properties", "Status"] },
+      "transform": {
+        "kind": "statusNameOrNull",
+        "allowedValues": [
+          "Not Needed",
+          "Not started",
+          "Requested",
+          "Translation",
+          "Legalisation",
+          "Stamped",
+          "Ordered",
+          "Rejected",
+          "Cancelled",
+          "Approved",
+          "Completed"
+        ]
+      },
+      "example": "Requested"
+    },
+
+    "document_id_pin": {
+      "notionProperty": "Document ID / PIN",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Document ID / PIN"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "RK PIN 161016554391"
+    },
+
+    "quick_notes": {
+      "notionProperty": "Quick notes",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Quick notes"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "Need translation + stamp"
+    },
+
+    "tickbox": {
+      "notionProperty": "Tickbox",
+      "type": "checkbox",
+      "required": false,
+      "write": { "path": ["properties", "Tickbox"] },
+      "transform": { "kind": "booleanOrNull" },
+      "example": true
+    },
+
+    "candidate_page_urls": {
+      "notionProperty": "Candidate",
+      "type": "relation",
+      "required": true,
+      "write": { "path": ["properties", "Candidate"] },
+      "transform": { "kind": "pageUrlArray" },
+      "example": ["https://www.notion.so/25479267768680f7a36cfd0ee552e5b2"]
+    },
+
+    "assignee_users": {
+      "notionProperty": "Assignee",
+      "type": "person",
+      "required": false,
+      "write": { "path": ["properties", "Assignee"] },
+      "transform": { "kind": "userUrlArrayOrNull" },
+      "example": ["user://c6d005f3-b24b-4b7d-ad2c-d94515f7eb64"]
+    },
+
+    "moved_from": {
+      "notionProperty": "Moved from",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Moved from"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "Waiting Room"
+    },
+
+    "date_of_issue": {
+      "notionProperty": "Date of Issue",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Date of Issue:start",
+        "endKey": "date:Date of Issue:end",
+        "isDatetimeKey": "date:Date of Issue:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2026-03-01"
+    },
+
+    "date_of_expiry": {
+      "notionProperty": "Date of Expiry",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Date of Expiry:start",
+        "endKey": "date:Date of Expiry:end",
+        "isDatetimeKey": "date:Date of Expiry:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2031-03-01"
+    },
+
+    "next_appointment": {
+      "notionProperty": "Next appointment",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Next appointment:start",
+        "endKey": "date:Next appointment:end",
+        "isDatetimeKey": "date:Next appointment:is_datetime"
+      },
+      "transform": { "kind": "dateOrDatetimeISOOrNull" },
+      "example": "2026-04-28"
+    },
+
+    "master_date": {
+      "notionProperty": "Master Date ",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Master Date :start",
+        "endKey": "date:Master Date :end",
+        "isDatetimeKey": "date:Master Date :is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2026-04-17"
+    },
+
+    "attachment_file_ids": {
+      "notionProperty": "Attachment",
+      "type": "file",
+      "required": false,
+      "write": { "path": ["properties", "Attachment"] },
+      "transform": { "kind": "fileIdArrayOrNull" },
+      "example": ["<notion-file-id-1>"]
+    }
+  },
+
+  "readOnlyProperties": [
+    "Candidate Nationality",
+    "Candidate Status",
+    "Aux_cand",
+    "Created by",
+    "Created time",
+    "Last edited time"
+  ]
+}

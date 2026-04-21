@@ -1,0 +1,187 @@
+---
+import Layout from "../layouts/Layout.astro";
+import JobPositionTabs from "../components/JobPositionTabs.astro";
+import CandidateCard from "../components/CandidateCard.astro";
+---
+
+<Layout
+  title="Candidate Database — Spa Company Bangkok"
+  description="Browse verified candidates available for international placement. Filter by job position."
+>
+  <!-- Page Hero -->
+  <section class="bg-[#a9cf54] py-12 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl font-bold text-white mb-3">Candidate Database</h1>
+      <p class="text-white/85 text-lg">Browse verified candidates ready to work abroad.</p>
+    </div>
+  </section>
+
+  <!-- Tabs + Grid -->
+  <section class="py-10 bg-gray-50 min-h-[400px]">
+    <div class="max-w-7xl mx-auto px-4">
+      <JobPositionTabs />
+      <div id="loading" class="text-center text-gray-400 py-20 text-lg">Loading candidates…</div>
+      <div id="empty" class="hidden text-center text-gray-400 py-20 text-lg">No candidates found for this position.</div>
+      <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
+      <div id="results-count" class="mt-6 text-sm text-gray-400 text-center"></div>
+    </div>
+  </section>
+
+  <CandidateCard />
+</Layout>
+
+<script>
+  import { collection, query, where, getDocs } from "firebase/firestore";
+  import { db } from "../lib/firebase.js";
+
+  type Candidate = {
+    id: string;
+    candidateId: string;
+    firstName?: string;
+    lastName?: string;
+    name?: string;
+    nationality?: string;
+    dateOfBirth?: string;
+    position?: string;
+    experience?: number;
+    photos?: string[];
+    status: string;
+  };
+
+  const FLAG_MAP: Record<string, string> = {
+    Thailand: "🇹🇭",
+    Philippines: "🇵🇭",
+    Indonesia: "🇮🇩",
+  };
+
+  function calcAge(dob?: string): number | null {
+    if (!dob) return null;
+    const birth = new Date(dob);
+    if (isNaN(birth.getTime())) return null;
+    const now = new Date();
+    let age = now.getFullYear() - birth.getFullYear();
+    const m = now.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age--;
+    return age;
+  }
+
+  function getDisplayName(c: Candidate): string {
+    if (c.firstName && c.lastName) return `${c.firstName} ${c.lastName}`;
+    if (c.firstName) return c.firstName;
+    if (c.name) return c.name;
+    return c.candidateId || "Unknown";
+  }
+
+  let allCandidates: Candidate[] = [];
+  let activePosition = "";
+
+  // Read initial ?position= param
+  const params = new URLSearchParams(window.location.search);
+  activePosition = params.get("position") || "";
+
+  async function loadCandidates() {
+    const q = query(
+      collection(db, "candidates"),
+      where("status", "==", "published")
+    );
+    const snapshot = await getDocs(q);
+    allCandidates = snapshot.docs.map((d) => ({
+      id: d.id,
+      ...(d.data() as Omit<Candidate, "id">),
+    }));
+    document.getElementById("loading")?.classList.add("hidden");
+    renderGrid(activePosition);
+    setActiveTab(activePosition);
+  }
+
+  function renderGrid(position: string) {
+    const filtered = position
+      ? allCandidates.filter(
+          (c) => (c.position || "").toLowerCase() === position.toLowerCase()
+        )
+      : allCandidates;
+
+    const grid = document.getElementById("grid")!;
+    const empty = document.getElementById("empty")!;
+    const count = document.getElementById("results-count")!;
+    const template = document.getElementById("candidate-card-template") as HTMLTemplateElement;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = "";
+      empty.classList.remove("hidden");
+      count.textContent = "";
+    } else {
+      empty.classList.add("hidden");
+      grid.innerHTML = "";
+
+      for (const c of filtered) {
+        const clone = template.content.cloneNode(true) as DocumentFragment;
+        const card = clone.querySelector(".candidate-card") as HTMLAnchorElement;
+        card.href = `/candidate?id=${encodeURIComponent(c.candidateId || c.id)}`;
+
+        const photo = card.querySelector(".card-photo") as HTMLImageElement;
+        const placeholder = card.querySelector(".card-placeholder") as HTMLDivElement;
+
+        if (c.photos && c.photos.length > 0) {
+          photo.src = c.photos[0];
+          photo.alt = getDisplayName(c);
+        } else {
+          photo.classList.add("hidden");
+          placeholder.classList.remove("hidden");
+        }
+
+        const flag = FLAG_MAP[c.nationality || ""] || "";
+        (card.querySelector(".card-flag") as HTMLSpanElement).textContent = flag;
+
+        const displayName = getDisplayName(c);
+        const firstName = displayName.split(" ")[0];
+        (card.querySelector(".card-name") as HTMLHeadingElement).textContent = firstName;
+
+        const age = calcAge(c.dateOfBirth);
+        const metaParts: string[] = [];
+        if (age !== null) metaParts.push(`${age} yrs`);
+        if (c.experience !== undefined && c.experience !== null) metaParts.push(`${c.experience} yrs exp`);
+        if (c.nationality) metaParts.push(c.nationality);
+        (card.querySelector(".card-meta") as HTMLParagraphElement).textContent = metaParts.join(" · ");
+
+        (card.querySelector(".card-position") as HTMLParagraphElement).textContent = c.position || "";
+
+        grid.appendChild(clone);
+      }
+
+      count.textContent = `${filtered.length} candidate${filtered.length !== 1 ? "s" : ""}`;
+    }
+  }
+
+  function setActiveTab(position: string) {
+    document.querySelectorAll(".position-tab").forEach((btn) => {
+      const btnPos = (btn as HTMLButtonElement).dataset.position || "";
+      const isActive = btnPos === position;
+      if (isActive) {
+        btn.classList.add("bg-[#a9cf54]", "text-white", "border-[#a9cf54]");
+        btn.classList.remove("bg-white", "text-gray-700", "border-gray-300", "hover:bg-gray-50");
+      } else {
+        btn.classList.remove("bg-[#a9cf54]", "text-white", "border-[#a9cf54]");
+        btn.classList.add("bg-white", "text-gray-700", "border-gray-300", "hover:bg-gray-50");
+      }
+    });
+  }
+
+  document.getElementById("position-tabs")?.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest(".position-tab") as HTMLButtonElement | null;
+    if (!btn) return;
+    activePosition = btn.dataset.position || "";
+    // Update URL without reload
+    const url = new URL(window.location.href);
+    if (activePosition) {
+      url.searchParams.set("position", activePosition);
+    } else {
+      url.searchParams.delete("position");
+    }
+    window.history.replaceState({}, "", url.toString());
+    setActiveTab(activePosition);
+    renderGrid(activePosition);
+  });
+
+  loadCandidates();
+</script>

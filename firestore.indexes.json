@@ -1,0 +1,20 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "therapists",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "candidates",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "jobPosition", "order": "ASCENDING" }
+      ]
+    }
+  ]
+}

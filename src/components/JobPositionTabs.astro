@@ -1,0 +1,14 @@
+---
+const positions = ["All", "Massage", "Chef", "Housekeeping", "Factory", "Portier", "Other"];
+---
+
+<div id="position-tabs" class="flex flex-wrap gap-2 mb-8">
+  {positions.map((pos) => (
+    <button
+      data-position={pos === "All" ? "" : pos}
+      class="position-tab px-5 py-2 rounded-full text-sm font-medium border transition-colors"
+    >
+      {pos}
+    </button>
+  ))}
+</div>

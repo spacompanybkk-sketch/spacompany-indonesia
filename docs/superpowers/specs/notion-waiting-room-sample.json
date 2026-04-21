@@ -1,0 +1,53 @@
+[
+  {
+    "candidateUrl": "https://www.notion.so/2a979267768680088deae9eec89f28f8",
+    "properties": {
+      "Name": "2509 -Phattharapha Misap// 25,000-50,000",
+      "Name Surname": "Miss Phattharapha Misap",
+      "External ID": null,
+      "Email": null,
+      "Phone Number": null,
+      "Date of Birth": "1984-10-01",
+      "Place of Birth": "Tak",
+      "Origin Address": "20 Village No. 8, Don Man Subdistrict, Prathai District, Nakhon Ratchasima Province 30180",
+      "Origin Address (Local Language)": "20 หมู่ที่ 8 ต.ดอนมัน อ.ประทาย จ.นครราชสีมา 30180",
+      "Nationality": "[\"Thailand\"]",
+      "Origin Country": "[\"Thailand\"]",
+      "Target Country": "[\"Slovakia\"]",
+      "Job Title / Position": "Massage",
+      "Candidate Status": "Waiting Room"
+    },
+    "documents": [
+      {
+        "Type": "Origin Country Documents",
+        "Status": "Not started",
+        "Attachment": { "fileIds": ["5ea3b103-3a0f-49be-93bf-cb45f6889876"] }
+      }
+    ]
+  },
+  {
+    "candidateUrl": "https://www.notion.so/27e7926776868000883dd0416d6a661b",
+    "properties": {
+      "Name": "8303 - John Maru De Leon (Chef) - HVT",
+      "Name Surname": "John Maru Abejero De Leon",
+      "Email": "marudeleon420@gmail.com",
+      "Phone Number": "09911410697",
+      "Date of Birth": "1999-07-10",
+      "Place of Birth": "Philippines",
+      "Origin Address": "GOV. PANOTES AVE., BRGY 7\nPUROK 1, DAET CAMARINES NORTE",
+      "Nationality": "[\"Philippines\"]",
+      "Origin Country": "[\"Philippines\"]",
+      "Target Country": "[\"Slovakia\"]",
+      "Job Title / Position": "Chef",
+      "Education": "High Vocational Certificate",
+      "Candidate Status": "Waiting Room"
+    },
+    "documents": [
+      {
+        "Type": "CV / Resume",
+        "Status": "Not started",
+        "Attachment": { "fileIds": ["59b92930-e13e-45b0-acd8-51f86d7bd5db"] }
+      }
+    ]
+  }
+]

@@ -1,0 +1,439 @@
+{
+  "meta": {
+    "workspace": "Spa Company Enterprise",
+    "database": {
+      "name": "👥 Candidates",
+      "databaseUrl": "https://www.notion.so/54319f2e7f104dcf948026a862f24d53",
+      "dataSourceUrl": "collection://3b2d5afa-86a2-46b1-97b0-2a252633b971",
+      "createPageParent": { "type": "dataSource", "url": "collection://3b2d5afa-86a2-46b1-97b0-2a252633b971" }
+    },
+    "notes": [
+      "Property names are case-sensitive and must match Notion exactly.",
+      "Date properties must be written using expanded keys: date:<Property>:start/end/is_datetime.",
+      "Select/Status/Multi-select values must match existing option names in Notion.",
+      "Relations must be written as Notion page URLs (not names).",
+      "Formula/Rollup/Created time/Last edited time fields are read-only and should not be written."
+    ]
+  },
+
+  "fields": {
+    "name_title": {
+      "notionProperty": "Name",
+      "type": "title",
+      "required": true,
+      "write": { "path": ["properties", "Name"] },
+      "transform": { "kind": "string" },
+      "example": "8225 - ARVIN JOHN FRANCISCO (CHEF) Spa Company - TMR Hotel Pošta - Runaway"
+    },
+    "name_surname": {
+      "notionProperty": "Name Surname",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Name Surname"] },
+      "transform": { "kind": "string" },
+      "example": "Arvin John Arcega Francisco"
+    },
+    "external_id": {
+      "notionProperty": "External ID",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "External ID"] },
+      "transform": { "kind": "string" },
+      "example": "SK-PH-SPA-001"
+    },
+
+    "email": {
+      "notionProperty": "Email",
+      "type": "email",
+      "required": false,
+      "write": { "path": ["properties", "Email"] },
+      "transform": { "kind": "string" },
+      "example": "janjanzeke804@gmail.com"
+    },
+    "phone_number": {
+      "notionProperty": "Phone Number",
+      "type": "phone_number",
+      "required": false,
+      "write": { "path": ["properties", "Phone Number"] },
+      "transform": { "kind": "string" },
+      "example": "09283216042"
+    },
+    "alternate_phone_number": {
+      "notionProperty": "Alternate Phone Number",
+      "type": "phone_number",
+      "required": false,
+      "write": { "path": ["properties", "Alternate Phone Number"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "+63..."
+    },
+    "whatsapp": {
+      "notionProperty": "WhatsApp",
+      "type": "phone_number",
+      "required": false,
+      "write": { "path": ["properties", "WhatsApp"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "+63..."
+    },
+    "line_facebook": {
+      "notionProperty": "LINE / Facebook",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "LINE / Facebook"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "line: john_doe / https://facebook.com/..."
+    },
+
+    "place_of_birth": {
+      "notionProperty": "Place of Birth",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Place of Birth"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "Philippines"
+    },
+    "origin_address": {
+      "notionProperty": "Origin Address",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Origin Address"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "CALUMPIT BULACAN"
+    },
+    "origin_address_local": {
+      "notionProperty": "Origin Address (Local Language)",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Origin Address (Local Language)"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "CALUMPIT BULACAN"
+    },
+
+    "marital_status": {
+      "notionProperty": "Marital Status",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Marital Status"] },
+      "transform": {
+        "kind": "selectNameOrNull",
+        "allowedValues": ["Single", "Married", "Divorced", "Widowed", "Separated"]
+      },
+      "example": "Married"
+    },
+
+    "nationality": {
+      "notionProperty": "Nationality",
+      "type": "multi_select",
+      "required": false,
+      "write": { "path": ["properties", "Nationality"] },
+      "transform": { "kind": "multiSelectNamesOrNull" },
+      "example": ["Philippines"]
+    },
+    "origin_country": {
+      "notionProperty": "Origin Country",
+      "type": "multi_select",
+      "required": false,
+      "write": { "path": ["properties", "Origin Country"] },
+      "transform": { "kind": "multiSelectNamesOrNull" },
+      "example": ["Philippines"]
+    },
+    "target_country": {
+      "notionProperty": "Target Country",
+      "type": "multi_select",
+      "required": false,
+      "write": { "path": ["properties", "Target Country"] },
+      "transform": { "kind": "multiSelectNamesOrNull" },
+      "example": ["Slovakia"]
+    },
+    "would_like_to_go": {
+      "notionProperty": "Would like to go",
+      "type": "multi_select",
+      "required": false,
+      "write": { "path": ["properties", "Would like to go"] },
+      "transform": { "kind": "multiSelectNamesOrNull" },
+      "example": ["Germany", "Austria"]
+    },
+
+    "education": {
+      "notionProperty": "Education",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Education"] },
+      "transform": { "kind": "selectNameOrNull" },
+      "example": "Bachelor Degree"
+    },
+    "english_level": {
+      "notionProperty": "English Level",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "English Level"] },
+      "transform": { "kind": "selectNameOrNull" },
+      "example": "Intermediate (B1)"
+    },
+    "experience": {
+      "notionProperty": "Experience",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Experience"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "5 years"
+    },
+    "job_title_position": {
+      "notionProperty": "Job Title / Position",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Job Title / Position"] },
+      "transform": {
+        "kind": "selectNameOrNull",
+        "allowedValues": [
+          "Massage",
+          "Chef",
+          "Housekeeping",
+          "Factory",
+          "Portier",
+          "License Holder",
+          "Agency Employee",
+          "Hybrid",
+          "Other"
+        ]
+      },
+      "example": "Chef"
+    },
+    "recruiting_source": {
+      "notionProperty": "Recruiting Source",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Recruiting Source"] },
+      "transform": { "kind": "selectNameOrNull" },
+      "example": "Direct"
+    },
+
+    "candidate_status": {
+      "notionProperty": "Candidate Status",
+      "type": "status",
+      "required": false,
+      "write": { "path": ["properties", "Candidate Status"] },
+      "transform": { "kind": "statusNameOrNull" },
+      "example": "Operational Leasing"
+    },
+    "employment_status": {
+      "notionProperty": "Employment Status",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Employment Status"] },
+      "transform": { "kind": "selectNameOrNull" },
+      "example": "Active - employed"
+    },
+    "employment_type": {
+      "notionProperty": "Employment Type",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Employment Type"] },
+      "transform": { "kind": "selectNameOrNull" },
+      "example": "Full-time"
+    },
+
+    "leasing_number": {
+      "notionProperty": "Leasing Number",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Leasing Number"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": "175"
+    },
+    "leasing_company": {
+      "notionProperty": "Leasing Company",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Leasing Company"] },
+      "transform": {
+        "kind": "selectNameOrNull",
+        "allowedValues": [
+          "TBD",
+          "Spa Company Slovakia",
+          "Prachuap Khiri Khan",
+          "Borisad Farang",
+          "Sabai Bratislava"
+        ]
+      },
+      "example": "Spa Company Slovakia"
+    },
+    "contract_under": {
+      "notionProperty": "Contract Under",
+      "type": "select",
+      "required": false,
+      "write": { "path": ["properties", "Contract Under"] },
+      "transform": {
+        "kind": "selectNameOrNull",
+        "allowedValues": [
+          "TBD",
+          "Prachuap Khiri Khan",
+          "Spa Company Slovakia s.ro.",
+          "DMJ Europe",
+          "RM2 Ventures",
+          "Borisad",
+          "Saithong",
+          "Portinter",
+          "7Leelawadee"
+        ]
+      },
+      "example": "Spa Company Slovakia s.ro."
+    },
+    "five_star_hotel_spa": {
+      "notionProperty": "5-Star hotel/Spa",
+      "type": "checkbox",
+      "required": false,
+      "write": { "path": ["properties", "5-Star hotel/Spa"] },
+      "transform": { "kind": "booleanOrNull" },
+      "example": false
+    },
+
+    "notes": {
+      "notionProperty": "Notes",
+      "type": "text",
+      "required": false,
+      "write": { "path": ["properties", "Notes"] },
+      "transform": { "kind": "stringOrNull" },
+      "example": ""
+    },
+
+    "date_of_birth": {
+      "notionProperty": "Date of Birth",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Date of Birth:start",
+        "endKey": "date:Date of Birth:end",
+        "isDatetimeKey": "date:Date of Birth:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "1995-11-17"
+    },
+    "date_applied": {
+      "notionProperty": "Date Applied",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Date Applied:start",
+        "endKey": "date:Date Applied:end",
+        "isDatetimeKey": "date:Date Applied:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2026-04-17"
+    },
+    "interview_date": {
+      "notionProperty": "Interview Date",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Interview Date:start",
+        "endKey": "date:Interview Date:end",
+        "isDatetimeKey": "date:Interview Date:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2026-04-20"
+    },
+    "client_approval_date": {
+      "notionProperty": "Client Approval",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Client Approval:start",
+        "endKey": "date:Client Approval:end",
+        "isDatetimeKey": "date:Client Approval:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2026-04-22"
+    },
+    "date_of_embassy": {
+      "notionProperty": "Date of Embassy",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Date of Embassy:start",
+        "endKey": "date:Date of Embassy:end",
+        "isDatetimeKey": "date:Date of Embassy:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2026-05-10"
+    },
+    "start_date_by_social_insurance": {
+      "notionProperty": "Start Date by Social Insurance",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:Start Date by Social Insurance:start",
+        "endKey": "date:Start Date by Social Insurance:end",
+        "isDatetimeKey": "date:Start Date by Social Insurance:is_datetime"
+      },
+      "transform": { "kind": "dateOnlyOrNull" },
+      "example": "2026-06-01"
+    },
+    "ocp_datetime": {
+      "notionProperty": "OCP date",
+      "type": "date",
+      "required": false,
+      "write": {
+        "startKey": "date:OCP date:start",
+        "endKey": "date:OCP date:end",
+        "isDatetimeKey": "date:OCP date:is_datetime"
+      },
+      "transform": { "kind": "datetimeISOOrNull", "forceIsDatetime": 1 },
+      "example": "2026-11-26T08:40:00.000Z"
+    },
+
+    "assigned_to_users": {
+      "notionProperty": "Assigned to",
+      "type": "person",
+      "required": false,
+      "write": { "path": ["properties", "Assigned to"] },
+      "transform": { "kind": "userUrlArrayOrNull" },
+      "example": ["user://c6d005f3-b24b-4b7d-ad2c-d94515f7eb64"]
+    },
+    "recruiter_users": {
+      "notionProperty": "Recruiter",
+      "type": "person",
+      "required": false,
+      "write": { "path": ["properties", "Recruiter"] },
+      "transform": { "kind": "userUrlArrayOrNull" },
+      "example": ["user://c6d005f3-b24b-4b7d-ad2c-d94515f7eb64"]
+    },
+
+    "client_relation_page_urls": {
+      "notionProperty": "Client ↕️",
+      "type": "relation",
+      "required": false,
+      "write": { "path": ["properties", "Client ↕️"] },
+      "transform": { "kind": "pageUrlArrayOrNull" },
+      "example": ["https://www.notion.so/9f3637df42b9497b98066d9e5c336e88"]
+    },
+    "location_relation_page_urls": {
+      "notionProperty": "Location",
+      "type": "relation",
+      "required": false,
+      "write": { "path": ["properties", "Location"] },
+      "transform": { "kind": "pageUrlArrayOrNull" },
+      "example": ["https://www.notion.so/1addb8a711e3480ebebf51c3de2bdc3c"]
+    }
+  },
+
+  "readOnlyProperties": [
+    "VPM Job Position",
+    "VPM Employer",
+    "VPM Address",
+    "Slovak Embassy Date Rollup",
+    "Next date type",
+    "Next date",
+    "LOP Status / Expiry",
+    "Accommodation ",
+    "Days Since Application",
+    "Time to Fill (Days)",
+    "LOP Status ",
+    "Docs in progress",
+    "OCP booked",
+    "Flight Ticket Date",
+    "Passport?",
+    "Placement Status & Company",
+    "Joined (Created Time)",
+    "Last edited time"
+  ]
+}

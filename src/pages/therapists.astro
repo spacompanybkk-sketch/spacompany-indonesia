@@ -1,0 +1,233 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Find a Thai Therapist — Spa Company Bangkok"
+  description="Browse verified Thai massage therapists available for international placement."
+>
+  <!-- Page Hero -->
+  <section class="bg-[#a9cf54] py-12 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl font-bold text-white mb-3">Therapist Database</h1>
+      <p class="text-white/85 text-lg">Browse verified Thai therapists — available now or successfully placed.</p>
+    </div>
+  </section>
+
+  <!-- Database Toggle -->
+  <section class="bg-white border-b border-gray-100 py-4">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="flex gap-2">
+        <button id="tab-available" class="db-tab px-5 py-2.5 text-sm font-semibold rounded-full bg-[#a9cf54] text-white transition-colors" data-status="active">
+          Available Now
+        </button>
+        <button id="tab-placed" class="db-tab px-5 py-2.5 text-sm font-semibold rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors" data-status="placed">
+          Successfully Placed
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="bg-white border-b border-gray-100 py-4 sticky top-16 z-40 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 flex flex-wrap gap-4 items-end">
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Min Age</label>
+        <input id="filter-age-min" type="number" min="18" max="60" placeholder="18"
+          class="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Max Age</label>
+        <input id="filter-age-max" type="number" min="18" max="60" placeholder="60"
+          class="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Min Experience (yrs)</label>
+        <input id="filter-exp-min" type="number" min="0" max="40" placeholder="0"
+          class="w-32 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Max Experience (yrs)</label>
+        <input id="filter-exp-max" type="number" min="0" max="40" placeholder="40"
+          class="w-32 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+      </div>
+      <button id="filter-apply"
+        class="px-5 py-2 bg-[#a9cf54] text-white text-sm font-semibold rounded-lg hover:bg-[#588f27] transition-colors">
+        Apply
+      </button>
+      <button id="filter-reset"
+        class="px-5 py-2 border border-gray-300 text-gray-600 text-sm font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+        Reset
+      </button>
+      <span id="results-count" class="text-sm text-gray-400 ml-auto self-center"></span>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section class="py-12 bg-gray-50 min-h-[400px]">
+    <div class="max-w-7xl mx-auto px-4">
+      <div id="loading" class="text-center text-gray-400 py-20 text-lg">Loading therapists…</div>
+      <div id="empty" class="hidden text-center text-gray-400 py-20 text-lg">No therapists match your filters.</div>
+      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+  import { db } from '../lib/firebase.js';
+
+  type Therapist = {
+    id: string;
+    name: string;
+    age: number;
+    experience: number;
+    location: string;
+    desiredWorkLocation: string;
+    skills: string[];
+    photos: string[];
+    status: string;
+    youtubeUrl?: string;
+    wpUserId?: number;
+    candidateNum?: string;
+    dateAdded?: string;
+  };
+
+  let activeTherapists: Therapist[] = [];
+  let placedTherapists: Therapist[] = [];
+  let currentView: 'active' | 'placed' = 'active';
+
+  function parseTherapist(d: any, i: number): Therapist {
+    const data = d.data();
+    const num = data.wpUserId || (2000 + i);
+    const createdDate = data.createdAt?.toDate?.();
+    let dateAdded = '';
+    if (createdDate) {
+      const diff = Date.now() - createdDate.getTime();
+      const days = Math.floor(diff / 86400000);
+      if (days === 0) dateAdded = 'Added today';
+      else if (days === 1) dateAdded = 'Added yesterday';
+      else if (days < 7) dateAdded = `Added ${days} days ago`;
+      else if (days < 30) dateAdded = `Added ${Math.floor(days / 7)} week${Math.floor(days / 7) > 1 ? 's' : ''} ago`;
+      else if (days < 365) dateAdded = `Added ${Math.floor(days / 30)} month${Math.floor(days / 30) > 1 ? 's' : ''} ago`;
+      else dateAdded = `Added ${Math.floor(days / 365)} year${Math.floor(days / 365) > 1 ? 's' : ''} ago`;
+    }
+    return { id: d.id, ...data, candidateNum: `SC-${num}`, dateAdded } as Therapist;
+  }
+
+  async function loadTherapists() {
+    const q = query(collection(db, 'therapists'), orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(q);
+    const all = snapshot.docs.map((d, i) => parseTherapist(d, i));
+    activeTherapists = all.filter(t => t.status === 'active');
+    placedTherapists = all.filter(t => t.status !== 'active');
+    document.getElementById('loading')?.classList.add('hidden');
+    showView('active');
+  }
+
+  // Toggle tabs
+  document.querySelectorAll('.db-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const status = (btn as HTMLElement).dataset.status as 'active' | 'placed';
+      showView(status);
+    });
+  });
+
+  function showView(status: 'active' | 'placed') {
+    currentView = status;
+
+    // Update tab styles
+    document.querySelectorAll('.db-tab').forEach(b => {
+      const isActive = (b as HTMLElement).dataset.status === status;
+      b.className = `db-tab px-5 py-2.5 text-sm font-semibold rounded-full transition-colors ${
+        isActive ? 'bg-[#a9cf54] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+      }`;
+    });
+
+    // Clear filters
+    (document.getElementById('filter-age-min') as HTMLInputElement).value = '';
+    (document.getElementById('filter-age-max') as HTMLInputElement).value = '';
+    (document.getElementById('filter-exp-min') as HTMLInputElement).value = '';
+    (document.getElementById('filter-exp-max') as HTMLInputElement).value = '';
+
+    const list = status === 'active' ? activeTherapists : placedTherapists;
+
+    if (status === 'active') {
+      // Show 15 random for available
+      const shuffled = [...list].sort(() => Math.random() - 0.5);
+      renderGrid(shuffled.slice(0, 15), status);
+      document.getElementById('results-count')!.textContent = `Showing 15 of ${list.length} available — use filters to see more`;
+    } else {
+      // Show all placed
+      renderGrid(list, status);
+      document.getElementById('results-count')!.textContent = `${list.length} successfully placed`;
+    }
+  }
+
+  function applyFilters() {
+    const ageMin = parseInt((document.getElementById('filter-age-min') as HTMLInputElement).value) || 0;
+    const ageMax = parseInt((document.getElementById('filter-age-max') as HTMLInputElement).value) || 999;
+    const expMin = parseInt((document.getElementById('filter-exp-min') as HTMLInputElement).value) || 0;
+    const expMax = parseInt((document.getElementById('filter-exp-max') as HTMLInputElement).value) || 999;
+
+    const list = currentView === 'active' ? activeTherapists : placedTherapists;
+    const filtered = list.filter(t =>
+      t.age >= ageMin && t.age <= ageMax &&
+      t.experience >= expMin && t.experience <= expMax
+    );
+
+    document.getElementById('results-count')!.textContent = `${filtered.length} therapist${filtered.length !== 1 ? 's' : ''}`;
+    renderGrid(filtered, currentView);
+  }
+
+  function renderGrid(list: Therapist[], view: 'active' | 'placed') {
+    const grid = document.getElementById('grid')!;
+    const empty = document.getElementById('empty')!;
+    const isPlaced = view === 'placed';
+
+    if (list.length === 0) {
+      grid.innerHTML = '';
+      empty.classList.remove('hidden');
+    } else {
+      empty.classList.add('hidden');
+      grid.innerHTML = list.map(t => {
+        const firstName = t.name.split(' ')[0];
+        return `
+        <a href="/therapist?id=${t.candidateNum}" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group ${isPlaced ? 'opacity-80' : ''}">
+          <div class="aspect-[4/3] bg-gray-100 overflow-hidden relative">
+            ${t.photos?.[0]
+              ? `<img src="${t.photos[0]}" alt="${firstName}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${isPlaced ? 'grayscale-[30%]' : ''}" />`
+              : `<div class="w-full h-full flex items-center justify-center text-gray-300 text-4xl">👤</div>`
+            }
+            <span class="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-lg">${t.candidateNum}</span>
+            ${isPlaced ? '<span class="absolute top-2 right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-lg">Placed</span>' : ''}
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-gray-900 mb-1">${firstName} <span class="text-xs font-normal text-gray-400">${t.candidateNum}</span></h3>
+            <p class="text-sm text-gray-500 mb-1">${t.age} yrs · ${t.experience} yrs exp · ${t.location}</p>
+            ${t.dateAdded ? `<p class="text-xs text-gray-400 mb-1">${t.dateAdded}</p>` : ''}
+            <p class="text-xs text-[#a9cf54] font-medium mb-2">→ ${t.desiredWorkLocation}</p>
+            ${t.youtubeUrl ? `<p class="text-xs text-red-600 font-medium mb-2"><svg class="inline w-4 h-4 mr-1 align-text-bottom" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>Video available</p>` : ''}
+            <div class="flex flex-wrap gap-1">
+              ${(t.skills || []).slice(0, 3).map(s =>
+                `<span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">${s}</span>`
+              ).join('')}
+              ${(t.skills?.length || 0) > 3 ? `<span class="text-xs text-gray-400">+${t.skills.length - 3} more</span>` : ''}
+            </div>
+          </div>
+        </a>
+      `}).join('');
+    }
+  }
+
+  document.getElementById('filter-apply')?.addEventListener('click', applyFilters);
+  document.getElementById('filter-reset')?.addEventListener('click', () => {
+    (document.getElementById('filter-age-min') as HTMLInputElement).value = '';
+    (document.getElementById('filter-age-max') as HTMLInputElement).value = '';
+    (document.getElementById('filter-exp-min') as HTMLInputElement).value = '';
+    (document.getElementById('filter-exp-max') as HTMLInputElement).value = '';
+    showView(currentView);
+  });
+
+  loadTherapists();
+</script>

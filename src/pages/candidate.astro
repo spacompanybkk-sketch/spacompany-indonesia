@@ -1,0 +1,341 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Candidate Profile — Spa Company Bangkok"
+  description="Verified candidate profile."
+>
+  <div id="loading" class="min-h-[60vh] flex items-center justify-center text-gray-400 text-lg">
+    Loading profile…
+  </div>
+  <div id="not-found" class="hidden min-h-[60vh] flex items-center justify-center text-gray-400 text-lg">
+    Profile not found. <a href="/candidates" class="ml-2 text-[#a9cf54] underline">Back to candidates</a>
+  </div>
+
+  <div id="profile" class="hidden">
+    <!-- Hero + Photos -->
+    <section class="bg-gray-900 py-10">
+      <div class="max-w-5xl mx-auto px-4">
+        <a href="/candidates" class="text-[#a9cf54] text-sm hover:underline mb-6 inline-block">← Back to candidates</a>
+        <div class="flex flex-col md:flex-row gap-8">
+          <!-- Photo Gallery -->
+          <div class="md:w-1/2">
+            <div class="rounded-2xl overflow-hidden bg-gray-800 aspect-[3/4]">
+              <img id="main-photo" src="" alt="" class="w-full h-full object-cover" />
+              <div id="main-placeholder" class="hidden w-full h-full flex items-center justify-center text-gray-600 text-8xl">&#128100;</div>
+            </div>
+            <div id="thumbnails" class="flex gap-2 mt-3 flex-wrap"></div>
+          </div>
+
+          <!-- Identity -->
+          <div class="md:w-1/2 text-white">
+            <div class="flex items-center gap-3 mb-3">
+              <span id="profile-flag" class="text-4xl"></span>
+              <div>
+                <h1 id="profile-name" class="text-3xl font-bold"></h1>
+                <p id="profile-candidate-id" class="text-gray-400 text-sm mt-0.5"></p>
+              </div>
+            </div>
+
+            <div id="profile-meta" class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-300 mb-5"></div>
+
+            <!-- Skills -->
+            <div id="profile-skills" class="flex flex-wrap gap-2 mb-5"></div>
+
+            <!-- Enquire Now -->
+            <div id="enquire-section">
+              <button id="enquire-btn"
+                class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors text-sm">
+                Enquire About This Candidate
+              </button>
+              <div id="enquire-form" class="hidden mt-4 space-y-3">
+                <input id="enq-name" type="text" required placeholder="Your name *"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                <input id="enq-email" type="email" required placeholder="Your email *"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                <input id="enq-phone" type="tel" placeholder="Phone (optional)"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                <textarea id="enq-message" rows="3" placeholder="Message (optional)"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400 resize-none"></textarea>
+                <button id="enq-submit"
+                  class="w-full py-2.5 bg-[#a9cf54] text-white font-bold rounded-lg hover:bg-[#588f27] transition-colors text-sm disabled:opacity-50">
+                  Send Enquiry
+                </button>
+                <div id="enq-success" class="hidden text-green-400 text-sm text-center font-medium">
+                  Enquiry sent! We'll be in touch soon.
+                </div>
+                <div id="enq-error" class="hidden text-red-400 text-sm text-center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio + Work History -->
+    <section class="py-12 bg-white">
+      <div class="max-w-5xl mx-auto px-4 space-y-10">
+        <!-- Bio -->
+        <div id="bio-section" class="hidden">
+          <h2 class="text-xl font-bold text-gray-900 mb-3">About</h2>
+          <p id="profile-bio" class="text-gray-600 leading-relaxed"></p>
+        </div>
+
+        <!-- Work History -->
+        <div id="work-history-section" class="hidden">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Work History</h2>
+          <div id="work-history" class="space-y-5"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  import { collection, query, where, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
+  import { db } from "../lib/firebase.js";
+
+  type WorkEntry = {
+    role?: string;
+    company?: string;
+    location?: string;
+    duration?: string;
+    from?: string;
+    to?: string;
+    duties?: string;
+    description?: string;
+  };
+
+  type Candidate = {
+    candidateId: string;
+    firstName?: string;
+    lastName?: string;
+    name?: string;
+    nationality?: string;
+    dateOfBirth?: string;
+    position?: string;
+    experience?: number;
+    education?: string;
+    englishLevel?: string;
+    skills?: string[];
+    bio?: string;
+    photos?: string[];
+    workHistory?: WorkEntry[];
+    status: string;
+  };
+
+  const FLAG_MAP: Record<string, string> = {
+    Thailand: "🇹🇭",
+    Philippines: "🇵🇭",
+    Indonesia: "🇮🇩",
+  };
+
+  function calcAge(dob?: string): number | null {
+    if (!dob) return null;
+    const birth = new Date(dob);
+    if (isNaN(birth.getTime())) return null;
+    const now = new Date();
+    let age = now.getFullYear() - birth.getFullYear();
+    const m = now.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age--;
+    return age;
+  }
+
+  function getDisplayName(c: Candidate): string {
+    if (c.firstName && c.lastName) return `${c.firstName} ${c.lastName}`;
+    if (c.firstName) return c.firstName;
+    if (c.name) return c.name;
+    return c.candidateId || "Unknown";
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const rawId = params.get("id") || "";
+
+  async function loadProfile() {
+    if (!rawId) {
+      showNotFound();
+      return;
+    }
+
+    const q = query(
+      collection(db, "candidates"),
+      where("candidateId", "==", rawId),
+      where("status", "==", "published")
+    );
+    const results = await getDocs(q);
+
+    if (results.empty) {
+      showNotFound();
+      return;
+    }
+
+    const data = results.docs[0].data() as Candidate;
+    render(data);
+  }
+
+  function showNotFound() {
+    document.getElementById("loading")?.classList.add("hidden");
+    document.getElementById("not-found")?.classList.remove("hidden");
+  }
+
+  function render(c: Candidate) {
+    document.getElementById("loading")?.classList.add("hidden");
+    document.getElementById("profile")?.classList.remove("hidden");
+
+    const displayName = getDisplayName(c);
+    const firstName = displayName.split(" ")[0];
+
+    // Update page title
+    document.title = `${displayName} (${c.candidateId}) — Spa Company Bangkok`;
+
+    // Flag + Name
+    const flag = FLAG_MAP[c.nationality || ""] || "";
+    (document.getElementById("profile-flag") as HTMLSpanElement).textContent = flag;
+    (document.getElementById("profile-name") as HTMLHeadingElement).textContent = displayName;
+    (document.getElementById("profile-candidate-id") as HTMLParagraphElement).textContent = c.candidateId;
+
+    // Identity grid
+    const age = calcAge(c.dateOfBirth);
+    const metaItems: [string, string][] = [];
+    if (c.position) metaItems.push(["Position", c.position]);
+    if (c.nationality) metaItems.push(["Nationality", c.nationality]);
+    if (age !== null) metaItems.push(["Age", `${age} years old`]);
+    if (c.experience !== undefined && c.experience !== null) metaItems.push(["Experience", `${c.experience} years`]);
+    if (c.education) metaItems.push(["Education", c.education]);
+    if (c.englishLevel) metaItems.push(["English Level", c.englishLevel]);
+
+    document.getElementById("profile-meta")!.innerHTML = metaItems
+      .map(
+        ([label, value]) =>
+          `<div><span class="text-gray-500 block text-xs uppercase tracking-wide">${label}</span><span class="text-white font-medium">${value}</span></div>`
+      )
+      .join("");
+
+    // Skills
+    document.getElementById("profile-skills")!.innerHTML = (c.skills || [])
+      .map(
+        (s) =>
+          `<span class="text-sm bg-[#a9cf54]/15 text-[#a9cf54] px-3 py-1 rounded-full font-medium">${s}</span>`
+      )
+      .join("");
+
+    // Photo gallery
+    const photos = c.photos || [];
+    const mainImg = document.getElementById("main-photo") as HTMLImageElement;
+    const mainPlaceholder = document.getElementById("main-placeholder") as HTMLDivElement;
+
+    if (photos.length > 0) {
+      mainImg.src = photos[0];
+      mainImg.alt = firstName;
+      mainPlaceholder.classList.add("hidden");
+
+      document.getElementById("thumbnails")!.innerHTML = photos
+        .map(
+          (p, i) =>
+            `<img src="${p}" alt="${firstName} photo ${i + 1}"
+              class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 ${i === 0 ? "border-[#a9cf54]" : "border-transparent"} hover:border-[#a9cf54] transition-colors"
+              data-index="${i}" />`
+        )
+        .join("");
+
+      document.getElementById("thumbnails")?.addEventListener("click", (e) => {
+        const thumb = (e.target as HTMLElement).closest("img[data-index]") as HTMLImageElement | null;
+        if (!thumb) return;
+        mainImg.src = thumb.src;
+        document.querySelectorAll("#thumbnails img").forEach((el) =>
+          el.classList.replace("border-[#a9cf54]", "border-transparent")
+        );
+        thumb.classList.replace("border-transparent", "border-[#a9cf54]");
+      });
+    } else {
+      mainImg.classList.add("hidden");
+      mainPlaceholder.classList.remove("hidden");
+    }
+
+    // Bio
+    if (c.bio) {
+      document.getElementById("bio-section")?.classList.remove("hidden");
+      (document.getElementById("profile-bio") as HTMLParagraphElement).textContent = c.bio;
+    }
+
+    // Work History
+    const workHistory = c.workHistory || [];
+    if (workHistory.length > 0) {
+      document.getElementById("work-history-section")?.classList.remove("hidden");
+      document.getElementById("work-history")!.innerHTML = workHistory
+        .map((w) => {
+          const role = w.role || w.company || "Role";
+          const location = w.location || "";
+          const duration = w.duration || (w.from ? `${w.from}${w.to ? ` – ${w.to}` : ""}` : "");
+          const duties = w.duties || w.description || "";
+          return `
+            <div class="border-l-2 border-[#a9cf54] pl-4">
+              <div class="font-semibold text-gray-900">${role}</div>
+              <div class="text-sm text-gray-500 mb-2">${[location, duration].filter(Boolean).join(" · ")}</div>
+              ${
+                duties
+                  ? `<ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                  ${duties
+                    .split("\n")
+                    .filter(Boolean)
+                    .map((d: string) => `<li>${d.trim()}</li>`)
+                    .join("")}
+                </ul>`
+                  : ""
+              }
+            </div>
+          `;
+        })
+        .join("");
+    }
+  }
+
+  // Enquiry form
+  document.getElementById("enquire-btn")?.addEventListener("click", () => {
+    document.getElementById("enquire-btn")?.classList.add("hidden");
+    document.getElementById("enquire-form")?.classList.remove("hidden");
+  });
+
+  document.getElementById("enq-submit")?.addEventListener("click", async () => {
+    const name = (document.getElementById("enq-name") as HTMLInputElement).value.trim();
+    const email = (document.getElementById("enq-email") as HTMLInputElement).value.trim();
+    const phone = (document.getElementById("enq-phone") as HTMLInputElement).value.trim();
+    const message = (document.getElementById("enq-message") as HTMLTextAreaElement).value.trim();
+
+    if (!name || !email) {
+      document.getElementById("enq-error")!.textContent = "Please fill in your name and email.";
+      document.getElementById("enq-error")?.classList.remove("hidden");
+      return;
+    }
+
+    const btn = document.getElementById("enq-submit") as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    document.getElementById("enq-error")?.classList.add("hidden");
+
+    const candidateLabel = document.getElementById("profile-name")?.textContent || rawId;
+
+    try {
+      await addDoc(collection(db, "enquiries"), {
+        candidateId: rawId,
+        candidateLabel,
+        name,
+        email,
+        phone,
+        message,
+        createdAt: serverTimestamp(),
+      });
+
+      document.getElementById("enquire-form")?.classList.add("hidden");
+      document.getElementById("enq-success")?.classList.remove("hidden");
+    } catch (err) {
+      document.getElementById("enq-error")!.textContent = `Error: ${(err as Error).message}`;
+      document.getElementById("enq-error")?.classList.remove("hidden");
+      btn.disabled = false;
+      btn.textContent = "Send Enquiry";
+    }
+  });
+
+  loadProfile();
+</script>

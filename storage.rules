@@ -1,0 +1,17 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /therapists/{allPaths=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /ebooks/{allPaths=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /candidates/{allPaths=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

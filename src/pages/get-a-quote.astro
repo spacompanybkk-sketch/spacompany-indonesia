@@ -1,0 +1,298 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Get a Quote — Spa Company Bangkok"
+  description="Post a job and hire verified Thai massage therapists. Tell us your requirements and we'll match you with the right candidates."
+>
+
+  <!-- Hero -->
+  <section class="bg-[#a9cf54] py-14 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl font-bold text-white mb-3">Get a Quote</h1>
+      <p class="text-white/85 text-lg">Post a Job Here</p>
+    </div>
+  </section>
+
+  <!-- Explanation -->
+  <section class="bg-gray-50 py-8 border-b border-gray-200">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-lg font-bold text-gray-900 mb-2">What happens after I fill out this form?</h2>
+      <p class="text-gray-600 leading-relaxed text-sm mb-3">
+        Once you submit this form, our team in Bangkok will receive the complete details of your job posting and begin the matching process immediately. Your requirements — salary, location, contract length, skills, and benefits — are used to actively headhunt and shortlist the most suitable Thai therapists from our verified database of hundreds of candidates. We also use these details to create targeted advertising in Thai-language job boards, social media, and our recruiter network across Thailand, so we can reach therapists who might not yet be in our database but are actively looking for international opportunities.
+      </p>
+      <p class="text-gray-600 leading-relaxed text-sm mb-3">
+        If you have <strong>not</strong> spoken to us before, one of our recruitment managers will contact you within one business day with follow-up questions, pricing details, and next steps. We'll walk you through the visa process, expected timelines, and how our placement guarantee works. If you've been referred by an existing client or have already received a quote from our team, please proceed with the form — your details will be routed directly to your assigned account manager for faster processing.
+      </p>
+      <p class="text-gray-600 leading-relaxed text-sm">
+        If a member of our staff has instructed you to fill out this form, please do so as completely as possible — every field helps us narrow down the right candidates faster. Every customer must fill in the job details at some point in the process, so getting it done upfront saves time later. Accurate information leads to better matches, faster placements, and a smoother onboarding experience for both you and the therapist.
+      </p>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section class="py-12 bg-white">
+    <div class="max-w-3xl mx-auto px-4">
+
+      <div id="success-msg" class="hidden bg-green-50 border-2 border-green-200 rounded-2xl p-8 text-center mb-6">
+        <div class="text-3xl mb-2">&#10003;</div>
+        <h2 class="text-xl font-bold text-green-800 mb-2">Job Posted Successfully!</h2>
+        <p class="text-green-700">We'll review your request and get back to you within one business day.</p>
+      </div>
+
+      <div id="error-msg" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-xl px-5 py-4 mb-6 text-sm font-medium"></div>
+
+      <form id="job-form" class="space-y-5">
+
+        <!-- Company Info -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Company Name</label>
+            <input name="company" type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Contact Name <span class="text-red-500">*</span></label>
+            <input name="contactName" required type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Full Address of Spa <span class="text-red-500">*</span></label>
+            <input name="address" required type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Country <span class="text-red-500">*</span></label>
+            <input name="country" required type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Spa Website or Social Media</label>
+            <p class="text-xs text-gray-500 mb-1">For a new spa, type "No"</p>
+            <input name="website" type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Phone Number <span class="text-red-500">*</span></label>
+            <input name="phone" required type="tel"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">E-mail</label>
+            <input name="email" type="email"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="border-gray-200" />
+
+        <!-- Job Requirements -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Age of Candidate <span class="text-red-500">*</span></label>
+            <p class="text-xs text-gray-500 mb-1">min - max</p>
+            <input name="ageRange" required type="text" placeholder="Ex. 25 - 45"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Gender <span class="text-red-500">*</span></label>
+            <input name="gender" required type="text" placeholder="Female / Male"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Experience (years)</label>
+            <input name="experience" type="number" min="0" max="10" placeholder="2"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Number of Therapists <span class="text-red-500">*</span></label>
+            <input name="numTherapists" required type="number" min="1"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Base Salary <span class="text-red-500">*</span></label>
+            <input name="salary" required type="text" placeholder="Ex. 1,000 USD"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Contract Length <span class="text-red-500">*</span></label>
+            <input name="contractLength" required type="text" placeholder="Ex. 12 or 24 months / 1 year"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Commission Pay <span class="text-red-500">*</span></label>
+            <p class="text-xs text-gray-500 mb-1">Commission payment is usually motivational — when a therapist fulfils a certain number of massages or hours. E.g. $4 for every client</p>
+            <input name="commission" required type="text" placeholder="Ex. 1 Euro / 5% per one service"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Estimation of Tips</label>
+            <p class="text-xs text-gray-500 mb-1">Estimate the range of tips the therapist usually receives. Do not put it too high, as to not create expectations. Tips are discretionary and are not part of the contract.</p>
+            <input name="tips" type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Food Allowance</label>
+            <p class="text-xs text-gray-500 mb-1">Do you give food allowance? Do you buy groceries for them?</p>
+            <input name="food" type="text" placeholder="Ex. 80 Euro a month / Rice 5 kg not included in salary"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Accommodation</label>
+            <p class="text-xs text-gray-500 mb-1">Do you provide accommodation?</p>
+            <input name="accommodation" type="text" placeholder="Yes / No"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Flight Ticket</label>
+            <p class="text-xs text-gray-500 mb-1">Do you provide a round-trip ticket?</p>
+            <input name="flight" type="text" placeholder="Yes / No"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Other Incentives or Bonus</label>
+            <p class="text-xs text-gray-500 mb-1">If your pay structure is complicated, write the detailed payment plan here.</p>
+            <input name="bonus" type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Working Hours per Week</label>
+            <p class="text-xs text-gray-500 mb-1">How many hours are therapists required to be on standby? Should be between 40-80 hours per week.</p>
+            <input name="hours" type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Working Week</label>
+            <p class="text-xs text-gray-500 mb-1">Describe the typical week. E.g. "MON-SUN 10:00-22:00, with one day off"</p>
+            <input name="workingWeek" type="text"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Job Description</label>
+            <textarea name="description" rows="4"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Additional Message</label>
+            <textarea name="message" rows="3"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm resize-none"></textarea>
+          </div>
+        </div>
+
+        <!-- Honeypot -->
+        <div class="absolute -left-[9999px]" aria-hidden="true">
+          <input name="website_url" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Math Captcha -->
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <label class="block text-sm font-semibold text-gray-800 mb-2">
+            Quick check: <span id="captcha-question" class="text-gray-900"></span> <span class="text-red-500">*</span>
+          </label>
+          <input name="captcha" required type="number" placeholder="Your answer"
+            class="w-32 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]/50 focus:border-[#a9cf54] text-sm" />
+        </div>
+
+        <button type="submit" id="submit-btn"
+          class="w-full py-4 rounded-xl bg-[#a9cf54] text-white font-semibold hover:bg-[#588f27] transition-colors text-lg disabled:opacity-50">
+          Send
+        </button>
+
+        <p class="text-xs text-gray-400 text-center">
+          We will review your request and respond within one business day.
+        </p>
+      </form>
+    </div>
+  </section>
+
+</Layout>
+
+<script>
+  import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+  import { db } from '../lib/firebase.js';
+
+  // Math captcha
+  const a = Math.floor(Math.random() * 10) + 1;
+  const b = Math.floor(Math.random() * 10) + 1;
+  const captchaAnswer = a + b;
+  document.getElementById('captcha-question')!.textContent = `What is ${a} + ${b}?`;
+
+  document.getElementById('job-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const data = new FormData(form);
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+    document.getElementById('error-msg')?.classList.add('hidden');
+
+    // Honeypot
+    if ((data.get('website_url') as string)?.trim()) return;
+
+    // Captcha
+    if (parseInt(data.get('captcha') as string) !== captchaAnswer) {
+      const errEl = document.getElementById('error-msg')!;
+      errEl.textContent = 'Incorrect answer to the math question. Please try again.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const fields = [
+        'company','contactName','address','country','website','phone','email',
+        'ageRange','gender','experience','numTherapists','salary','contractLength',
+        'commission','tips','food','accommodation','flight','bonus','hours',
+        'workingWeek','description','message',
+      ];
+      const jobData: Record<string, any> = { status: 'new', createdAt: serverTimestamp() };
+      for (const f of fields) {
+        jobData[f] = (data.get(f) as string) || '';
+      }
+      if (jobData.numTherapists) jobData.numTherapists = parseInt(jobData.numTherapists);
+      if (jobData.experience) jobData.experience = parseInt(jobData.experience);
+
+      await addDoc(collection(db, 'jobs'), jobData);
+
+      // Email notification
+      try {
+        await fetch('https://formsubmit.co/ajax/info@spa-company.com,dadda@spa-company.com,michal@spa-company.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `New Job Post: ${jobData.contactName} — ${jobData.country}`,
+            'Contact': jobData.contactName,
+            'Company': jobData.company || '—',
+            'Address': jobData.address,
+            'Country': jobData.country,
+            'Phone': jobData.phone,
+            'Email': jobData.email || '—',
+            'Therapists': jobData.numTherapists,
+            'Gender': jobData.gender,
+            'Age Range': jobData.ageRange,
+            'Salary': jobData.salary,
+            'Contract': jobData.contractLength,
+            'Commission': jobData.commission,
+            'Accommodation': jobData.accommodation || '—',
+            'Flight': jobData.flight || '—',
+            'Description': jobData.description || '—',
+          }),
+        });
+      } catch (_) { /* best-effort */ }
+
+      form.classList.add('hidden');
+      document.getElementById('success-msg')?.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      const errEl = document.getElementById('error-msg')!;
+      errEl.textContent = `Error submitting: ${(err as Error).message}`;
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send';
+    }
+  });
+</script>

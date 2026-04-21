@@ -1,0 +1,68 @@
+---
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/service' },
+  { label: 'Book', href: '/book' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Get a Quote', href: '/get-a-quote' },
+  { label: 'Legal', href: '/s-legal' },
+];
+---
+
+<footer class="bg-gray-900 text-gray-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Brand -->
+      <div>
+        <a href="/" class="inline-block mb-4">
+          <img src="/images/spa-company-logo-horizontal.png" alt="Spa Company Bangkok" class="h-12 object-contain brightness-0 invert" />
+        </a>
+        <p class="text-sm text-gray-400 leading-relaxed">
+          Thailand's easiest Thai therapist recruiting portal. Find verified, experienced massage therapists for your spa.
+        </p>
+      </div>
+
+      <!-- Navigation -->
+      <div>
+        <h3 class="text-white font-semibold mb-4">Navigation</h3>
+        <ul class="space-y-2">
+          {navLinks.map(({ label, href }) => (
+            <li>
+              <a href={href} class="text-sm text-gray-400 hover:text-[#a9cf54] transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-white font-semibold mb-4">Get in Touch</h3>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li>Bangkok, Thailand</li>
+          <li>
+            <a href="mailto:info@spa-company.com" class="hover:text-[#a9cf54] transition-colors">
+              info@spa-company.com
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.facebook.com/spacompany/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[#a9cf54] transition-colors"
+            >
+              Facebook
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 pt-6 border-t border-gray-700 text-center text-sm text-gray-500">
+      &copy; {new Date().getFullYear()} Spa Company Bangkok — All Rights Reserved
+    </div>
+  </div>
+</footer>

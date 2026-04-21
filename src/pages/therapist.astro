@@ -1,0 +1,324 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Therapist Profile — Spa Company Bangkok"
+  description="Verified Thai massage therapist profile."
+>
+  <div id="loading" class="min-h-[60vh] flex items-center justify-center text-gray-400 text-lg">
+    Loading profile…
+  </div>
+  <div id="not-found" class="hidden min-h-[60vh] flex items-center justify-center text-gray-400 text-lg">
+    Profile not found. <a href="/therapists" class="ml-2 text-[#a9cf54] underline">Back to search</a>
+  </div>
+
+  <div id="profile" class="hidden">
+    <!-- Hero + Photos -->
+    <section class="bg-gray-900 py-10">
+      <div class="max-w-5xl mx-auto px-4">
+        <a href="/therapists" class="text-[#a9cf54] text-sm hover:underline mb-6 inline-block">← Back to search</a>
+        <div class="flex flex-col md:flex-row gap-8">
+          <div class="md:w-1/2">
+            <img id="main-photo" src="" alt="" class="rounded-2xl w-full object-cover max-h-96" />
+            <div id="thumbnails" class="flex gap-2 mt-3 flex-wrap"></div>
+          </div>
+          <div class="md:w-1/2 text-white">
+            <div class="flex items-center gap-2 mb-2">
+              <span id="profile-name" class="text-3xl font-bold"></span>
+              <span class="bg-[#a9cf54] text-white text-xs font-semibold px-2 py-0.5 rounded-full">Verified</span>
+            </div>
+            <div id="profile-meta" class="text-gray-300 text-sm space-y-1 mb-4"></div>
+            <div id="profile-skills" class="flex flex-wrap gap-2 mb-4"></div>
+            <div id="profile-desired" class="text-[#a9cf54] text-sm font-medium mb-6"></div>
+
+            <!-- Enquire Now -->
+            <div id="enquire-section">
+              <button id="enquire-btn" class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors text-sm">
+                Enquire About This Therapist
+              </button>
+              <div id="enquire-form" class="hidden mt-4 space-y-3">
+                <input id="enq-name" type="text" required placeholder="Your name *"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                <input id="enq-email" type="email" required placeholder="Your email *"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                <input id="enq-phone" type="tel" placeholder="Phone (optional)"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                <textarea id="enq-message" rows="2" placeholder="Message (optional)"
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400 resize-none"></textarea>
+                <button id="enq-submit" class="w-full py-2.5 bg-[#a9cf54] text-white font-bold rounded-lg hover:bg-[#588f27] transition-colors text-sm disabled:opacity-50">
+                  Send Enquiry
+                </button>
+                <div id="enq-success" class="hidden text-green-400 text-sm text-center font-medium">Enquiry sent! We'll be in touch soon.</div>
+                <div id="enq-error" class="hidden text-red-400 text-sm text-center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio + Ratings + Work History -->
+    <section class="py-12 bg-white">
+      <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-3 gap-10">
+        <div class="md:col-span-2 space-y-8">
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 mb-3">About</h2>
+            <p id="profile-bio" class="text-gray-600 leading-relaxed"></p>
+          </div>
+          <div id="video-section" class="hidden">
+            <h2 class="text-xl font-bold text-gray-900 mb-3">Video</h2>
+            <div class="aspect-video rounded-xl overflow-hidden">
+              <iframe id="profile-video" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <a id="youtube-link" href="" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-3 text-sm text-red-600 hover:text-red-700 font-medium">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              Watch on YouTube
+            </a>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Work History</h2>
+            <div id="work-history" class="space-y-5"></div>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Assessment</h2>
+          <div id="ratings" class="space-y-3"></div>
+          <div id="ratings-total" class="mt-4 text-center text-2xl font-bold text-[#a9cf54]"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  import { doc, getDoc } from 'firebase/firestore';
+  import { db } from '../lib/firebase.js';
+
+  type WorkEntry = { role: string; location: string; duration: string; duties: string };
+  type Ratings = {
+    communication: number; appearance: number; proactivity: number;
+    experience: number; massageSkills: number;
+  };
+  type Therapist = {
+    name: string; age: number; gender: string; location: string;
+    experience: number; desiredWorkLocation: string; skills: string[];
+    bio: string; photos: string[]; workHistory: WorkEntry[]; ratings: Ratings;
+    youtubeUrl?: string; wpUserId?: number;
+    createdAt?: { toDate: () => Date };
+  };
+
+  import { collection, query, where, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
+
+  const params = new URLSearchParams(window.location.search);
+  const rawId = params.get('id') || '';
+
+  async function loadProfile() {
+    if (!rawId) { showNotFound(); return; }
+
+    let snapData: Therapist | null = null;
+    let candidateNum = '';
+
+    // Try candidates collection first (new unified DB)
+    const scMatch = rawId.match(/^SC-(\d+)$/i);
+    if (scMatch) {
+      const candidateId = `SC-${scMatch[1]}`;
+      // Search candidates collection by candidateId
+      const cq = query(collection(db, 'candidates'), where('candidateId', '==', candidateId));
+      const cResults = await getDocs(cq);
+      if (!cResults.empty) {
+        const data = cResults.docs[0].data() as any;
+        // Map candidates fields to therapist display format
+        snapData = {
+          ...data,
+          name: data.fullName || data.firstName || data.name || '',
+          age: data.dateOfBirth ? Math.floor((Date.now() - new Date(data.dateOfBirth).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : (data.age || 0),
+          location: data.placeOfBirth || data.location || '',
+          desiredWorkLocation: data.targetCountry || data.desiredWorkLocation || '',
+          experience: typeof data.experience === 'string' ? parseInt(data.experience) || 0 : (data.experience || 0),
+          ratings: {
+            communication: data.ratings?.communication || 0,
+            appearance: data.ratings?.appearance || 0,
+            proactivity: data.ratings?.proActivity || data.ratings?.proactivity || 0,
+            experience: data.ratings?.experience || 0,
+            massageSkills: data.ratings?.jobSkills || data.ratings?.massageSkills || 0,
+          },
+        } as Therapist;
+        candidateNum = candidateId;
+      } else {
+        // Fallback: old therapists collection by wpUserId
+        const wpId = parseInt(scMatch[1]);
+        const q = query(collection(db, 'therapists'), where('wpUserId', '==', wpId));
+        const results = await getDocs(q);
+        if (!results.empty) {
+          snapData = results.docs[0].data() as Therapist;
+          candidateNum = `SC-${wpId}`;
+        }
+      }
+    } else {
+      // Fallback: direct Firestore doc ID (try candidates first, then therapists)
+      const snap = await getDoc(doc(db, 'candidates', rawId));
+      if (snap.exists()) {
+        const data = snap.data() as any;
+        snapData = { ...data, name: data.fullName || data.name || '' } as Therapist;
+        candidateNum = data.candidateId || `SC-${rawId.slice(0, 6).toUpperCase()}`;
+      } else {
+        const oldSnap = await getDoc(doc(db, 'therapists', rawId));
+        if (oldSnap.exists()) {
+          snapData = oldSnap.data() as Therapist;
+          candidateNum = snapData.wpUserId ? `SC-${snapData.wpUserId}` : `SC-${rawId.slice(0, 6).toUpperCase()}`;
+        }
+      }
+    }
+
+    if (!snapData) { showNotFound(); return; }
+    render(snapData, candidateNum);
+  }
+
+  function showNotFound() {
+    document.getElementById('loading')?.classList.add('hidden');
+    document.getElementById('not-found')?.classList.remove('hidden');
+  }
+
+  function render(t: Therapist, candidateNum: string) {
+    document.getElementById('loading')?.classList.add('hidden');
+    document.getElementById('profile')?.classList.remove('hidden');
+
+    const firstName = t.name.split(' ')[0];
+    document.getElementById('profile-name')!.innerHTML = `${firstName} <span class="text-lg font-normal text-gray-400 ml-2">${candidateNum}</span>`;
+    document.title = `${firstName} (${candidateNum}) — Spa Company Bangkok`;
+    document.getElementById('profile-meta')!.innerHTML = `
+      <div>${t.gender} · ${t.age} years old</div>
+      <div>From: ${t.location}, Thailand</div>
+      <div>Experience: ${t.experience} years</div>
+    `;
+    document.getElementById('profile-desired')!.textContent = `Desired destination: ${t.desiredWorkLocation}`;
+    document.getElementById('profile-bio')!.textContent = t.bio;
+
+    // YouTube video
+    if (t.youtubeUrl) {
+      const videoId = t.youtubeUrl.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([^&?#]+)/)?.[1];
+      if (videoId) {
+        document.getElementById('video-section')?.classList.remove('hidden');
+        (document.getElementById('profile-video') as HTMLIFrameElement).src =
+          `https://www.youtube.com/embed/${videoId}`;
+        (document.getElementById('youtube-link') as HTMLAnchorElement).href = t.youtubeUrl;
+      }
+    }
+
+    document.getElementById('profile-skills')!.innerHTML = (t.skills || []).map(s =>
+      `<span class="text-sm bg-[#a9cf54]/15 text-[#588f27] px-3 py-1 rounded-full font-medium">${s}</span>`
+    ).join('');
+
+    const photos = t.photos || [];
+    if (photos.length > 0) {
+      const mainImg = document.getElementById('main-photo') as HTMLImageElement;
+      mainImg.src = photos[0];
+      mainImg.alt = firstName;
+      document.getElementById('thumbnails')!.innerHTML = photos.map((p, i) =>
+        `<img src="${p}" alt="${firstName} photo ${i + 1}"
+          class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 ${i === 0 ? 'border-[#a9cf54]' : 'border-transparent'} hover:border-[#a9cf54] transition-colors"
+          data-index="${i}" />`
+      ).join('');
+      document.getElementById('thumbnails')?.addEventListener('click', (e) => {
+        const thumb = (e.target as HTMLElement).closest('img[data-index]') as HTMLImageElement;
+        if (!thumb) return;
+        mainImg.src = thumb.src;
+        document.querySelectorAll('#thumbnails img').forEach(el =>
+          el.classList.replace('border-[#a9cf54]', 'border-transparent')
+        );
+        thumb.classList.replace('border-transparent', 'border-[#a9cf54]');
+      });
+    }
+
+    const r = t.ratings || {} as Ratings;
+    const ratingLabels: [keyof Ratings, string][] = [
+      ['communication', 'Communication'], ['appearance', 'Appearance'],
+      ['proactivity', 'Pro Activity'], ['experience', 'Experience'],
+      ['massageSkills', 'Massage Skills'],
+    ];
+    const total = ratingLabels.reduce((sum, [key]) => sum + (r[key] || 0), 0);
+    document.getElementById('ratings')!.innerHTML = ratingLabels.map(([key, label]) => `
+      <div>
+        <div class="flex justify-between text-sm mb-1">
+          <span class="text-gray-600">${label}</span>
+          <span class="font-semibold text-gray-900">${r[key] || 0}/20</span>
+        </div>
+        <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div class="h-full bg-[#a9cf54] rounded-full" style="width:${((r[key] || 0) / 20) * 100}%"></div>
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('ratings-total')!.textContent = `${total} / 100`;
+
+    document.getElementById('work-history')!.innerHTML = (t.workHistory || []).map(w => `
+      <div class="border-l-2 border-[#a9cf54] pl-4">
+        <div class="font-semibold text-gray-900">${w.role}</div>
+        <div class="text-sm text-gray-500 mb-2">${w.location} · ${w.duration}</div>
+        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+          ${(w.duties || '').split('\n').filter(Boolean).map(d => `<li>${d.trim()}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+  }
+
+  // Enquire form toggle + submit
+  document.getElementById('enquire-btn')?.addEventListener('click', () => {
+    document.getElementById('enquire-btn')?.classList.add('hidden');
+    document.getElementById('enquire-form')?.classList.remove('hidden');
+  });
+
+  document.getElementById('enq-submit')?.addEventListener('click', async () => {
+    const name = (document.getElementById('enq-name') as HTMLInputElement).value.trim();
+    const email = (document.getElementById('enq-email') as HTMLInputElement).value.trim();
+    const phone = (document.getElementById('enq-phone') as HTMLInputElement).value.trim();
+    const message = (document.getElementById('enq-message') as HTMLTextAreaElement).value.trim();
+
+    if (!name || !email) {
+      document.getElementById('enq-error')!.textContent = 'Please fill in your name and email.';
+      document.getElementById('enq-error')?.classList.remove('hidden');
+      return;
+    }
+
+    const btn = document.getElementById('enq-submit') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    document.getElementById('enq-error')?.classList.add('hidden');
+
+    const candidateLabel = document.getElementById('profile-name')?.textContent || rawId;
+
+    try {
+      await addDoc(collection(db, 'enquiries'), {
+        candidateId: rawId,
+        candidateLabel,
+        name, email, phone, message,
+        createdAt: serverTimestamp(),
+      });
+
+      try {
+        await fetch('https://formsubmit.co/ajax/info@spa-company.com,dadda@spa-company.com,michal@spa-company.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `Enquiry: ${candidateLabel}`,
+            'Candidate': candidateLabel,
+            'Name': name,
+            'Email': email,
+            'Phone': phone || '—',
+            'Message': message || '—',
+          }),
+        });
+      } catch (_) {}
+
+      document.getElementById('enquire-form')?.classList.add('hidden');
+      document.getElementById('enq-success')?.classList.remove('hidden');
+    } catch (err) {
+      document.getElementById('enq-error')!.textContent = `Error: ${(err as Error).message}`;
+      document.getElementById('enq-error')?.classList.remove('hidden');
+      btn.disabled = false;
+      btn.textContent = 'Send Enquiry';
+    }
+  });
+
+  loadProfile();
+</script>

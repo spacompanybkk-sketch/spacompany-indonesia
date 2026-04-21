@@ -1,0 +1,125 @@
+---
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/service' },
+  { label: 'Therapists', href: '/therapists' },
+  { label: 'Get a Quote', href: '/get-a-quote' },
+  { label: 'Book', href: '/book' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="/" class="shrink-0">
+        <img src="/images/spa-company-logo-horizontal.png" alt="Spa Company Bangkok" class="h-10 object-contain" />
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-6">
+        {navLinks.map(({ label, href }) => {
+          const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+          return (
+            <a
+              href={href}
+              class={`text-sm font-medium transition-colors ${
+                isActive
+                  ? 'text-[#a9cf54] border-b-2 border-[#a9cf54] pb-0.5'
+                  : 'text-gray-600 hover:text-[#a9cf54]'
+              }`}
+            >
+              {label}
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- CTA Buttons -->
+      <div class="hidden md:flex items-center gap-2">
+        <a
+          href="https://spa-company.com/search-therapists/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-4 py-2 text-sm font-medium rounded-full bg-[#a9cf54] text-white hover:bg-[#588f27] transition-colors"
+        >
+          For Therapists
+        </a>
+        <a
+          href="/contact"
+          class="px-4 py-2 text-sm font-medium rounded-full bg-[#ababab] text-white hover:bg-gray-500 transition-colors"
+        >
+          Post a Job
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-md text-gray-600 hover:text-[#a9cf54] focus:outline-none"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+    <nav class="flex flex-col px-4 py-3 gap-1">
+      {navLinks.map(({ label, href }) => {
+        const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+        return (
+          <a
+            href={href}
+            class={`px-3 py-2 rounded-md text-sm font-medium ${
+              isActive
+                ? 'bg-[#a9cf54]/10 text-[#a9cf54]'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-[#a9cf54]'
+            }`}
+          >
+            {label}
+          </a>
+        );
+      })}
+      <div class="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+        <a
+          href="https://spa-company.com/search-therapists/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 text-center px-4 py-2 text-sm font-medium rounded-full bg-[#a9cf54] text-white"
+        >
+          For Therapists
+        </a>
+        <a
+          href="/contact"
+          class="flex-1 text-center px-4 py-2 text-sm font-medium rounded-full bg-[#ababab] text-white"
+        >
+          Post a Job
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+  });
+</script>

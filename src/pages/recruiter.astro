@@ -1,0 +1,814 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LoginGate from '../components/LoginGate.astro';
+
+const skills = [
+  'Aroma Massage','Body Massage','Foot Massage','Foot Reflexology',
+  'Foot Spa','Herbal Massage','Oil Massage',
+  'Thai Foot Spa and Massage','Traditional Thai Massage',
+];
+const ratingFields = [
+  ['communication','Communication'],
+  ['appearance','Appearance'],
+  ['proactivity','Pro Activity'],
+  ['experience','Experience'],
+  ['massageSkills','Massage Skills'],
+];
+---
+
+<Layout title="Recruiter Panel — Spa Company Staff">
+  <LoginGate>
+  <section class="py-12 bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-1">Recruiter Panel</h1>
+          <p class="text-gray-500">Add new therapists or manage existing profiles.</p>
+        </div>
+        <div id="logged-in-as" class="text-xs text-gray-400 text-right"></div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-200 mb-8">
+        <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-[#a9cf54] text-[#588f27]" data-tab="add">
+          Add New
+        </button>
+        <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="manage">
+          Manage Existing
+        </button>
+      </div>
+
+      <!-- ADD TAB -->
+      <div id="tab-add">
+
+      <div id="success-msg" class="hidden bg-green-50 border border-green-200 text-green-800 rounded-xl px-5 py-4 mb-6 text-sm font-medium">
+        Profile saved! <a href="/therapists" class="underline">View on search page →</a>
+      </div>
+      <div id="error-msg" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-xl px-5 py-4 mb-6 text-sm font-medium"></div>
+
+      <form id="recruiter-form" class="space-y-6">
+
+        <!-- Basic Info -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-4">
+          <h2 class="font-semibold text-gray-900 text-lg">Basic Information</h2>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+              <input name="name" required type="text"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Age *</label>
+              <input name="age" required type="number" min="18" max="65"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Gender *</label>
+              <select name="gender" required
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+                <option value="">Select…</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Thai City *</label>
+              <input name="location" required type="text" placeholder="e.g. Khon Kaen"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Experience (years) *</label>
+              <input name="experience" required type="number" min="0" max="40"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Desired Work Location *</label>
+              <input name="desiredWorkLocation" required type="text" placeholder="e.g. Slovakia, UAE"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 class="font-semibold text-gray-900 text-lg mb-4">Skills</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {skills.map(skill => (
+              <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <input type="checkbox" name="skills" value={skill} class="rounded accent-[#a9cf54]" />
+                {skill}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- YouTube Video -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 class="font-semibold text-gray-900 text-lg mb-4">YouTube Video</h2>
+          <input name="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..."
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          <p class="text-xs text-gray-400 mt-1">Optional. Paste a YouTube link for the therapist's introduction video.</p>
+        </div>
+
+        <!-- Bio -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 class="font-semibold text-gray-900 text-lg mb-4">Biography</h2>
+          <textarea name="bio" rows="4" required
+            placeholder="Describe the therapist's background, personality, and experience…"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+        </div>
+
+        <!-- Ratings -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 class="font-semibold text-gray-900 text-lg mb-4">Assessment (0–20 each)</h2>
+          <div class="space-y-4">
+            {ratingFields.map(([key, label]) => (
+              <div>
+                <div class="flex justify-between mb-1">
+                  <label class="text-sm font-medium text-gray-700">{label}</label>
+                  <span class="text-sm text-gray-500" id={`rating-display-${key}`}>0</span>
+                </div>
+                <input type="range" name={`rating-${key}`} min="0" max="20" value="0"
+                  class="w-full accent-[#a9cf54]"
+                  data-display={`rating-display-${key}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Work History -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-semibold text-gray-900 text-lg">Work History</h2>
+            <button type="button" id="add-work-entry" class="text-sm text-[#a9cf54] font-medium hover:underline">
+              + Add Entry
+            </button>
+          </div>
+          <div id="work-entries" class="space-y-4"></div>
+        </div>
+
+        <!-- Photos -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 class="font-semibold text-gray-900 text-lg mb-4">Photos</h2>
+          <input type="file" id="photo-input" multiple accept="image/*"
+            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#a9cf54] file:text-white hover:file:bg-[#588f27]" />
+          <div id="photo-previews" class="flex flex-wrap gap-3 mt-4"></div>
+        </div>
+
+        <!-- Notion Upload -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" name="pushToNotion" class="rounded accent-[#a9cf54] w-5 h-5" />
+            <div>
+              <span class="text-sm font-semibold text-gray-900">Also create in Notion</span>
+              <p class="text-xs text-gray-500">Creates a candidate entry with status "WAITING FOR APPROVAL" and job title "MASSAGE".</p>
+            </div>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="submit-btn"
+          class="w-full py-4 bg-[#a9cf54] text-white font-bold text-lg rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50">
+          Save Profile
+        </button>
+      </form>
+      </div>
+
+      <!-- MANAGE TAB -->
+      <div id="tab-manage" class="hidden">
+        <div class="flex flex-wrap items-center gap-4 mb-4">
+          <input id="manage-search" type="text" placeholder="Search by name or SC number…"
+            class="w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+            <input type="checkbox" id="filter-mine" class="rounded accent-[#a9cf54]" />
+            Show only mine
+          </label>
+          <span id="manage-count" class="text-xs text-gray-400 ml-auto"></span>
+        </div>
+        <div id="manage-loading" class="text-center text-gray-400 py-16">Loading therapists…</div>
+        <div id="manage-empty" class="hidden text-center text-gray-400 py-16">No therapists found.</div>
+
+        <div id="manage-table-wrap" class="hidden overflow-x-auto rounded-2xl shadow-sm border border-gray-200">
+          <table class="w-full text-sm bg-white">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">SC#</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Name</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Age</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Location</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Added</th>
+                <th class="text-left px-4 py-3 text-gray-600 font-semibold">Status</th>
+                <th class="px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody id="manage-tbody" class="divide-y divide-gray-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Edit Modal (full recruiter version) -->
+  <div id="rec-edit-modal" class="hidden fixed inset-0 z-50 flex items-start justify-center bg-black/50 overflow-y-auto py-6">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl mx-4 relative">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <h2 class="text-lg font-bold text-gray-900">Edit Therapist <span id="edit-sc-label" class="text-sm font-normal text-gray-400"></span></h2>
+        <button id="rec-edit-close" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+      </div>
+      <form id="rec-edit-form" class="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
+        <input type="hidden" name="editDocId" />
+
+        <!-- Basic Info -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <input name="editName" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+            <input name="editAge" required type="number" min="18" max="65" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+            <select name="editGender" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+            <input name="editLocation" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Experience (years)</label>
+            <input name="editExperience" required type="number" min="0" max="40" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Desired Work Location</label>
+            <input name="editDesired" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Skills</label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {skills.map(skill => (
+              <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <input type="checkbox" name="editSkills" value={skill} class="rounded accent-[#a9cf54]" />
+                {skill}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">YouTube URL</label>
+          <input name="editYoutube" type="url" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        </div>
+
+        <!-- Bio -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+          <textarea name="editBio" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+        </div>
+
+        <!-- Assessment -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-3">Assessment (0-20 each)</label>
+          <div class="space-y-3">
+            {ratingFields.map(([key, label]) => (
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm text-gray-600">{label}</span>
+                  <span class="text-sm text-gray-500" id={`edit-r-${key}`}>0</span>
+                </div>
+                <input type="range" name={`editRating-${key}`} min="0" max="20" value="0"
+                  class="w-full accent-[#a9cf54]" data-display={`edit-r-${key}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Work History -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <label class="text-sm font-medium text-gray-700">Work History</label>
+            <button type="button" id="edit-add-work" class="text-sm text-[#a9cf54] font-medium hover:underline">+ Add Entry</button>
+          </div>
+          <div id="edit-work-entries" class="space-y-3"></div>
+        </div>
+
+        <!-- Photos -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Photos</label>
+          <div id="edit-photo-grid" class="flex flex-wrap gap-2 mb-3"></div>
+          <input type="file" id="edit-photo-input" multiple accept="image/*"
+            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#a9cf54] file:text-white hover:file:bg-[#588f27]" />
+          <p class="text-xs text-gray-400 mt-1">Existing photos shown above. Upload new ones to add (won't replace existing).</p>
+        </div>
+
+        <div id="rec-edit-error" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm"></div>
+        <button type="submit" id="rec-edit-save" class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50">
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+  </LoginGate>
+</Layout>
+
+<script>
+  import { collection, addDoc, getDocs, doc, getDoc, updateDoc, query, orderBy, limit, serverTimestamp } from 'firebase/firestore';
+  import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+  import { getFunctions, httpsCallable } from 'firebase/functions';
+  import { db, storage } from '../lib/firebase.js';
+
+  // Get logged-in email from LoginGate
+  let loggedInEmail = '';
+  document.addEventListener('intake-authenticated', (e: Event) => {
+    loggedInEmail = (e as CustomEvent<{ email: string }>).detail.email;
+    document.getElementById('logged-in-as')!.textContent = `Logged in as ${loggedInEmail}`;
+  });
+  if ((window as any).__intakeUserEmail) {
+    loggedInEmail = (window as any).__intakeUserEmail;
+    document.getElementById('logged-in-as')!.textContent = `Logged in as ${loggedInEmail}`;
+  }
+
+  // Tab switching
+  let manageLoaded = false;
+  document.querySelectorAll('.rec-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.rec-tab').forEach(b => {
+        b.classList.remove('border-[#a9cf54]', 'text-[#588f27]');
+        b.classList.add('border-transparent', 'text-gray-500');
+      });
+      btn.classList.add('border-[#a9cf54]', 'text-[#588f27]');
+      btn.classList.remove('border-transparent', 'text-gray-500');
+      const tab = (btn as HTMLElement).dataset.tab!;
+      document.getElementById('tab-add')!.classList.toggle('hidden', tab !== 'add');
+      document.getElementById('tab-manage')!.classList.toggle('hidden', tab !== 'manage');
+      if (tab === 'manage' && !manageLoaded) { loadManage(); manageLoaded = true; }
+    });
+  });
+
+  // ===== MANAGE TAB =====
+  let allManageTherapists: any[] = [];
+
+  async function loadManage() {
+    const q = query(collection(db, 'therapists'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    allManageTherapists = snap.docs.map(d => ({ id: d.id, ...d.data() } as any));
+
+    document.getElementById('manage-loading')?.classList.add('hidden');
+    if (allManageTherapists.length === 0) {
+      document.getElementById('manage-empty')?.classList.remove('hidden');
+      return;
+    }
+
+    renderManageTable(allManageTherapists);
+
+    // Combined filter: search + mine
+    function applyManageFilters() {
+      const searchVal = (document.getElementById('manage-search') as HTMLInputElement).value.trim().toLowerCase();
+      const onlyMine = (document.getElementById('filter-mine') as HTMLInputElement).checked;
+      let filtered = allManageTherapists;
+      if (onlyMine) filtered = filtered.filter(t => t.addedBy === loggedInEmail);
+      if (searchVal) {
+        filtered = filtered.filter(t => {
+          const name = (t.name || '').toLowerCase();
+          const sc = t.wpUserId ? `sc-${t.wpUserId}` : '';
+          return name.includes(searchVal) || sc.includes(searchVal);
+        });
+      }
+      renderManageTable(filtered);
+    }
+
+    document.getElementById('filter-mine')?.addEventListener('change', applyManageFilters);
+    document.getElementById('manage-search')?.addEventListener('input', applyManageFilters);
+  }
+
+  function renderManageTable(therapists: any[]) {
+    const tbody = document.getElementById('manage-tbody')!;
+    const wrap = document.getElementById('manage-table-wrap')!;
+    const empty = document.getElementById('manage-empty')!;
+    const count = document.getElementById('manage-count')!;
+
+    count.textContent = `${therapists.length} therapist${therapists.length !== 1 ? 's' : ''}`;
+
+    if (therapists.length === 0) {
+      wrap.classList.add('hidden');
+      empty.classList.remove('hidden');
+      return;
+    }
+
+    empty.classList.add('hidden');
+    wrap.classList.remove('hidden');
+
+    tbody.innerHTML = therapists.map((t: any) => {
+      const date = t.createdAt?.toDate?.().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) ?? '—';
+      const scNum = t.wpUserId ? `SC-${t.wpUserId}` : '—';
+      const isActive = t.status === 'active';
+      const addedBy = t.addedBy ? t.addedBy.split('@')[0] : '—';
+      return `
+        <tr data-id="${t.id}" data-added-by="${t.addedBy || ''}">
+          <td class="px-4 py-3 font-mono text-xs text-gray-500">${scNum}</td>
+          <td class="px-4 py-3 font-medium text-gray-900">
+            <a href="/therapist?id=${scNum !== '—' ? scNum : t.id}" target="_blank" class="hover:text-[#a9cf54] hover:underline">${t.name}</a>
+            <div class="text-xs text-gray-400">by ${addedBy}</div>
+          </td>
+          <td class="px-4 py-3 text-gray-600">${t.age}</td>
+          <td class="px-4 py-3 text-gray-600">${t.location || '—'}</td>
+          <td class="px-4 py-3 text-gray-500 text-xs">${date}</td>
+          <td class="px-4 py-3">
+            <span class="status-badge px-2.5 py-1 rounded-full text-xs font-semibold ${isActive ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">
+              ${isActive ? 'Active' : 'Taken'}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-right space-x-2">
+            <button class="rec-edit-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-blue-300 text-blue-600 hover:bg-blue-50" data-id="${t.id}">Edit</button>
+            <button class="rec-toggle-btn px-3 py-1.5 rounded-lg text-xs font-semibold border ${isActive ? 'border-amber-300 text-amber-600 hover:bg-amber-50' : 'border-green-300 text-green-600 hover:bg-green-50'}"
+              data-id="${t.id}" data-status="${t.status}">
+              ${isActive ? 'Mark Taken' : 'Reactivate'}
+            </button>
+          </td>
+        </tr>`;
+    }).join('');
+
+    // Toggle status
+    tbody.addEventListener('click', async (e) => {
+      const toggleBtn = (e.target as HTMLElement).closest<HTMLButtonElement>('.rec-toggle-btn');
+      if (toggleBtn) {
+        const id = toggleBtn.dataset.id!;
+        const newStatus = toggleBtn.dataset.status === 'active' ? 'placed' : 'active';
+        toggleBtn.disabled = true;
+        toggleBtn.textContent = '…';
+        await updateDoc(doc(db, 'therapists', id), { status: newStatus });
+        const row = tbody.querySelector(`tr[data-id="${id}"]`)!;
+        const badge = row.querySelector('.status-badge')!;
+        const isNow = newStatus === 'active';
+        badge.textContent = isNow ? 'Active' : 'Taken';
+        badge.className = `status-badge px-2.5 py-1 rounded-full text-xs font-semibold ${isNow ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`;
+        toggleBtn.dataset.status = newStatus;
+        toggleBtn.textContent = isNow ? 'Mark Taken' : 'Reactivate';
+        toggleBtn.className = `rec-toggle-btn px-3 py-1.5 rounded-lg text-xs font-semibold border ${isNow ? 'border-amber-300 text-amber-600 hover:bg-amber-50' : 'border-green-300 text-green-600 hover:bg-green-50'}`;
+        toggleBtn.disabled = false;
+        return;
+      }
+
+      const editBtn = (e.target as HTMLElement).closest<HTMLButtonElement>('.rec-edit-btn');
+      if (editBtn) openRecEdit(editBtn.dataset.id!);
+    });
+  }
+
+  // Edit modal
+  const recModal = document.getElementById('rec-edit-modal')!;
+  const recForm = document.getElementById('rec-edit-form') as HTMLFormElement;
+  let editExistingPhotos: string[] = [];
+  let editWorkCount = 0;
+
+  document.getElementById('rec-edit-close')?.addEventListener('click', () => recModal.classList.add('hidden'));
+  recModal.addEventListener('click', (e) => { if (e.target === recModal) recModal.classList.add('hidden'); });
+
+  // Rating sliders in edit modal
+  recForm.querySelectorAll<HTMLInputElement>('input[type="range"]').forEach(input => {
+    const displayId = input.dataset.display;
+    if (displayId) {
+      input.addEventListener('input', () => {
+        document.getElementById(displayId)!.textContent = input.value;
+      });
+    }
+  });
+
+  function addEditWorkEntry(data?: { role: string; location: string; duration: string; duties: string }) {
+    const i = editWorkCount++;
+    const div = document.createElement('div');
+    div.className = 'border border-gray-200 rounded-lg p-3 space-y-2 relative';
+    div.dataset.ewi = String(i);
+    div.innerHTML = `
+      <button type="button" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xs edit-remove-work">✕</button>
+      <div class="grid grid-cols-3 gap-2">
+        <input type="text" name="ew-role-${i}" placeholder="Role" value="${data?.role || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        <input type="text" name="ew-loc-${i}" placeholder="Location" value="${data?.location || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        <input type="text" name="ew-dur-${i}" placeholder="Duration" value="${data?.duration || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+      </div>
+      <textarea name="ew-duties-${i}" rows="2" placeholder="Duties (one per line)" class="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none">${data?.duties || ''}</textarea>
+    `;
+    div.querySelector('.edit-remove-work')?.addEventListener('click', () => div.remove());
+    document.getElementById('edit-work-entries')!.appendChild(div);
+  }
+
+  document.getElementById('edit-add-work')?.addEventListener('click', () => addEditWorkEntry());
+
+  async function openRecEdit(id: string) {
+    const snap = await getDoc(doc(db, 'therapists', id));
+    if (!snap.exists()) return;
+    const t = snap.data();
+
+    (recForm.querySelector('[name="editDocId"]') as HTMLInputElement).value = id;
+    document.getElementById('edit-sc-label')!.textContent = t.wpUserId ? `SC-${t.wpUserId}` : '';
+
+    // Basic fields
+    (recForm.querySelector('[name="editName"]') as HTMLInputElement).value = t.name || '';
+    (recForm.querySelector('[name="editAge"]') as HTMLInputElement).value = String(t.age || '');
+    (recForm.querySelector('[name="editGender"]') as HTMLSelectElement).value = t.gender || 'Female';
+    (recForm.querySelector('[name="editLocation"]') as HTMLInputElement).value = t.location || '';
+    (recForm.querySelector('[name="editExperience"]') as HTMLInputElement).value = String(t.experience || '');
+    (recForm.querySelector('[name="editDesired"]') as HTMLInputElement).value = t.desiredWorkLocation || '';
+    (recForm.querySelector('[name="editYoutube"]') as HTMLInputElement).value = t.youtubeUrl || '';
+    (recForm.querySelector('[name="editBio"]') as HTMLTextAreaElement).value = t.bio || '';
+
+    // Skills
+    recForm.querySelectorAll<HTMLInputElement>('[name="editSkills"]').forEach(cb => {
+      cb.checked = (t.skills || []).includes(cb.value);
+    });
+
+    // Ratings
+    const r = t.ratings || {};
+    for (const key of ['communication', 'appearance', 'proactivity', 'experience', 'massageSkills']) {
+      const input = recForm.querySelector(`[name="editRating-${key}"]`) as HTMLInputElement;
+      if (input) {
+        input.value = String(r[key] || 0);
+        const display = document.getElementById(`edit-r-${key}`);
+        if (display) display.textContent = String(r[key] || 0);
+      }
+    }
+
+    // Work history
+    editWorkCount = 0;
+    document.getElementById('edit-work-entries')!.innerHTML = '';
+    (t.workHistory || []).forEach((w: any) => addEditWorkEntry(w));
+    if ((t.workHistory || []).length === 0) addEditWorkEntry();
+
+    // Photos
+    editExistingPhotos = [...(t.photos || [])];
+    const photoGrid = document.getElementById('edit-photo-grid')!;
+    photoGrid.innerHTML = editExistingPhotos.map((url, i) =>
+      `<div class="relative group">
+        <img src="${url}" class="w-20 h-20 object-cover rounded-lg border border-gray-200" />
+        <button type="button" class="edit-remove-photo absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs hidden group-hover:flex items-center justify-center" data-idx="${i}">✕</button>
+      </div>`
+    ).join('');
+    photoGrid.querySelectorAll('.edit-remove-photo').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt((btn as HTMLElement).dataset.idx!);
+        editExistingPhotos.splice(idx, 1);
+        (btn as HTMLElement).closest('div')?.remove();
+      });
+    });
+    (document.getElementById('edit-photo-input') as HTMLInputElement).value = '';
+
+    document.getElementById('rec-edit-error')?.classList.add('hidden');
+    recModal.classList.remove('hidden');
+  }
+
+  recForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('rec-edit-save') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    document.getElementById('rec-edit-error')?.classList.add('hidden');
+
+    try {
+      const fd = new FormData(recForm);
+      const docId = fd.get('editDocId') as string;
+
+      // Upload new photos
+      btn.textContent = 'Uploading photos…';
+      const newPhotoInput = document.getElementById('edit-photo-input') as HTMLInputElement;
+      const newPhotoUrls = [...editExistingPhotos];
+      if (newPhotoInput.files && newPhotoInput.files.length > 0) {
+        const scLabel = document.getElementById('edit-sc-label')!.textContent || docId;
+        for (const file of Array.from(newPhotoInput.files)) {
+          const storageRef = ref(storage, `therapists/${scLabel}/${file.name}`);
+          const snap = await uploadBytes(storageRef, file);
+          newPhotoUrls.push(await getDownloadURL(snap.ref));
+        }
+      }
+
+      // Gather work history
+      const workEntries = Array.from(
+        document.querySelectorAll<HTMLElement>('#edit-work-entries [data-ewi]')
+      ).map(el => {
+        const i = el.dataset.ewi!;
+        return {
+          role: (fd.get(`ew-role-${i}`) as string) || '',
+          location: (fd.get(`ew-loc-${i}`) as string) || '',
+          duration: (fd.get(`ew-dur-${i}`) as string) || '',
+          duties: (fd.get(`ew-duties-${i}`) as string) || '',
+        };
+      }).filter(w => w.role);
+
+      btn.textContent = 'Saving…';
+      await updateDoc(doc(db, 'therapists', docId), {
+        name: fd.get('editName') as string,
+        age: parseInt(fd.get('editAge') as string),
+        gender: fd.get('editGender') as string,
+        location: fd.get('editLocation') as string,
+        experience: parseInt(fd.get('editExperience') as string),
+        desiredWorkLocation: fd.get('editDesired') as string,
+        youtubeUrl: (fd.get('editYoutube') as string) || '',
+        bio: fd.get('editBio') as string,
+        skills: fd.getAll('editSkills') as string[],
+        ratings: {
+          communication: parseInt(fd.get('editRating-communication') as string) || 0,
+          appearance: parseInt(fd.get('editRating-appearance') as string) || 0,
+          proactivity: parseInt(fd.get('editRating-proactivity') as string) || 0,
+          experience: parseInt(fd.get('editRating-experience') as string) || 0,
+          massageSkills: parseInt(fd.get('editRating-massageSkills') as string) || 0,
+        },
+        workHistory: workEntries,
+        photos: newPhotoUrls,
+      });
+
+      recModal.classList.add('hidden');
+      const row = document.querySelector(`tr[data-id="${docId}"]`);
+      if (row) {
+        row.querySelectorAll('td')[1].querySelector('a')!.textContent = fd.get('editName') as string;
+        row.querySelectorAll('td')[2].textContent = fd.get('editAge') as string;
+        row.querySelectorAll('td')[3].textContent = fd.get('editLocation') as string;
+      }
+    } catch (err) {
+      const el = document.getElementById('rec-edit-error')!;
+      el.textContent = `Error: ${(err as Error).message}`;
+      el.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Save Changes';
+    }
+  });
+
+  // Range slider live display
+  document.querySelectorAll<HTMLInputElement>('input[type="range"]').forEach(input => {
+    const displayId = input.dataset.display;
+    if (displayId) {
+      input.addEventListener('input', () => {
+        document.getElementById(displayId)!.textContent = input.value;
+      });
+    }
+  });
+
+  // Work history
+  let workEntryCount = 0;
+  function addWorkEntry() {
+    const i = workEntryCount++;
+    const div = document.createElement('div');
+    div.className = 'border border-gray-200 rounded-xl p-4 space-y-3 relative';
+    div.dataset.entryIndex = String(i);
+    div.innerHTML = `
+      <button type="button" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-xs remove-entry">✕ Remove</button>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Role</label>
+          <input type="text" name="work-role-${i}" placeholder="e.g. Senior Therapist"
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Location</label>
+          <input type="text" name="work-location-${i}" placeholder="e.g. Dubai, UAE"
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Duration</label>
+          <input type="text" name="work-duration-${i}" placeholder="e.g. 2 years"
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-600 mb-1">Duties (one per line)</label>
+        <textarea name="work-duties-${i}" rows="3"
+          placeholder="Provided traditional Thai massage&#10;Assisted with spa treatments"
+          class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+      </div>
+    `;
+    div.querySelector('.remove-entry')?.addEventListener('click', () => div.remove());
+    document.getElementById('work-entries')!.appendChild(div);
+  }
+  document.getElementById('add-work-entry')?.addEventListener('click', addWorkEntry);
+  addWorkEntry();
+
+  // Photo previews
+  document.getElementById('photo-input')?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    const container = document.getElementById('photo-previews')!;
+    container.innerHTML = '';
+    if (!files) return;
+    Array.from(files).forEach(file => {
+      const url = URL.createObjectURL(file);
+      container.innerHTML += `<img src="${url}" class="w-20 h-20 object-cover rounded-lg border border-gray-200" />`;
+    });
+  });
+
+  // Form submit
+  document.getElementById('recruiter-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    document.getElementById('error-msg')?.classList.add('hidden');
+
+    try {
+      const form = e.currentTarget as HTMLFormElement;
+      const data = new FormData(form);
+
+      const workEntries = Array.from(
+        document.querySelectorAll<HTMLElement>('#work-entries [data-entry-index]')
+      ).map(el => {
+        const i = el.dataset.entryIndex!;
+        return {
+          role: (data.get(`work-role-${i}`) as string) || '',
+          location: (data.get(`work-location-${i}`) as string) || '',
+          duration: (data.get(`work-duration-${i}`) as string) || '',
+          duties: (data.get(`work-duties-${i}`) as string) || '',
+        };
+      }).filter(w => w.role);
+
+      // Auto-generate next SC number
+      btn.textContent = 'Generating SC number…';
+      const existingSnap = await getDocs(query(collection(db, 'therapists'), orderBy('wpUserId', 'desc'), limit(1)));
+      let nextScNum = 1602; // default if no therapists exist
+      if (!existingSnap.empty) {
+        const maxId = existingSnap.docs[0].data().wpUserId || 1601;
+        nextScNum = maxId + 1;
+      }
+
+      btn.textContent = 'Uploading photos…';
+      const photoInput = document.getElementById('photo-input') as HTMLInputElement;
+      const photoUrls: string[] = [];
+      if (photoInput.files) {
+        for (const file of Array.from(photoInput.files)) {
+          const storageRef = ref(storage, `therapists/${nextScNum}/${file.name}`);
+          const snap = await uploadBytes(storageRef, file);
+          photoUrls.push(await getDownloadURL(snap.ref));
+        }
+      }
+
+      btn.textContent = 'Saving profile…';
+      const therapistData = {
+        name: data.get('name') as string,
+        age: parseInt(data.get('age') as string),
+        gender: data.get('gender') as string,
+        location: data.get('location') as string,
+        experience: parseInt(data.get('experience') as string),
+        desiredWorkLocation: data.get('desiredWorkLocation') as string,
+        bio: data.get('bio') as string,
+        youtubeUrl: (data.get('youtubeUrl') as string) || '',
+        skills: data.getAll('skills') as string[],
+        ratings: {
+          communication: parseInt(data.get('rating-communication') as string),
+          appearance: parseInt(data.get('rating-appearance') as string),
+          proactivity: parseInt(data.get('rating-proactivity') as string),
+          experience: parseInt(data.get('rating-experience') as string),
+          massageSkills: parseInt(data.get('rating-massageSkills') as string),
+        },
+        workHistory: workEntries,
+        photos: photoUrls,
+        status: 'active',
+        wpUserId: nextScNum,
+        addedBy: loggedInEmail || 'unknown',
+        createdAt: serverTimestamp(),
+      };
+
+      await addDoc(collection(db, 'therapists'), therapistData);
+
+      // Optionally push to Notion
+      const pushToNotion = (data.get('pushToNotion') as string) === 'on';
+      if (pushToNotion) {
+        btn.textContent = 'Creating in Notion…';
+        try {
+          const functions = getFunctions();
+          const createInNotion = httpsCallable(functions, 'createTherapistInNotion');
+          await createInNotion({
+            therapist: {
+              name: therapistData.name,
+              scNumber: `SC-${nextScNum}`,
+              location: therapistData.location,
+              experience: therapistData.experience,
+              desiredWorkLocation: therapistData.desiredWorkLocation,
+            },
+          });
+        } catch (notionErr) {
+          console.error('Notion push failed (profile was saved):', notionErr);
+        }
+      }
+
+      const successEl = document.getElementById('success-msg')!;
+      successEl.innerHTML = `Profile saved as <strong>SC-${nextScNum}</strong>! ${pushToNotion ? '(Also created in Notion) ' : ''}<a href="/therapists" class="underline">View on search page →</a>`;
+      successEl.classList.remove('hidden');
+      form.reset();
+      document.getElementById('photo-previews')!.innerHTML = '';
+      document.getElementById('work-entries')!.innerHTML = '';
+      addWorkEntry();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      const errEl = document.getElementById('error-msg')!;
+      errEl.textContent = `Error saving profile: ${(err as Error).message}`;
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Save Profile';
+    }
+  });
+</script>
