@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>Spa Company Indonesia</title>
+    <meta name="description" content="Spa Company Indonesia — recruitment portal for spa owners and Indonesian therapists." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="antialiased">
+
+    <div
+      class="min-h-screen flex flex-col items-center justify-center bg-cover bg-center relative"
+      style="background-image: url('/images/spa-massage-hero.jpg');"
+    >
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/60"></div>
+
+      <div class="relative z-10 flex flex-col items-center px-4 w-full max-w-2xl">
+        <!-- Logo -->
+        <img
+          src="/images/spa-company-indonesia-logo-black.jpeg"
+          alt="Spa Company Indonesia"
+          class="h-20 sm:h-28 object-contain mb-12 drop-shadow-lg invert"
+        />
+
+        <!-- Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-md">
+          <!-- CLIENT -->
+          <a
+            href="/en"
+            class="group flex flex-col items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/20 hover:border-white/40 transition-all duration-300"
+          >
+            <span class="text-6xl">🇬🇧</span>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-white tracking-wide">CLIENT</div>
+              <div class="text-sm text-white/60 mt-1">English</div>
+            </div>
+          </a>
+
+          <!-- KANDIDAT -->
+          <a
+            href="/id"
+            class="group flex flex-col items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/20 hover:border-white/40 transition-all duration-300"
+          >
+            <span class="text-6xl">🇮🇩</span>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-white tracking-wide">KANDIDAT</div>
+              <div class="text-sm text-white/60 mt-1">Bahasa Indonesia</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
