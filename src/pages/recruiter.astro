@@ -30,7 +30,7 @@ const ratingFields = [
 
       <!-- Tabs -->
       <div class="flex border-b border-gray-200 mb-8">
-        <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-[#a9cf54] text-[#588f27]" data-tab="add">
+        <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-[#4a7c3f] text-[#2d5a27]" data-tab="add">
           Add New
         </button>
         <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="manage">
@@ -55,17 +55,17 @@ const ratingFields = [
             <div class="col-span-2">
               <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
               <input name="name" required type="text"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Age *</label>
               <input name="age" required type="number" min="18" max="65"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Gender *</label>
               <select name="gender" required
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]">
                 <option value="">Select…</option>
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
@@ -74,17 +74,17 @@ const ratingFields = [
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Thai City *</label>
               <input name="location" required type="text" placeholder="e.g. Khon Kaen"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Experience (years) *</label>
               <input name="experience" required type="number" min="0" max="40"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
             </div>
             <div class="col-span-2">
               <label class="block text-sm font-medium text-gray-700 mb-1">Desired Work Location *</label>
               <input name="desiredWorkLocation" required type="text" placeholder="e.g. Slovakia, UAE"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
             </div>
           </div>
         </div>
@@ -95,7 +95,7 @@ const ratingFields = [
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {skills.map(skill => (
               <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                <input type="checkbox" name="skills" value={skill} class="rounded accent-[#a9cf54]" />
+                <input type="checkbox" name="skills" value={skill} class="rounded accent-[#4a7c3f]" />
                 {skill}
               </label>
             ))}
@@ -106,7 +106,7 @@ const ratingFields = [
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 class="font-semibold text-gray-900 text-lg mb-4">YouTube Video</h2>
           <input name="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..."
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
           <p class="text-xs text-gray-400 mt-1">Optional. Paste a YouTube link for the therapist's introduction video.</p>
         </div>
 
@@ -115,7 +115,7 @@ const ratingFields = [
           <h2 class="font-semibold text-gray-900 text-lg mb-4">Biography</h2>
           <textarea name="bio" rows="4" required
             placeholder="Describe the therapist's background, personality, and experience…"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none"></textarea>
         </div>
 
         <!-- Ratings -->
@@ -129,7 +129,7 @@ const ratingFields = [
                   <span class="text-sm text-gray-500" id={`rating-display-${key}`}>0</span>
                 </div>
                 <input type="range" name={`rating-${key}`} min="0" max="20" value="0"
-                  class="w-full accent-[#a9cf54]"
+                  class="w-full accent-[#4a7c3f]"
                   data-display={`rating-display-${key}`} />
               </div>
             ))}
@@ -140,7 +140,7 @@ const ratingFields = [
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div class="flex items-center justify-between mb-4">
             <h2 class="font-semibold text-gray-900 text-lg">Work History</h2>
-            <button type="button" id="add-work-entry" class="text-sm text-[#a9cf54] font-medium hover:underline">
+            <button type="button" id="add-work-entry" class="text-sm text-[#4a7c3f] font-medium hover:underline">
               + Add Entry
             </button>
           </div>
@@ -151,14 +151,14 @@ const ratingFields = [
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 class="font-semibold text-gray-900 text-lg mb-4">Photos</h2>
           <input type="file" id="photo-input" multiple accept="image/*"
-            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#a9cf54] file:text-white hover:file:bg-[#588f27]" />
+            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#4a7c3f] file:text-white hover:file:bg-[#2d5a27]" />
           <div id="photo-previews" class="flex flex-wrap gap-3 mt-4"></div>
         </div>
 
         <!-- Notion Upload -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" name="pushToNotion" class="rounded accent-[#a9cf54] w-5 h-5" />
+            <input type="checkbox" name="pushToNotion" class="rounded accent-[#4a7c3f] w-5 h-5" />
             <div>
               <span class="text-sm font-semibold text-gray-900">Also create in Notion</span>
               <p class="text-xs text-gray-500">Creates a candidate entry with status "WAITING FOR APPROVAL" and job title "MASSAGE".</p>
@@ -168,7 +168,7 @@ const ratingFields = [
 
         <!-- Submit -->
         <button type="submit" id="submit-btn"
-          class="w-full py-4 bg-[#a9cf54] text-white font-bold text-lg rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50">
+          class="w-full py-4 bg-[#4a7c3f] text-white font-bold text-lg rounded-xl hover:bg-[#2d5a27] transition-colors disabled:opacity-50">
           Save Profile
         </button>
       </form>
@@ -178,9 +178,9 @@ const ratingFields = [
       <div id="tab-manage" class="hidden">
         <div class="flex flex-wrap items-center gap-4 mb-4">
           <input id="manage-search" type="text" placeholder="Search by name or SC number…"
-            class="w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            class="w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
           <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-            <input type="checkbox" id="filter-mine" class="rounded accent-[#a9cf54]" />
+            <input type="checkbox" id="filter-mine" class="rounded accent-[#4a7c3f]" />
             Show only mine
           </label>
           <span id="manage-count" class="text-xs text-gray-400 ml-auto"></span>
@@ -223,30 +223,30 @@ const ratingFields = [
         <div class="grid grid-cols-2 gap-4">
           <div class="col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-            <input name="editName" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            <input name="editName" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
-            <input name="editAge" required type="number" min="18" max="65" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            <input name="editAge" required type="number" min="18" max="65" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-            <select name="editGender" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
+            <select name="editGender" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]">
               <option value="Female">Female</option>
               <option value="Male">Male</option>
             </select>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-            <input name="editLocation" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            <input name="editLocation" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Experience (years)</label>
-            <input name="editExperience" required type="number" min="0" max="40" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            <input name="editExperience" required type="number" min="0" max="40" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
           </div>
           <div class="col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">Desired Work Location</label>
-            <input name="editDesired" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            <input name="editDesired" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
           </div>
         </div>
 
@@ -256,7 +256,7 @@ const ratingFields = [
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {skills.map(skill => (
               <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                <input type="checkbox" name="editSkills" value={skill} class="rounded accent-[#a9cf54]" />
+                <input type="checkbox" name="editSkills" value={skill} class="rounded accent-[#4a7c3f]" />
                 {skill}
               </label>
             ))}
@@ -266,13 +266,13 @@ const ratingFields = [
         <!-- YouTube -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">YouTube URL</label>
-          <input name="editYoutube" type="url" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+          <input name="editYoutube" type="url" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
         </div>
 
         <!-- Bio -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-          <textarea name="editBio" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+          <textarea name="editBio" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none"></textarea>
         </div>
 
         <!-- Assessment -->
@@ -286,7 +286,7 @@ const ratingFields = [
                   <span class="text-sm text-gray-500" id={`edit-r-${key}`}>0</span>
                 </div>
                 <input type="range" name={`editRating-${key}`} min="0" max="20" value="0"
-                  class="w-full accent-[#a9cf54]" data-display={`edit-r-${key}`} />
+                  class="w-full accent-[#4a7c3f]" data-display={`edit-r-${key}`} />
               </div>
             ))}
           </div>
@@ -296,7 +296,7 @@ const ratingFields = [
         <div>
           <div class="flex items-center justify-between mb-3">
             <label class="text-sm font-medium text-gray-700">Work History</label>
-            <button type="button" id="edit-add-work" class="text-sm text-[#a9cf54] font-medium hover:underline">+ Add Entry</button>
+            <button type="button" id="edit-add-work" class="text-sm text-[#4a7c3f] font-medium hover:underline">+ Add Entry</button>
           </div>
           <div id="edit-work-entries" class="space-y-3"></div>
         </div>
@@ -306,12 +306,12 @@ const ratingFields = [
           <label class="block text-sm font-medium text-gray-700 mb-2">Photos</label>
           <div id="edit-photo-grid" class="flex flex-wrap gap-2 mb-3"></div>
           <input type="file" id="edit-photo-input" multiple accept="image/*"
-            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#a9cf54] file:text-white hover:file:bg-[#588f27]" />
+            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#4a7c3f] file:text-white hover:file:bg-[#2d5a27]" />
           <p class="text-xs text-gray-400 mt-1">Existing photos shown above. Upload new ones to add (won't replace existing).</p>
         </div>
 
         <div id="rec-edit-error" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm"></div>
-        <button type="submit" id="rec-edit-save" class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50">
+        <button type="submit" id="rec-edit-save" class="w-full py-3 bg-[#4a7c3f] text-white font-bold rounded-xl hover:bg-[#2d5a27] transition-colors disabled:opacity-50">
           Save Changes
         </button>
       </form>
@@ -342,10 +342,10 @@ const ratingFields = [
   document.querySelectorAll('.rec-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.rec-tab').forEach(b => {
-        b.classList.remove('border-[#a9cf54]', 'text-[#588f27]');
+        b.classList.remove('border-[#4a7c3f]', 'text-[#2d5a27]');
         b.classList.add('border-transparent', 'text-gray-500');
       });
-      btn.classList.add('border-[#a9cf54]', 'text-[#588f27]');
+      btn.classList.add('border-[#4a7c3f]', 'text-[#2d5a27]');
       btn.classList.remove('border-transparent', 'text-gray-500');
       const tab = (btn as HTMLElement).dataset.tab!;
       document.getElementById('tab-add')!.classList.toggle('hidden', tab !== 'add');
@@ -416,7 +416,7 @@ const ratingFields = [
         <tr data-id="${t.id}" data-added-by="${t.addedBy || ''}">
           <td class="px-4 py-3 font-mono text-xs text-gray-500">${scNum}</td>
           <td class="px-4 py-3 font-medium text-gray-900">
-            <a href="/therapist?id=${scNum !== '—' ? scNum : t.id}" target="_blank" class="hover:text-[#a9cf54] hover:underline">${t.name}</a>
+            <a href="/therapist?id=${scNum !== '—' ? scNum : t.id}" target="_blank" class="hover:text-[#4a7c3f] hover:underline">${t.name}</a>
             <div class="text-xs text-gray-400">by ${addedBy}</div>
           </td>
           <td class="px-4 py-3 text-gray-600">${t.age}</td>
@@ -490,11 +490,11 @@ const ratingFields = [
     div.innerHTML = `
       <button type="button" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xs edit-remove-work">✕</button>
       <div class="grid grid-cols-3 gap-2">
-        <input type="text" name="ew-role-${i}" placeholder="Role" value="${data?.role || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
-        <input type="text" name="ew-loc-${i}" placeholder="Location" value="${data?.location || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
-        <input type="text" name="ew-dur-${i}" placeholder="Duration" value="${data?.duration || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        <input type="text" name="ew-role-${i}" placeholder="Role" value="${data?.role || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+        <input type="text" name="ew-loc-${i}" placeholder="Location" value="${data?.location || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+        <input type="text" name="ew-dur-${i}" placeholder="Duration" value="${data?.duration || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
       </div>
-      <textarea name="ew-duties-${i}" rows="2" placeholder="Duties (one per line)" class="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none">${data?.duties || ''}</textarea>
+      <textarea name="ew-duties-${i}" rows="2" placeholder="Duties (one per line)" class="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none">${data?.duties || ''}</textarea>
     `;
     div.querySelector('.edit-remove-work')?.addEventListener('click', () => div.remove());
     document.getElementById('edit-work-entries')!.appendChild(div);
@@ -663,24 +663,24 @@ const ratingFields = [
         <div>
           <label class="block text-xs font-medium text-gray-600 mb-1">Role</label>
           <input type="text" name="work-role-${i}" placeholder="e.g. Senior Therapist"
-            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
         </div>
         <div>
           <label class="block text-xs font-medium text-gray-600 mb-1">Location</label>
           <input type="text" name="work-location-${i}" placeholder="e.g. Dubai, UAE"
-            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
         </div>
         <div>
           <label class="block text-xs font-medium text-gray-600 mb-1">Duration</label>
           <input type="text" name="work-duration-${i}" placeholder="e.g. 2 years"
-            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
         </div>
       </div>
       <div>
         <label class="block text-xs font-medium text-gray-600 mb-1">Duties (one per line)</label>
         <textarea name="work-duties-${i}" rows="3"
           placeholder="Provided traditional Thai massage&#10;Assisted with spa treatments"
-          class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
+          class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none"></textarea>
       </div>
     `;
     div.querySelector('.remove-entry')?.addEventListener('click', () => div.remove());

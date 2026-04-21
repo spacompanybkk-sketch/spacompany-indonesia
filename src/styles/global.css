@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-green: #a9cf54;
-  --color-brand-dark-green: #588f27;
+  --color-brand-green: #4a7c3f;
+  --color-brand-dark-green: #2d5a27;
+  --color-brand-light-green: #6b9e5e;
   --color-brand-gray: #ababab;
-  --color-brand-cyan: #04bfbf;
   --color-body: #404040;
   --font-family-sans: 'Prompt', sans-serif;
 }

@@ -9,7 +9,7 @@ import CandidateCard from "../components/CandidateCard.astro";
   description="Browse verified candidates available for international placement. Filter by job position."
 >
   <!-- Page Hero -->
-  <section class="bg-[#a9cf54] py-12 text-center">
+  <section class="bg-[#4a7c3f] py-12 text-center">
     <div class="max-w-3xl mx-auto px-4">
       <h1 class="text-4xl font-bold text-white mb-3">Candidate Database</h1>
       <p class="text-white/85 text-lg">Browse verified candidates ready to work abroad.</p>
@@ -158,10 +158,10 @@ import CandidateCard from "../components/CandidateCard.astro";
       const btnPos = (btn as HTMLButtonElement).dataset.position || "";
       const isActive = btnPos === position;
       if (isActive) {
-        btn.classList.add("bg-[#a9cf54]", "text-white", "border-[#a9cf54]");
+        btn.classList.add("bg-[#4a7c3f]", "text-white", "border-[#4a7c3f]");
         btn.classList.remove("bg-white", "text-gray-700", "border-gray-300", "hover:bg-gray-50");
       } else {
-        btn.classList.remove("bg-[#a9cf54]", "text-white", "border-[#a9cf54]");
+        btn.classList.remove("bg-[#4a7c3f]", "text-white", "border-[#4a7c3f]");
         btn.classList.add("bg-white", "text-gray-700", "border-gray-300", "hover:bg-gray-50");
       }
     });

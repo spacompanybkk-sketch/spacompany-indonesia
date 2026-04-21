@@ -6,7 +6,7 @@
 <div id="login-gate" class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
   <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm">
     <div class="text-center mb-6">
-      <div class="w-12 h-12 bg-[#a9cf54] rounded-xl flex items-center justify-center mx-auto mb-3">
+      <div class="w-12 h-12 bg-[#4a7c3f] rounded-xl flex items-center justify-center mx-auto mb-3">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
@@ -22,13 +22,13 @@
         id="login-email"
         type="email"
         placeholder="you@spa-company.com"
-        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#a9cf54]"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]"
         autofocus
       />
       <p id="email-error" class="text-red-500 text-xs mb-3 hidden"></p>
       <button
         id="send-code-btn"
-        class="w-full bg-[#a9cf54] text-white font-semibold py-2 rounded-lg hover:bg-[#588f27] transition-colors disabled:opacity-50"
+        class="w-full bg-[#4a7c3f] text-white font-semibold py-2 rounded-lg hover:bg-[#2d5a27] transition-colors disabled:opacity-50"
       >
         Send Code
       </button>
@@ -46,13 +46,13 @@
         inputmode="numeric"
         maxlength="6"
         placeholder="123456"
-        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-3 tracking-widest text-center text-lg focus:outline-none focus:ring-2 focus:ring-[#a9cf54]"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-3 tracking-widest text-center text-lg focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]"
         autofocus
       />
       <p id="code-error" class="text-red-500 text-xs mb-3 hidden"></p>
       <button
         id="verify-code-btn"
-        class="w-full bg-[#a9cf54] text-white font-semibold py-2 rounded-lg hover:bg-[#588f27] transition-colors disabled:opacity-50"
+        class="w-full bg-[#4a7c3f] text-white font-semibold py-2 rounded-lg hover:bg-[#2d5a27] transition-colors disabled:opacity-50"
       >
         Verify Code
       </button>
@@ -63,7 +63,7 @@
 
     <!-- Loading state -->
     <div id="step-loading" class="hidden text-center py-4">
-      <svg class="animate-spin w-8 h-8 text-[#a9cf54] mx-auto" fill="none" viewBox="0 0 24 24">
+      <svg class="animate-spin w-8 h-8 text-[#4a7c3f] mx-auto" fill="none" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
       </svg>

@@ -69,7 +69,7 @@ const pricing = [
 >
 
   <!-- Page Hero -->
-  <section class="bg-[#a9cf54] py-16 text-center">
+  <section class="bg-[#4a7c3f] py-16 text-center">
     <div class="max-w-3xl mx-auto px-4">
       <h1 class="text-4xl font-bold text-white mb-4">Recruitment Services</h1>
       <p class="text-white/85 text-lg">
@@ -98,7 +98,7 @@ const pricing = [
             <ul class="space-y-2 mb-6">
               {s.bullets.map((b) => (
                 <li class="flex items-start gap-3">
-                  <span class="mt-1 w-5 h-5 rounded-full bg-[#a9cf54] flex items-center justify-center shrink-0">
+                  <span class="mt-1 w-5 h-5 rounded-full bg-[#4a7c3f] flex items-center justify-center shrink-0">
                     <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                     </svg>
@@ -108,7 +108,7 @@ const pricing = [
               ))}
             </ul>
             <a href={s.cta.href}
-              class="inline-block px-6 py-2.5 rounded-full bg-[#a9cf54] text-white font-semibold text-sm hover:bg-[#588f27] transition-colors">
+              class="inline-block px-6 py-2.5 rounded-full bg-[#4a7c3f] text-white font-semibold text-sm hover:bg-[#2d5a27] transition-colors">
               {s.cta.label}
             </a>
           </div>
@@ -124,22 +124,22 @@ const pricing = [
       <h2 class="text-3xl font-bold text-gray-900 mb-10">How Recruitment Works</h2>
       <div class="grid grid-cols-1 sm:grid-cols-4 gap-8">
         <div>
-          <div class="w-12 h-12 rounded-full bg-[#a9cf54] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">1</div>
+          <div class="w-12 h-12 rounded-full bg-[#4a7c3f] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">1</div>
           <h3 class="font-semibold text-gray-900 mb-1 text-sm">Post a Job</h3>
           <p class="text-xs text-gray-500">Fill a quick form with your requirements and salary details.</p>
         </div>
         <div>
-          <div class="w-12 h-12 rounded-full bg-[#a9cf54] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">2</div>
+          <div class="w-12 h-12 rounded-full bg-[#4a7c3f] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">2</div>
           <h3 class="font-semibold text-gray-900 mb-1 text-sm">We Match</h3>
           <p class="text-xs text-gray-500">Our team shortlists verified candidates that fit your criteria.</p>
         </div>
         <div>
-          <div class="w-12 h-12 rounded-full bg-[#a9cf54] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">3</div>
+          <div class="w-12 h-12 rounded-full bg-[#4a7c3f] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">3</div>
           <h3 class="font-semibold text-gray-900 mb-1 text-sm">You Select</h3>
           <p class="text-xs text-gray-500">Review profiles, watch videos, and pick your preferred therapist.</p>
         </div>
         <div>
-          <div class="w-12 h-12 rounded-full bg-[#a9cf54] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">4</div>
+          <div class="w-12 h-12 rounded-full bg-[#4a7c3f] text-white text-lg font-bold flex items-center justify-center mx-auto mb-3">4</div>
           <h3 class="font-semibold text-gray-900 mb-1 text-sm">We Deliver</h3>
           <p class="text-xs text-gray-500">We handle visa, travel, and onboarding. Your therapist arrives ready to work.</p>
         </div>
@@ -153,9 +153,9 @@ const pricing = [
       <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Pricing</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {pricing.map((p) => (
-          <div class={`rounded-2xl border-2 p-8 flex flex-col ${p.highlight ? 'border-[#a9cf54] shadow-lg' : 'border-gray-200 bg-white'}`}>
+          <div class={`rounded-2xl border-2 p-8 flex flex-col ${p.highlight ? 'border-[#4a7c3f] shadow-lg' : 'border-gray-200 bg-white'}`}>
             {p.highlight && (
-              <div class="text-xs font-bold text-[#a9cf54] uppercase tracking-widest mb-2">Most Popular</div>
+              <div class="text-xs font-bold text-[#4a7c3f] uppercase tracking-widest mb-2">Most Popular</div>
             )}
             <h3 class="text-xl font-bold text-gray-900 mb-1">{p.label}</h3>
             <div class="text-2xl font-bold text-gray-900 mb-2">{p.price}</div>
@@ -163,7 +163,7 @@ const pricing = [
             <ul class="space-y-2 mb-8 flex-1">
               {p.features.map((f) => (
                 <li class="flex items-center gap-2 text-sm text-gray-600">
-                  <span class="w-4 h-4 rounded-full bg-[#a9cf54] flex items-center justify-center shrink-0">
+                  <span class="w-4 h-4 rounded-full bg-[#4a7c3f] flex items-center justify-center shrink-0">
                     <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                     </svg>
@@ -175,8 +175,8 @@ const pricing = [
             <a href="/get-a-quote"
               class={`block text-center py-3 rounded-full font-semibold transition-colors ${
                 p.highlight
-                  ? 'bg-[#a9cf54] text-white hover:bg-[#588f27]'
-                  : 'border-2 border-[#a9cf54] text-[#a9cf54] hover:bg-[#a9cf54] hover:text-white'
+                  ? 'bg-[#4a7c3f] text-white hover:bg-[#2d5a27]'
+                  : 'border-2 border-[#4a7c3f] text-[#4a7c3f] hover:bg-[#4a7c3f] hover:text-white'
               }`}>
               Get Started
             </a>
@@ -196,7 +196,7 @@ const pricing = [
       <div class="flex flex-col sm:flex-row gap-3 justify-center">
         <a
           href="/get-a-quote"
-          class="px-10 py-4 rounded-full bg-[#a9cf54] text-white font-bold hover:bg-[#588f27] transition-colors"
+          class="px-10 py-4 rounded-full bg-[#4a7c3f] text-white font-bold hover:bg-[#2d5a27] transition-colors"
         >
           Post a Job
         </a>

@@ -10,14 +10,14 @@ import Layout from '../layouts/Layout.astro';
     Loading profile…
   </div>
   <div id="not-found" class="hidden min-h-[60vh] flex items-center justify-center text-gray-400 text-lg">
-    Profile not found. <a href="/therapists" class="ml-2 text-[#a9cf54] underline">Back to search</a>
+    Profile not found. <a href="/therapists" class="ml-2 text-[#4a7c3f] underline">Back to search</a>
   </div>
 
   <div id="profile" class="hidden">
     <!-- Hero + Photos -->
     <section class="bg-gray-900 py-10">
       <div class="max-w-5xl mx-auto px-4">
-        <a href="/therapists" class="text-[#a9cf54] text-sm hover:underline mb-6 inline-block">← Back to search</a>
+        <a href="/therapists" class="text-[#4a7c3f] text-sm hover:underline mb-6 inline-block">← Back to search</a>
         <div class="flex flex-col md:flex-row gap-8">
           <div class="md:w-1/2">
             <img id="main-photo" src="" alt="" class="rounded-2xl w-full object-cover max-h-96" />
@@ -26,27 +26,27 @@ import Layout from '../layouts/Layout.astro';
           <div class="md:w-1/2 text-white">
             <div class="flex items-center gap-2 mb-2">
               <span id="profile-name" class="text-3xl font-bold"></span>
-              <span class="bg-[#a9cf54] text-white text-xs font-semibold px-2 py-0.5 rounded-full">Verified</span>
+              <span class="bg-[#4a7c3f] text-white text-xs font-semibold px-2 py-0.5 rounded-full">Verified</span>
             </div>
             <div id="profile-meta" class="text-gray-300 text-sm space-y-1 mb-4"></div>
             <div id="profile-skills" class="flex flex-wrap gap-2 mb-4"></div>
-            <div id="profile-desired" class="text-[#a9cf54] text-sm font-medium mb-6"></div>
+            <div id="profile-desired" class="text-[#4a7c3f] text-sm font-medium mb-6"></div>
 
             <!-- Enquire Now -->
             <div id="enquire-section">
-              <button id="enquire-btn" class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors text-sm">
+              <button id="enquire-btn" class="w-full py-3 bg-[#4a7c3f] text-white font-bold rounded-xl hover:bg-[#2d5a27] transition-colors text-sm">
                 Enquire About This Therapist
               </button>
               <div id="enquire-form" class="hidden mt-4 space-y-3">
                 <input id="enq-name" type="text" required placeholder="Your name *"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400" />
                 <input id="enq-email" type="email" required placeholder="Your email *"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400" />
                 <input id="enq-phone" type="tel" placeholder="Phone (optional)"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400" />
                 <textarea id="enq-message" rows="2" placeholder="Message (optional)"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400 resize-none"></textarea>
-                <button id="enq-submit" class="w-full py-2.5 bg-[#a9cf54] text-white font-bold rounded-lg hover:bg-[#588f27] transition-colors text-sm disabled:opacity-50">
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400 resize-none"></textarea>
+                <button id="enq-submit" class="w-full py-2.5 bg-[#4a7c3f] text-white font-bold rounded-lg hover:bg-[#2d5a27] transition-colors text-sm disabled:opacity-50">
                   Send Enquiry
                 </button>
                 <div id="enq-success" class="hidden text-green-400 text-sm text-center font-medium">Enquiry sent! We'll be in touch soon.</div>
@@ -84,7 +84,7 @@ import Layout from '../layouts/Layout.astro';
         <div>
           <h2 class="text-xl font-bold text-gray-900 mb-4">Assessment</h2>
           <div id="ratings" class="space-y-3"></div>
-          <div id="ratings-total" class="mt-4 text-center text-2xl font-bold text-[#a9cf54]"></div>
+          <div id="ratings-total" class="mt-4 text-center text-2xl font-bold text-[#4a7c3f]"></div>
         </div>
       </div>
     </section>
@@ -207,7 +207,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     document.getElementById('profile-skills')!.innerHTML = (t.skills || []).map(s =>
-      `<span class="text-sm bg-[#a9cf54]/15 text-[#588f27] px-3 py-1 rounded-full font-medium">${s}</span>`
+      `<span class="text-sm bg-[#4a7c3f]/15 text-[#2d5a27] px-3 py-1 rounded-full font-medium">${s}</span>`
     ).join('');
 
     const photos = t.photos || [];
@@ -217,7 +217,7 @@ import Layout from '../layouts/Layout.astro';
       mainImg.alt = firstName;
       document.getElementById('thumbnails')!.innerHTML = photos.map((p, i) =>
         `<img src="${p}" alt="${firstName} photo ${i + 1}"
-          class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 ${i === 0 ? 'border-[#a9cf54]' : 'border-transparent'} hover:border-[#a9cf54] transition-colors"
+          class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 ${i === 0 ? 'border-[#4a7c3f]' : 'border-transparent'} hover:border-[#4a7c3f] transition-colors"
           data-index="${i}" />`
       ).join('');
       document.getElementById('thumbnails')?.addEventListener('click', (e) => {
@@ -225,9 +225,9 @@ import Layout from '../layouts/Layout.astro';
         if (!thumb) return;
         mainImg.src = thumb.src;
         document.querySelectorAll('#thumbnails img').forEach(el =>
-          el.classList.replace('border-[#a9cf54]', 'border-transparent')
+          el.classList.replace('border-[#4a7c3f]', 'border-transparent')
         );
-        thumb.classList.replace('border-transparent', 'border-[#a9cf54]');
+        thumb.classList.replace('border-transparent', 'border-[#4a7c3f]');
       });
     }
 
@@ -245,14 +245,14 @@ import Layout from '../layouts/Layout.astro';
           <span class="font-semibold text-gray-900">${r[key] || 0}/20</span>
         </div>
         <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div class="h-full bg-[#a9cf54] rounded-full" style="width:${((r[key] || 0) / 20) * 100}%"></div>
+          <div class="h-full bg-[#4a7c3f] rounded-full" style="width:${((r[key] || 0) / 20) * 100}%"></div>
         </div>
       </div>
     `).join('');
     document.getElementById('ratings-total')!.textContent = `${total} / 100`;
 
     document.getElementById('work-history')!.innerHTML = (t.workHistory || []).map(w => `
-      <div class="border-l-2 border-[#a9cf54] pl-4">
+      <div class="border-l-2 border-[#4a7c3f] pl-4">
         <div class="font-semibold text-gray-900">${w.role}</div>
         <div class="text-sm text-gray-500 mb-2">${w.location} · ${w.duration}</div>
         <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">

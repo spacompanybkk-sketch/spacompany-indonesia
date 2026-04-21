@@ -10,14 +10,14 @@ import Layout from "../layouts/Layout.astro";
     Loading profile…
   </div>
   <div id="not-found" class="hidden min-h-[60vh] flex items-center justify-center text-gray-400 text-lg">
-    Profile not found. <a href="/candidates" class="ml-2 text-[#a9cf54] underline">Back to candidates</a>
+    Profile not found. <a href="/candidates" class="ml-2 text-[#4a7c3f] underline">Back to candidates</a>
   </div>
 
   <div id="profile" class="hidden">
     <!-- Hero + Photos -->
     <section class="bg-gray-900 py-10">
       <div class="max-w-5xl mx-auto px-4">
-        <a href="/candidates" class="text-[#a9cf54] text-sm hover:underline mb-6 inline-block">← Back to candidates</a>
+        <a href="/candidates" class="text-[#4a7c3f] text-sm hover:underline mb-6 inline-block">← Back to candidates</a>
         <div class="flex flex-col md:flex-row gap-8">
           <!-- Photo Gallery -->
           <div class="md:w-1/2">
@@ -46,20 +46,20 @@ import Layout from "../layouts/Layout.astro";
             <!-- Enquire Now -->
             <div id="enquire-section">
               <button id="enquire-btn"
-                class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors text-sm">
+                class="w-full py-3 bg-[#4a7c3f] text-white font-bold rounded-xl hover:bg-[#2d5a27] transition-colors text-sm">
                 Enquire About This Candidate
               </button>
               <div id="enquire-form" class="hidden mt-4 space-y-3">
                 <input id="enq-name" type="text" required placeholder="Your name *"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400" />
                 <input id="enq-email" type="email" required placeholder="Your email *"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400" />
                 <input id="enq-phone" type="tel" placeholder="Phone (optional)"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400" />
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400" />
                 <textarea id="enq-message" rows="3" placeholder="Message (optional)"
-                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] placeholder-gray-400 resize-none"></textarea>
+                  class="w-full border border-gray-600 bg-gray-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400 resize-none"></textarea>
                 <button id="enq-submit"
-                  class="w-full py-2.5 bg-[#a9cf54] text-white font-bold rounded-lg hover:bg-[#588f27] transition-colors text-sm disabled:opacity-50">
+                  class="w-full py-2.5 bg-[#4a7c3f] text-white font-bold rounded-lg hover:bg-[#2d5a27] transition-colors text-sm disabled:opacity-50">
                   Send Enquiry
                 </button>
                 <div id="enq-success" class="hidden text-green-400 text-sm text-center font-medium">
@@ -216,7 +216,7 @@ import Layout from "../layouts/Layout.astro";
     document.getElementById("profile-skills")!.innerHTML = (c.skills || [])
       .map(
         (s) =>
-          `<span class="text-sm bg-[#a9cf54]/15 text-[#a9cf54] px-3 py-1 rounded-full font-medium">${s}</span>`
+          `<span class="text-sm bg-[#4a7c3f]/15 text-[#4a7c3f] px-3 py-1 rounded-full font-medium">${s}</span>`
       )
       .join("");
 
@@ -234,7 +234,7 @@ import Layout from "../layouts/Layout.astro";
         .map(
           (p, i) =>
             `<img src="${p}" alt="${firstName} photo ${i + 1}"
-              class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 ${i === 0 ? "border-[#a9cf54]" : "border-transparent"} hover:border-[#a9cf54] transition-colors"
+              class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 ${i === 0 ? "border-[#4a7c3f]" : "border-transparent"} hover:border-[#4a7c3f] transition-colors"
               data-index="${i}" />`
         )
         .join("");
@@ -244,9 +244,9 @@ import Layout from "../layouts/Layout.astro";
         if (!thumb) return;
         mainImg.src = thumb.src;
         document.querySelectorAll("#thumbnails img").forEach((el) =>
-          el.classList.replace("border-[#a9cf54]", "border-transparent")
+          el.classList.replace("border-[#4a7c3f]", "border-transparent")
         );
-        thumb.classList.replace("border-transparent", "border-[#a9cf54]");
+        thumb.classList.replace("border-transparent", "border-[#4a7c3f]");
       });
     } else {
       mainImg.classList.add("hidden");
@@ -270,7 +270,7 @@ import Layout from "../layouts/Layout.astro";
           const duration = w.duration || (w.from ? `${w.from}${w.to ? ` – ${w.to}` : ""}` : "");
           const duties = w.duties || w.description || "";
           return `
-            <div class="border-l-2 border-[#a9cf54] pl-4">
+            <div class="border-l-2 border-[#4a7c3f] pl-4">
               <div class="font-semibold text-gray-900">${role}</div>
               <div class="text-sm text-gray-500 mb-2">${[location, duration].filter(Boolean).join(" · ")}</div>
               ${

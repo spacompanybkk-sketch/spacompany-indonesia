@@ -48,7 +48,7 @@ import LoginGate from "../../components/LoginGate.astro";
 
       <!-- Loading state -->
       <div id="review-loading" class="text-center py-16">
-        <svg class="animate-spin w-8 h-8 text-[#a9cf54] mx-auto mb-3" fill="none" viewBox="0 0 24 24">
+        <svg class="animate-spin w-8 h-8 text-[#4a7c3f] mx-auto mb-3" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
         </svg>
@@ -200,7 +200,7 @@ import LoginGate from "../../components/LoginGate.astro";
           </div>
           ${notionUrl ? `
             <a href="${escapeHtml(notionUrl)}" target="_blank" rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 text-xs text-[#588f27] hover:underline mt-2">
+              class="inline-flex items-center gap-1 text-xs text-[#2d5a27] hover:underline mt-2">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
@@ -210,7 +210,7 @@ import LoginGate from "../../components/LoginGate.astro";
         </div>
         <div class="flex gap-3 shrink-0">
           <button
-            class="approve-btn px-4 py-2 bg-[#a9cf54] text-white text-sm font-semibold rounded-lg hover:bg-[#588f27] transition-colors disabled:opacity-50"
+            class="approve-btn px-4 py-2 bg-[#4a7c3f] text-white text-sm font-semibold rounded-lg hover:bg-[#2d5a27] transition-colors disabled:opacity-50"
             data-id="${candidateId}"
           >
             Approve

@@ -12,7 +12,7 @@
     <!-- Passport PDF slot -->
     <div
       id="slot-passport"
-      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#a9cf54] hover:bg-green-50 transition-colors min-h-[140px] relative"
+      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#4a7c3f] hover:bg-green-50 transition-colors min-h-[140px] relative"
       data-slot="passport"
       data-accept=".pdf,application/pdf"
     >
@@ -21,14 +21,14 @@
       </svg>
       <p class="text-sm font-medium text-gray-600">Passport</p>
       <p class="text-xs text-gray-400 mt-0.5">PDF only</p>
-      <div id="passport-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#588f27] font-medium hidden"></div>
+      <div id="passport-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#2d5a27] font-medium hidden"></div>
       <input id="input-passport" type="file" accept=".pdf,application/pdf" class="hidden" />
     </div>
 
     <!-- CV PDF slot -->
     <div
       id="slot-cv"
-      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#a9cf54] hover:bg-green-50 transition-colors min-h-[140px] relative"
+      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#4a7c3f] hover:bg-green-50 transition-colors min-h-[140px] relative"
       data-slot="cv"
       data-accept=".pdf,application/pdf"
     >
@@ -37,14 +37,14 @@
       </svg>
       <p class="text-sm font-medium text-gray-600">CV / Resume</p>
       <p class="text-xs text-gray-400 mt-0.5">PDF only</p>
-      <div id="cv-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#588f27] font-medium hidden"></div>
+      <div id="cv-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#2d5a27] font-medium hidden"></div>
       <input id="input-cv" type="file" accept=".pdf,application/pdf" class="hidden" />
     </div>
 
     <!-- Photos slot -->
     <div
       id="slot-photos"
-      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#a9cf54] hover:bg-green-50 transition-colors min-h-[140px] relative"
+      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#4a7c3f] hover:bg-green-50 transition-colors min-h-[140px] relative"
       data-slot="photos"
       data-accept="image/jpeg,image/png,image/jpg"
     >
@@ -53,13 +53,13 @@
       </svg>
       <p class="text-sm font-medium text-gray-600">Photos</p>
       <p class="text-xs text-gray-400 mt-0.5">JPG / PNG, multiple</p>
-      <div id="photos-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#588f27] font-medium hidden"></div>
+      <div id="photos-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#2d5a27] font-medium hidden"></div>
       <input id="input-photos" type="file" accept="image/jpeg,image/png,image/jpg" multiple class="hidden" />
     </div>
     <!-- Country ID Card slot (optional) -->
     <div
       id="slot-idcard"
-      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#a9cf54] hover:bg-green-50 transition-colors min-h-[140px] relative"
+      class="upload-slot flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 cursor-pointer hover:border-[#4a7c3f] hover:bg-green-50 transition-colors min-h-[140px] relative"
       data-slot="idcard"
       data-accept=".pdf,application/pdf,image/jpeg,image/png,image/jpg"
     >
@@ -68,7 +68,7 @@
       </svg>
       <p class="text-sm font-medium text-gray-600">Country ID Card</p>
       <p class="text-xs text-gray-400 mt-0.5">PDF or image — optional</p>
-      <div id="idcard-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#588f27] font-medium hidden"></div>
+      <div id="idcard-status" class="absolute bottom-2 left-0 right-0 px-2 text-center text-xs text-[#2d5a27] font-medium hidden"></div>
       <input id="input-idcard" type="file" accept=".pdf,application/pdf,image/jpeg,image/png,image/jpg" class="hidden" />
     </div>
   </div>
@@ -85,7 +85,7 @@
   <button
     id="process-btn"
     disabled
-    class="w-full py-3 bg-[#a9cf54] text-white font-semibold rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+    class="w-full py-3 bg-[#4a7c3f] text-white font-semibold rounded-xl hover:bg-[#2d5a27] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
   >
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.347.347a3.82 3.82 0 01-1.197 2.309A3.822 3.822 0 0112 20.25a3.822 3.822 0 01-2.794-1.194 3.82 3.82 0 01-1.197-2.309L7.66 16.34z" />
@@ -117,7 +117,7 @@
   function setSlotStatus(slot: string, filename: string) {
     const slotEl = document.getElementById(`slot-${slot}`)!;
     const statusEl = document.getElementById(`${slot}-status`)!;
-    slotEl.classList.add('border-[#a9cf54]', 'bg-green-50');
+    slotEl.classList.add('border-[#4a7c3f]', 'bg-green-50');
     slotEl.classList.remove('border-gray-300');
     statusEl.textContent = filename;
     statusEl.classList.remove('hidden');
@@ -197,14 +197,14 @@
 
     slotEl.addEventListener('dragover', (e) => {
       e.preventDefault();
-      slotEl.classList.add('border-[#a9cf54]', 'bg-green-50');
+      slotEl.classList.add('border-[#4a7c3f]', 'bg-green-50');
     });
 
     slotEl.addEventListener('dragleave', () => {
-      if (!uploaded.passport && slotId === 'slot-passport') slotEl.classList.remove('border-[#a9cf54]', 'bg-green-50');
-      if (!uploaded.cv && slotId === 'slot-cv') slotEl.classList.remove('border-[#a9cf54]', 'bg-green-50');
-      if (uploaded.photos.length === 0 && slotId === 'slot-photos') slotEl.classList.remove('border-[#a9cf54]', 'bg-green-50');
-      if (!uploaded.idcard && slotId === 'slot-idcard') slotEl.classList.remove('border-[#a9cf54]', 'bg-green-50');
+      if (!uploaded.passport && slotId === 'slot-passport') slotEl.classList.remove('border-[#4a7c3f]', 'bg-green-50');
+      if (!uploaded.cv && slotId === 'slot-cv') slotEl.classList.remove('border-[#4a7c3f]', 'bg-green-50');
+      if (uploaded.photos.length === 0 && slotId === 'slot-photos') slotEl.classList.remove('border-[#4a7c3f]', 'bg-green-50');
+      if (!uploaded.idcard && slotId === 'slot-idcard') slotEl.classList.remove('border-[#4a7c3f]', 'bg-green-50');
     });
 
     slotEl.addEventListener('drop', (e) => {
@@ -300,7 +300,7 @@
       `;
       processStatus.textContent = 'Form populated from documents. Review and edit below.';
       processBtn.classList.add('bg-green-600');
-      processBtn.classList.remove('bg-[#a9cf54]', 'hover:bg-[#588f27]');
+      processBtn.classList.remove('bg-[#4a7c3f]', 'hover:bg-[#2d5a27]');
 
     } catch (err) {
       uploadError.textContent = `Processing failed: ${(err as Error).message}`;
