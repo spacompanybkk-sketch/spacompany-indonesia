@@ -1,0 +1,200 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, t, localizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+
+const features = [
+  {
+    titleKey: 'home.feature1.title' as const,
+    bodyKey: 'home.feature1.body' as const,
+    img: '/images/Main1-1.png',
+    imgLeft: true,
+    subs: [
+      { titleKey: 'home.feature1.sub1.title' as const, img: '/images/sub1-1.png', bodyKey: 'home.feature1.sub1.body' as const },
+      { titleKey: 'home.feature1.sub2.title' as const, img: '/images/sub1-2.png', bodyKey: 'home.feature1.sub2.body' as const },
+      { titleKey: 'home.feature1.sub3.title' as const, img: '/images/sub1-3.png', bodyKey: 'home.feature1.sub3.body' as const },
+    ],
+  },
+  {
+    titleKey: 'home.feature2.title' as const,
+    bodyKey: 'home.feature2.body' as const,
+    img: '/images/Main2.png',
+    imgLeft: false,
+    subs: [
+      { titleKey: 'home.feature2.sub1.title' as const, img: '/images/sub2-1.png', bodyKey: 'home.feature2.sub1.body' as const },
+      { titleKey: 'home.feature2.sub2.title' as const, img: '/images/sub2-2.png', bodyKey: 'home.feature2.sub2.body' as const },
+      { titleKey: 'home.feature2.sub3.title' as const, img: '/images/sub2-3.png', bodyKey: 'home.feature2.sub3.body' as const },
+    ],
+  },
+  {
+    titleKey: 'home.feature3.title' as const,
+    bodyKey: 'home.feature3.body' as const,
+    img: '/images/Main3.png',
+    imgLeft: true,
+    subs: [
+      { titleKey: 'home.feature3.sub1.title' as const, img: '/images/sub3-1.png', bodyKey: 'home.feature3.sub1.body' as const },
+      { titleKey: 'home.feature3.sub2.title' as const, img: '/images/sub3-2.png', bodyKey: 'home.feature3.sub2.body' as const },
+      { titleKey: 'home.feature3.sub3.title' as const, img: '/images/sub3-3.png', bodyKey: 'home.feature3.sub3.body' as const },
+    ],
+  },
+];
+
+const steps = [
+  { num: 1, labelKey: 'home.step1.label' as const, img: '/images/02-Post-A-Job.png', bodyKey: 'home.step1.body' as const },
+  { num: 2, labelKey: 'home.step2.label' as const, img: '/images/03-Payment.png', bodyKey: 'home.step2.body' as const },
+  { num: 3, labelKey: 'home.step3.label' as const, img: '/images/04-Select-Candidates.png', bodyKey: 'home.step3.body' as const },
+  { num: 4, labelKey: 'home.step4.label' as const, img: '/images/06-Approval.png', bodyKey: 'home.step4.body' as const },
+];
+---
+
+<Layout
+  title={lang === 'en'
+    ? "Spa Company Indonesia — Indonesia's Leading Therapist Recruiting Portal"
+    : 'Spa Company Indonesia — Portal Rekrutmen Terapis Terkemuka di Indonesia'}
+  lang={lang}
+>
+
+  <!-- Hero -->
+  <section
+    class="relative min-h-[560px] flex items-center justify-center text-center bg-cover bg-center"
+    style="background-image: url('/images/spa-massage-hero.jpg');"
+  >
+    <div class="absolute inset-0 bg-black/55"></div>
+    <div class="relative z-10 px-4 max-w-3xl mx-auto">
+      <img src="/images/logo.png" alt="Spa Company Indonesia" class="h-24 mx-auto mb-6" />
+      <h1 class="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
+        {t(lang, 'home.hero.title')}
+      </h1>
+      <p class="text-lg text-white/85 mb-8 max-w-xl mx-auto">
+        {t(lang, 'home.hero.subtitle')}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href={localizedPath(lang, '/jobs')}
+          class="px-8 py-3 rounded-full bg-[#4a7c3f] text-white font-semibold hover:bg-[#2d5a27] transition-colors"
+        >
+          {t(lang, 'home.hero.cta')}
+        </a>
+        <a
+          href={localizedPath(lang, '/get-a-quote')}
+          class="px-8 py-3 rounded-full border-2 border-white text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors"
+        >
+          {t(lang, 'home.hero.ctaEmployer')}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="bg-[#4a7c3f] text-white py-10">
+    <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <div class="text-4xl font-bold mb-1">500+</div>
+        <div class="text-white/80 font-medium">{lang === 'en' ? 'Verified Therapists' : 'Terapis Terverifikasi'}</div>
+      </div>
+      <div>
+        <div class="text-4xl font-bold mb-1">200+</div>
+        <div class="text-white/80 font-medium">{lang === 'en' ? 'Spas Served' : 'Spa Dilayani'}</div>
+      </div>
+      <div>
+        <div class="text-4xl font-bold mb-1">24 hr</div>
+        <div class="text-white/80 font-medium">{lang === 'en' ? 'Approval Turnaround' : 'Waktu Persetujuan'}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  {features.map((f, fi) => (
+    <section class={`py-16 ${fi % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Main Feature Row -->
+        <div class={`flex flex-col ${f.imgLeft ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-10 mb-12`}>
+          <div class="md:w-1/2">
+            <img src={f.img} alt={t(lang, f.titleKey)} class="rounded-2xl shadow-md w-full object-cover" />
+          </div>
+          <div class="md:w-1/2">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">{t(lang, f.titleKey)}</h2>
+            <p class="text-gray-600 leading-relaxed text-lg">{t(lang, f.bodyKey)}</p>
+          </div>
+        </div>
+
+        <!-- Sub-features -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {f.subs.map((s) => (
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
+              <img src={s.img} alt={t(lang, s.titleKey)} class="w-24 h-24 object-cover mx-auto mb-4 rounded-xl" />
+              <h3 class="font-semibold text-gray-800 mb-2 text-sm tracking-wide uppercase">{t(lang, s.titleKey)}</h3>
+              <p class="text-gray-500 text-sm leading-relaxed">{t(lang, s.bodyKey)}</p>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  ))}
+
+  <!-- Book CTA Banner -->
+  <section class="bg-gray-900 py-14">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-white mb-3">{lang === 'en' ? 'How to Run a Spa' : 'Cara Mengelola Spa'}</h2>
+      <p class="text-gray-300 mb-6 text-lg">
+        {lang === 'en'
+          ? 'Get the management book for all Spa & Wellness operators. A decade of experience and trends in one place — verified tips to increase profit, customer retention, and operational effectiveness.'
+          : 'Dapatkan buku manajemen untuk semua operator Spa & Wellness. Pengalaman dan tren satu dekade dalam satu tempat — tips terverifikasi untuk meningkatkan keuntungan dan efektivitas operasional.'}
+      </p>
+      <a
+        href="/book"
+        class="inline-block px-8 py-3 rounded-full bg-[#4a7c3f] text-white font-semibold hover:bg-[#2d5a27] transition-colors"
+      >
+        {t(lang, 'common.learnMore')}
+      </a>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-3">{lang === 'en' ? 'How It Works' : 'Cara Kerjanya'}</h2>
+        <p class="text-gray-500">{lang === 'en' ? 'Please pay close attention to the following steps.' : 'Silakan perhatikan langkah-langkah berikut.'}</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-8">
+        {steps.map((s) => (
+          <div class="flex flex-col items-center text-center group">
+            <div class="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-3 group-hover:border-[#4a7c3f] transition-colors">
+              <img src={s.img} alt={t(lang, s.labelKey)} class="w-14 h-14 object-contain" />
+            </div>
+            <div class="text-xs font-bold text-[#4a7c3f] mb-1">{s.num}.</div>
+            <div class="text-sm font-semibold text-gray-800 mb-2">{t(lang, s.labelKey)}</div>
+            <p class="text-xs text-gray-500 leading-relaxed hidden lg:block">{t(lang, s.bodyKey)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="bg-[#4a7c3f] py-16 text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-white mb-4">
+        {lang === 'en' ? 'Ready to Find Your Next Therapist?' : 'Siap Menemukan Terapis Berikutnya?'}
+      </h2>
+      <p class="text-white/85 mb-8 text-lg">
+        {lang === 'en'
+          ? 'Get started today — chat with us on WhatsApp.'
+          : 'Mulai sekarang — hubungi kami di WhatsApp.'}
+      </p>
+      <a
+        href="https://wa.me/628211519986"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block px-10 py-4 rounded-full bg-white text-[#2d5a27] font-bold text-lg hover:bg-gray-100 transition-colors"
+      >
+        {t(lang, 'contact.whatsapp')}
+      </a>
+    </div>
+  </section>
+
+</Layout>

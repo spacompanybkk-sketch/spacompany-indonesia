@@ -1,32 +1,43 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, t, localizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout
-  title="Get a Quote — Spa Company Bangkok"
-  description="Post a job and hire verified Thai massage therapists. Tell us your requirements and we'll match you with the right candidates."
+  title={lang === 'en' ? 'Get a Quote — Spa Company Indonesia' : 'Minta Penawaran — Spa Company Indonesia'}
+  lang={lang}
 >
 
   <!-- Hero -->
   <section class="bg-[#4a7c3f] py-14 text-center">
     <div class="max-w-3xl mx-auto px-4">
-      <h1 class="text-4xl font-bold text-white mb-3">Get a Quote</h1>
-      <p class="text-white/85 text-lg">Post a Job Here</p>
+      <h1 class="text-4xl font-bold text-white mb-3">{t(lang, 'quote.hero.title')}</h1>
+      <p class="text-white/85 text-lg">{t(lang, 'quote.hero.subtitle')}</p>
     </div>
   </section>
 
   <!-- Explanation -->
   <section class="bg-gray-50 py-8 border-b border-gray-200">
     <div class="max-w-3xl mx-auto px-4">
-      <h2 class="text-lg font-bold text-gray-900 mb-2">What happens after I fill out this form?</h2>
+      <h2 class="text-lg font-bold text-gray-900 mb-2">
+        {lang === 'en' ? 'What happens after I fill out this form?' : 'Apa yang terjadi setelah saya mengisi formulir ini?'}
+      </h2>
       <p class="text-gray-600 leading-relaxed text-sm mb-3">
-        Once you submit this form, our team in Bangkok will receive the complete details of your job posting and begin the matching process immediately. Your requirements — salary, location, contract length, skills, and benefits — are used to actively headhunt and shortlist the most suitable Thai therapists from our verified database of hundreds of candidates. We also use these details to create targeted advertising in Thai-language job boards, social media, and our recruiter network across Thailand, so we can reach therapists who might not yet be in our database but are actively looking for international opportunities.
+        {lang === 'en'
+          ? 'Once you submit this form, our team in Indonesia will receive the complete details of your job posting and begin the matching process immediately. Your requirements — salary, location, contract length, skills, and benefits — are used to actively headhunt and shortlist the most suitable Indonesian therapists from our verified database of hundreds of candidates.'
+          : 'Setelah Anda mengirimkan formulir ini, tim kami di Indonesia akan menerima detail lengkap lowongan kerja Anda dan memulai proses pencocokan segera. Persyaratan Anda — gaji, lokasi, durasi kontrak, keterampilan, dan tunjangan — digunakan untuk mencari dan memilih terapis Indonesia yang paling sesuai dari database terverifikasi kami.'}
       </p>
       <p class="text-gray-600 leading-relaxed text-sm mb-3">
-        If you have <strong>not</strong> spoken to us before, one of our recruitment managers will contact you within one business day with follow-up questions, pricing details, and next steps. We'll walk you through the visa process, expected timelines, and how our placement guarantee works. If you've been referred by an existing client or have already received a quote from our team, please proceed with the form — your details will be routed directly to your assigned account manager for faster processing.
+        {lang === 'en'
+          ? "If you have not spoken to us before, one of our recruitment managers will contact you within one business day with follow-up questions, pricing details, and next steps. We'll walk you through the visa process, expected timelines, and how our placement guarantee works."
+          : 'Jika Anda belum pernah berbicara dengan kami sebelumnya, salah satu manajer rekrutmen kami akan menghubungi Anda dalam satu hari kerja dengan pertanyaan lanjutan, detail harga, dan langkah selanjutnya.'}
       </p>
       <p class="text-gray-600 leading-relaxed text-sm">
-        If a member of our staff has instructed you to fill out this form, please do so as completely as possible — every field helps us narrow down the right candidates faster. Every customer must fill in the job details at some point in the process, so getting it done upfront saves time later. Accurate information leads to better matches, faster placements, and a smoother onboarding experience for both you and the therapist.
+        {lang === 'en'
+          ? 'If a member of our staff has instructed you to fill out this form, please do so as completely as possible — every field helps us narrow down the right candidates faster. Accurate information leads to better matches, faster placements, and a smoother onboarding experience.'
+          : 'Jika anggota staf kami telah menginstruksikan Anda untuk mengisi formulir ini, silakan isi selengkap mungkin — setiap kolom membantu kami mempersempit kandidat yang tepat dengan lebih cepat.'}
       </p>
     </div>
   </section>
@@ -37,8 +48,12 @@ import Layout from '../layouts/Layout.astro';
 
       <div id="success-msg" class="hidden bg-green-50 border-2 border-green-200 rounded-2xl p-8 text-center mb-6">
         <div class="text-3xl mb-2">&#10003;</div>
-        <h2 class="text-xl font-bold text-green-800 mb-2">Job Posted Successfully!</h2>
-        <p class="text-green-700">We'll review your request and get back to you within one business day.</p>
+        <h2 class="text-xl font-bold text-green-800 mb-2">
+          {lang === 'en' ? 'Job Posted Successfully!' : 'Lowongan Berhasil Dikirim!'}
+        </h2>
+        <p class="text-green-700">
+          {lang === 'en' ? "We'll review your request and get back to you within one business day." : 'Kami akan meninjau permintaan Anda dan menghubungi Anda dalam satu hari kerja.'}
+        </p>
       </div>
 
       <div id="error-msg" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-xl px-5 py-4 mb-6 text-sm font-medium"></div>
@@ -48,38 +63,38 @@ import Layout from '../layouts/Layout.astro';
         <!-- Company Info -->
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Company Name</label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Company Name' : 'Nama Perusahaan'}</label>
             <input name="company" type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Contact Name <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Contact Name' : 'Nama Kontak'} <span class="text-red-500">*</span></label>
             <input name="contactName" required type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Full Address of Spa <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Full Address of Spa' : 'Alamat Lengkap Spa'} <span class="text-red-500">*</span></label>
             <input name="address" required type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Country <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Country' : 'Negara'} <span class="text-red-500">*</span></label>
             <input name="country" required type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Spa Website or Social Media</label>
-            <p class="text-xs text-gray-500 mb-1">For a new spa, type "No"</p>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Spa Website or Social Media' : 'Website atau Media Sosial Spa'}</label>
+            <p class="text-xs text-gray-500 mb-1">{lang === 'en' ? 'For a new spa, type "No"' : 'Untuk spa baru, ketik "Tidak"'}</p>
             <input name="website" type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Phone Number <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Phone Number' : 'Nomor Telepon'} <span class="text-red-500">*</span></label>
             <input name="phone" required type="tel"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">E-mail</label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">Email</label>
             <input name="email" type="email"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
@@ -91,91 +106,111 @@ import Layout from '../layouts/Layout.astro';
         <!-- Job Requirements -->
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Age of Candidate <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Age of Candidate' : 'Usia Kandidat'} <span class="text-red-500">*</span></label>
             <p class="text-xs text-gray-500 mb-1">min - max</p>
             <input name="ageRange" required type="text" placeholder="Ex. 25 - 45"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Gender <span class="text-red-500">*</span></label>
-            <input name="gender" required type="text" placeholder="Female / Male"
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Gender' : 'Jenis Kelamin'} <span class="text-red-500">*</span></label>
+            <input name="gender" required type="text" placeholder={lang === 'en' ? 'Female / Male' : 'Perempuan / Laki-laki'}
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Experience (years)</label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Experience (years)' : 'Pengalaman (tahun)'}</label>
             <input name="experience" type="number" min="0" max="10" placeholder="2"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Number of Therapists <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Number of Therapists' : 'Jumlah Terapis'} <span class="text-red-500">*</span></label>
             <input name="numTherapists" required type="number" min="1"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Base Salary <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Base Salary' : 'Gaji Pokok'} <span class="text-red-500">*</span></label>
             <input name="salary" required type="text" placeholder="Ex. 1,000 USD"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Contract Length <span class="text-red-500">*</span></label>
-            <input name="contractLength" required type="text" placeholder="Ex. 12 or 24 months / 1 year"
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Contract Length' : 'Durasi Kontrak'} <span class="text-red-500">*</span></label>
+            <input name="contractLength" required type="text" placeholder={lang === 'en' ? 'Ex. 12 or 24 months / 1 year' : 'Mis. 12 atau 24 bulan / 1 tahun'}
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Commission Pay <span class="text-red-500">*</span></label>
-            <p class="text-xs text-gray-500 mb-1">Commission payment is usually motivational — when a therapist fulfils a certain number of massages or hours. E.g. $4 for every client</p>
-            <input name="commission" required type="text" placeholder="Ex. 1 Euro / 5% per one service"
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Commission Pay' : 'Komisi'} <span class="text-red-500">*</span></label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en'
+                ? 'Commission payment is usually motivational — when a therapist fulfils a certain number of massages or hours. E.g. $4 for every client'
+                : 'Pembayaran komisi biasanya bersifat motivasi — ketika terapis memenuhi sejumlah pijat atau jam tertentu.'}
+            </p>
+            <input name="commission" required type="text" placeholder={lang === 'en' ? 'Ex. 1 Euro / 5% per one service' : 'Mis. 1 Euro / 5% per layanan'}
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Estimation of Tips</label>
-            <p class="text-xs text-gray-500 mb-1">Estimate the range of tips the therapist usually receives. Do not put it too high, as to not create expectations. Tips are discretionary and are not part of the contract.</p>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Estimation of Tips' : 'Perkiraan Tips'}</label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en'
+                ? 'Estimate the range of tips the therapist usually receives. Tips are discretionary and are not part of the contract.'
+                : 'Perkirakan rentang tip yang biasa diterima terapis. Tips bersifat sukarela dan bukan bagian dari kontrak.'}
+            </p>
             <input name="tips" type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Food Allowance</label>
-            <p class="text-xs text-gray-500 mb-1">Do you give food allowance? Do you buy groceries for them?</p>
-            <input name="food" type="text" placeholder="Ex. 80 Euro a month / Rice 5 kg not included in salary"
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Food Allowance' : 'Tunjangan Makan'}</label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en' ? 'Do you give food allowance? Do you buy groceries for them?' : 'Apakah Anda memberikan tunjangan makan?'}
+            </p>
+            <input name="food" type="text" placeholder={lang === 'en' ? 'Ex. 80 Euro a month' : 'Mis. 80 Euro per bulan'}
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Accommodation</label>
-            <p class="text-xs text-gray-500 mb-1">Do you provide accommodation?</p>
-            <input name="accommodation" type="text" placeholder="Yes / No"
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Accommodation' : 'Akomodasi'}</label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en' ? 'Do you provide accommodation?' : 'Apakah Anda menyediakan akomodasi?'}
+            </p>
+            <input name="accommodation" type="text" placeholder={lang === 'en' ? 'Yes / No' : 'Ya / Tidak'}
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Flight Ticket</label>
-            <p class="text-xs text-gray-500 mb-1">Do you provide a round-trip ticket?</p>
-            <input name="flight" type="text" placeholder="Yes / No"
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Flight Ticket' : 'Tiket Pesawat'}</label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en' ? 'Do you provide a round-trip ticket?' : 'Apakah Anda menyediakan tiket pulang-pergi?'}
+            </p>
+            <input name="flight" type="text" placeholder={lang === 'en' ? 'Yes / No' : 'Ya / Tidak'}
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Other Incentives or Bonus</label>
-            <p class="text-xs text-gray-500 mb-1">If your pay structure is complicated, write the detailed payment plan here.</p>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Other Incentives or Bonus' : 'Insentif atau Bonus Lainnya'}</label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en' ? 'If your pay structure is complicated, write the detailed payment plan here.' : 'Jika struktur gaji Anda rumit, tulis rencana pembayaran detail di sini.'}
+            </p>
             <input name="bonus" type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Working Hours per Week</label>
-            <p class="text-xs text-gray-500 mb-1">How many hours are therapists required to be on standby? Should be between 40-80 hours per week.</p>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Working Hours per Week' : 'Jam Kerja per Minggu'}</label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en' ? 'How many hours are therapists required to be on standby? Should be between 40-80 hours per week.' : 'Berapa jam terapis harus siaga? Antara 40-80 jam per minggu.'}
+            </p>
             <input name="hours" type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Working Week</label>
-            <p class="text-xs text-gray-500 mb-1">Describe the typical week. E.g. "MON-SUN 10:00-22:00, with one day off"</p>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Working Week' : 'Minggu Kerja'}</label>
+            <p class="text-xs text-gray-500 mb-1">
+              {lang === 'en' ? 'Describe the typical week. E.g. "MON-SUN 10:00-22:00, with one day off"' : 'Jelaskan minggu kerja tipikal. Mis. "SEN-MIN 10:00-22:00, satu hari libur"'}
+            </p>
             <input name="workingWeek" type="text"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Job Description</label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Job Description' : 'Deskripsi Pekerjaan'}</label>
             <textarea name="description" rows="4"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm resize-none"></textarea>
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-800 mb-1">Additional Message</label>
+            <label class="block text-sm font-semibold text-gray-800 mb-1">{lang === 'en' ? 'Additional Message' : 'Pesan Tambahan'}</label>
             <textarea name="message" rows="3"
               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm resize-none"></textarea>
           </div>
@@ -189,19 +224,19 @@ import Layout from '../layouts/Layout.astro';
         <!-- Math Captcha -->
         <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
           <label class="block text-sm font-semibold text-gray-800 mb-2">
-            Quick check: <span id="captcha-question" class="text-gray-900"></span> <span class="text-red-500">*</span>
+            {lang === 'en' ? 'Quick check:' : 'Verifikasi cepat:'} <span id="captcha-question" class="text-gray-900"></span> <span class="text-red-500">*</span>
           </label>
-          <input name="captcha" required type="number" placeholder="Your answer"
+          <input name="captcha" required type="number" placeholder={lang === 'en' ? 'Your answer' : 'Jawaban Anda'}
             class="w-32 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]/50 focus:border-[#4a7c3f] text-sm" />
         </div>
 
         <button type="submit" id="submit-btn"
           class="w-full py-4 rounded-xl bg-[#4a7c3f] text-white font-semibold hover:bg-[#2d5a27] transition-colors text-lg disabled:opacity-50">
-          Send
+          {lang === 'en' ? 'Send' : 'Kirim'}
         </button>
 
         <p class="text-xs text-gray-400 text-center">
-          We will review your request and respond within one business day.
+          {lang === 'en' ? 'We will review your request and respond within one business day.' : 'Kami akan meninjau permintaan Anda dan merespons dalam satu hari kerja.'}
         </p>
       </form>
     </div>
@@ -211,7 +246,7 @@ import Layout from '../layouts/Layout.astro';
 
 <script>
   import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-  import { db } from '../lib/firebase.js';
+  import { db } from '../../lib/firebase.js';
 
   // Math captcha
   const a = Math.floor(Math.random() * 10) + 1;
@@ -239,7 +274,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     btn.disabled = true;
-    btn.textContent = 'Sending…';
+    btn.textContent = 'Sending...';
 
     try {
       const fields = [
@@ -259,7 +294,7 @@ import Layout from '../layouts/Layout.astro';
 
       // Email notification
       try {
-        await fetch('https://formsubmit.co/ajax/info@spa-company.com,dadda@spa-company.com,michal@spa-company.com', {
+        await fetch('https://formsubmit.co/ajax/info@spacompany-indonesia.com', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
