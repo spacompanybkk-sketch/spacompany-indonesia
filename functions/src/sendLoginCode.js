@@ -7,7 +7,7 @@ const msClientId = defineString("MS_CLIENT_ID");
 const msClientSecret = defineString("MS_CLIENT_SECRET");
 const msSenderEmail = defineString("MS_SENDER_EMAIL");
 
-const ALLOWED_DOMAINS = ["spa-company.com", "dmjeurope.com"];
+const ALLOWED_DOMAINS = ["spa-company.com", "spacompany-indonesia.com", "dmjeurope.com"];
 const CODE_EXPIRY_MINUTES = 10;
 
 export const sendLoginCode = onCall({ invoker: "public" }, async (request) => {
@@ -21,7 +21,7 @@ export const sendLoginCode = onCall({ invoker: "public" }, async (request) => {
   if (!ALLOWED_DOMAINS.includes(domain)) {
     throw new HttpsError(
       "permission-denied",
-      "Only @spa-company.com and @dmjeurope.com emails are allowed."
+      "Only @spa-company.com, @spacompany-indonesia.com, and @dmjeurope.com emails are allowed."
     );
   }
 
