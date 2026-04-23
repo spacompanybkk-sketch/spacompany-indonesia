@@ -5,7 +5,7 @@ import LoginGate from '../components/LoginGate.astro';
 const skills = [
   'Aroma Massage','Body Massage','Foot Massage','Foot Reflexology',
   'Foot Spa','Herbal Massage','Oil Massage',
-  'Thai Foot Spa and Massage','Traditional Thai Massage',
+  'Balinese Massage','Traditional Indonesian Massage',
 ];
 const ratingFields = [
   ['communication','Communication'],
@@ -89,12 +89,12 @@ const ratingFields = [
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Place of Birth</label>
-              <input name="placeOfBirth" type="text" placeholder="e.g. Chiang Mai"
+              <input name="placeOfBirth" type="text" placeholder="e.g. Bali, Jakarta"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
-              <input name="nationality" type="text" placeholder="e.g. Thailand, Indonesia"
+              <input name="nationality" type="text" placeholder="e.g. Indonesia"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
             </div>
             <div>
@@ -852,7 +852,7 @@ const ratingFields = [
       <div>
         <label class="block text-xs font-medium text-gray-600 mb-1">Duties (one per line)</label>
         <textarea name="work-duties-${i}" rows="3"
-          placeholder="Provided traditional Thai massage&#10;Assisted with spa treatments"
+          placeholder="Provided Balinese massage&#10;Assisted with spa treatments"
           class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
       </div>
     `;
