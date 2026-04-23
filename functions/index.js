@@ -8,3 +8,5 @@ export { sendFormNotification } from "./src/sendFormNotification.js";
 export { fetchJobs } from "./src/fetchJobs.js";
 export { importJobs } from "./src/importJobs.js";
 export { submitCV } from "./src/submitCV.js";
+export { processDocuments } from "./src/processDocuments.js";
+export { syncToNotion, searchNotionCandidates } from "./src/syncToNotion.js";
