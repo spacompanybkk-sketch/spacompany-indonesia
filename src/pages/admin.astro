@@ -88,9 +88,31 @@ const ratingFields = [
       </div>
       <!-- Jobs Panel -->
       <div id="panel-jobs" class="hidden">
-        <div id="jobs-loading" class="text-center text-gray-400 py-16">Loading job posts…</div>
-        <div id="jobs-empty" class="hidden text-center text-gray-400 py-16">No job posts yet.</div>
-        <div id="jobs-list" class="space-y-4"></div>
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-lg font-bold text-gray-900">Jobs Portal</h2>
+            <p class="text-sm text-gray-500">Toggle which jobs appear on the Indonesian site.</p>
+          </div>
+          <button id="sync-jobs-btn"
+            class="px-5 py-2 text-sm font-semibold rounded-lg bg-[#4a7c3f] text-white hover:bg-[#2d5a27] transition-colors disabled:opacity-50">
+            Sync from Notion
+          </button>
+        </div>
+        <div id="sync-jobs-status" class="hidden mb-4 px-4 py-3 rounded-lg text-sm"></div>
+        <div class="mb-4">
+          <input id="jobs-search" type="text" placeholder="Search jobs by name, location, or country…"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] placeholder-gray-400" />
+          <div class="flex items-center gap-4 mt-2 text-sm text-gray-500">
+            <span id="jobs-count"></span>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input id="jobs-filter-live" type="checkbox" class="rounded accent-[#4a7c3f]" />
+              Show live only
+            </label>
+          </div>
+        </div>
+        <div id="jobs-admin-loading" class="text-center text-gray-400 py-16">Loading jobs…</div>
+        <div id="jobs-admin-empty" class="hidden text-center text-gray-400 py-16">No jobs synced yet. Click "Sync from Notion" to import.</div>
+        <div id="jobs-admin-list" class="hidden space-y-3"></div>
       </div>
 
       <!-- Messages Panel -->

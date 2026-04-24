@@ -1,6 +1,6 @@
 ---
 // LoginGate.astro — Email code authentication gate for internal intake tools
-// Allowed domains: @spacompany-indonesia.com, @dmjeurope.com
+// Allowed domains: @spa-company.com
 ---
 
 <div id="login-gate" class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
@@ -21,7 +21,7 @@
       <input
         id="login-email"
         type="email"
-        placeholder="you@spacompany-indonesia.com"
+        placeholder="you@spa-company.com"
         class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]"
         autofocus
       />
@@ -80,7 +80,7 @@
 <script>
   import { callFunction } from '../lib/firebase.js';
 
-  const ALLOWED_DOMAINS = ['spacompany-indonesia.com', 'dmjeurope.com'];
+  const ALLOWED_DOMAINS = ['spa-company.com'];
   const SESSION_KEY = 'intake_session';
 
   const gateEl = document.getElementById('login-gate')!;
@@ -145,7 +145,7 @@
 
     const domain = email.split('@')[1];
     if (!email || !ALLOWED_DOMAINS.includes(domain)) {
-      emailError.textContent = 'Please use a @spacompany-indonesia.com or @dmjeurope.com email address.';
+      emailError.textContent = 'Please use a @spa-company.com email address.';
       emailError.classList.remove('hidden');
       return;
     }

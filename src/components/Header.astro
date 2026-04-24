@@ -4,15 +4,22 @@ import { getLangFromUrl, t, localizedPath } from '../i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const otherLang = lang === 'en' ? 'id' : 'en';
 
-const navLinks = [
-  { key: 'nav.home', href: '/' },
-  { key: 'nav.services', href: '/services' },
-  { key: 'nav.jobs', href: '/jobs' },
-  { key: 'nav.about', href: '/about' },
-  { key: 'nav.getQuote', href: '/get-a-quote' },
-  { key: 'nav.blog', href: '/blog' },
-  { key: 'nav.contact', href: '/contact' },
+const allNavLinks = [
+  { key: 'nav.home', href: '/', enOnly: false, idOnly: false },
+  { key: 'nav.services', href: '/services', enOnly: false, idOnly: false },
+  { key: 'nav.therapists', href: '/en/therapists', enOnly: true, idOnly: false },
+  { key: 'nav.jobs', href: '/jobs', enOnly: false, idOnly: true },
+  { key: 'nav.about', href: '/about', enOnly: false, idOnly: false },
+  { key: 'nav.getQuote', href: '/get-a-quote', enOnly: false, idOnly: false },
+  { key: 'nav.blog', href: '/blog', enOnly: false, idOnly: false },
+  { key: 'nav.contact', href: '/contact', enOnly: false, idOnly: false },
 ] as const;
+
+const navLinks = allNavLinks.filter(link => {
+  if (link.idOnly && lang === 'en') return false;
+  if (link.enOnly && lang === 'id') return false;
+  return true;
+});
 
 const pathname = Astro.url.pathname;
 
@@ -65,10 +72,10 @@ const langToggleHref = '/' + otherLang + pathname.replace(/^\/(en|id)/, '') || '
         </a>
         <a
           href={langToggleHref}
-          class="ml-2 px-3 py-1.5 text-sm font-semibold rounded-full border border-[#4a7c3f] text-[#4a7c3f] hover:bg-[#4a7c3f] hover:text-white transition-colors"
+          class="ml-2 px-3 py-1.5 text-sm font-semibold rounded-full border border-[#4a7c3f] text-[#4a7c3f] hover:bg-[#4a7c3f] hover:text-white transition-colors inline-flex items-center gap-1.5"
           aria-label={`Switch to ${otherLang === 'en' ? 'English' : 'Indonesian'}`}
         >
-          {otherLang.toUpperCase()}
+          {otherLang === 'en' ? '🇬🇧' : '🇮🇩'} {otherLang.toUpperCase()}
         </a>
       </div>
 
@@ -124,7 +131,7 @@ const langToggleHref = '/' + otherLang + pathname.replace(/^\/(en|id)/, '') || '
           href={langToggleHref}
           class="block text-center px-3 py-2 text-sm font-semibold rounded-md border border-[#4a7c3f] text-[#4a7c3f] hover:bg-[#4a7c3f] hover:text-white transition-colors"
         >
-          {otherLang === 'en' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'}
+          {otherLang === 'en' ? '🇬🇧 Switch to English' : '🇮🇩 Ganti ke Bahasa Indonesia'}
         </a>
       </div>
     </nav>

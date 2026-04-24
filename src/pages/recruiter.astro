@@ -5,7 +5,7 @@ import LoginGate from '../components/LoginGate.astro';
 const skills = [
   'Aroma Massage','Body Massage','Foot Massage','Foot Reflexology',
   'Foot Spa','Herbal Massage','Oil Massage',
-  'Thai Foot Spa and Massage','Traditional Thai Massage',
+  'Balinese Massage','Traditional Indonesian Massage',
 ];
 const ratingFields = [
   ['communication','Communication'],
@@ -25,12 +25,18 @@ const ratingFields = [
           <h1 class="text-3xl font-bold text-gray-900 mb-1">Recruiter Panel</h1>
           <p class="text-gray-500">Add new therapists or manage existing profiles.</p>
         </div>
-        <div id="logged-in-as" class="text-xs text-gray-400 text-right"></div>
+        <div class="text-right">
+          <button id="logout-btn"
+            class="text-xs text-gray-400 hover:text-red-500 transition-colors mb-1 cursor-pointer">
+            Logout ×
+          </button>
+          <div id="logged-in-as" class="text-xs text-gray-400"></div>
+        </div>
       </div>
 
       <!-- Tabs -->
       <div class="flex border-b border-gray-200 mb-8">
-        <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-[#4a7c3f] text-[#2d5a27]" data-tab="add">
+        <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-[#a9cf54] text-[#588f27]" data-tab="add">
           Add New
         </button>
         <button class="rec-tab px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="manage">
@@ -55,36 +61,66 @@ const ratingFields = [
             <div class="col-span-2">
               <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
               <input name="name" required type="text"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Age *</label>
               <input name="age" required type="number" min="18" max="65"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Gender *</label>
               <select name="gender" required
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]">
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
                 <option value="">Select…</option>
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Indonesian City *</label>
-              <input name="location" required type="text" placeholder="e.g. Jakarta"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+              <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+              <input name="dateOfBirth" type="date"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">City / Region *</label>
+              <input name="location" required type="text" placeholder="e.g. Bali, Jakarta"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Place of Birth</label>
+              <input name="placeOfBirth" type="text" placeholder="e.g. Bali, Jakarta"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
+              <input name="nationality" type="text" placeholder="e.g. Indonesia"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Experience (years) *</label>
               <input name="experience" required type="number" min="0" max="40"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Passport Number</label>
+              <input name="passportNumber" type="text" placeholder="From OCR"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Address (English)</label>
+              <input name="address" type="text" placeholder="From ID card OCR"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            </div>
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Address (Local Language)</label>
+              <input name="addressLocal" type="text" placeholder="From ID card OCR"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
             </div>
             <div class="col-span-2">
               <label class="block text-sm font-medium text-gray-700 mb-1">Desired Work Location *</label>
               <input name="desiredWorkLocation" required type="text" placeholder="e.g. Slovakia, UAE"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
             </div>
           </div>
         </div>
@@ -95,7 +131,7 @@ const ratingFields = [
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {skills.map(skill => (
               <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                <input type="checkbox" name="skills" value={skill} class="rounded accent-[#4a7c3f]" />
+                <input type="checkbox" name="skills" value={skill} class="rounded accent-[#a9cf54]" />
                 {skill}
               </label>
             ))}
@@ -106,7 +142,7 @@ const ratingFields = [
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 class="font-semibold text-gray-900 text-lg mb-4">YouTube Video</h2>
           <input name="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..."
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
           <p class="text-xs text-gray-400 mt-1">Optional. Paste a YouTube link for the therapist's introduction video.</p>
         </div>
 
@@ -115,7 +151,7 @@ const ratingFields = [
           <h2 class="font-semibold text-gray-900 text-lg mb-4">Biography</h2>
           <textarea name="bio" rows="4" required
             placeholder="Describe the therapist's background, personality, and experience…"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none"></textarea>
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
         </div>
 
         <!-- Ratings -->
@@ -129,7 +165,7 @@ const ratingFields = [
                   <span class="text-sm text-gray-500" id={`rating-display-${key}`}>0</span>
                 </div>
                 <input type="range" name={`rating-${key}`} min="0" max="20" value="0"
-                  class="w-full accent-[#4a7c3f]"
+                  class="w-full accent-[#a9cf54]"
                   data-display={`rating-display-${key}`} />
               </div>
             ))}
@@ -140,7 +176,7 @@ const ratingFields = [
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div class="flex items-center justify-between mb-4">
             <h2 class="font-semibold text-gray-900 text-lg">Work History</h2>
-            <button type="button" id="add-work-entry" class="text-sm text-[#4a7c3f] font-medium hover:underline">
+            <button type="button" id="add-work-entry" class="text-sm text-[#a9cf54] font-medium hover:underline">
               + Add Entry
             </button>
           </div>
@@ -149,28 +185,166 @@ const ratingFields = [
 
         <!-- Photos -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h2 class="font-semibold text-gray-900 text-lg mb-4">Photos</h2>
+          <div class="flex items-start justify-between mb-4">
+            <h2 class="font-semibold text-gray-900 text-lg">Photos</h2>
+            <button type="button" id="photo-guide-toggle" class="shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold hover:bg-blue-200 transition-colors">i</button>
+          </div>
+          <div id="photo-guide" class="hidden mb-4 bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800 space-y-2">
+            <p class="font-semibold">Photo Guidelines</p>
+            <p><strong>Photo 1 (Avatar / Main Profile):</strong> This is the first photo clients see. It should be a <strong>portrait-style headshot or half-body photo</strong> — clean background, professional spa uniform, friendly smile, good lighting. Ideal size: <strong>800 × 1000px</strong> (portrait orientation).</p>
+            <p><strong>Additional photos:</strong> Include 2–4 more photos showing the therapist at work, in the spa environment, or a full-body photo. Landscape orientation works well. Ideal size: <strong>800 × 600px</strong>.</p>
+            <div class="border-t border-blue-200 pt-2 mt-2">
+              <p class="text-xs text-blue-600"><strong>Tips:</strong></p>
+              <ul class="text-xs text-blue-600 list-disc list-inside space-y-0.5">
+                <li>Use natural lighting — avoid harsh flash or dark rooms</li>
+                <li>No filters or heavy editing — clients want to see the real person</li>
+                <li>Uniform or professional attire preferred</li>
+                <li>JPEG format, max 500KB per photo for fast loading</li>
+                <li>Phone camera photos work fine — just ensure good lighting and focus</li>
+              </ul>
+            </div>
+          </div>
           <input type="file" id="photo-input" multiple accept="image/*"
-            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#4a7c3f] file:text-white hover:file:bg-[#2d5a27]" />
+            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#a9cf54] file:text-white hover:file:bg-[#588f27]" />
+          <p class="text-xs text-gray-400 mt-2">First photo = main profile avatar. Upload multiple for gallery.</p>
           <div id="photo-previews" class="flex flex-wrap gap-3 mt-4"></div>
         </div>
 
-        <!-- Notion Upload -->
+        <!-- Documents -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" name="pushToNotion" class="rounded accent-[#4a7c3f] w-5 h-5" />
+          <h2 class="font-semibold text-gray-900 text-lg mb-4">Documents</h2>
+          <div class="space-y-4">
+            <!-- Passport -->
             <div>
-              <span class="text-sm font-semibold text-gray-900">Also create in Notion</span>
-              <p class="text-xs text-gray-500">Creates a candidate entry with status "WAITING FOR APPROVAL" and job title "MASSAGE".</p>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Passport (PDF)</label>
+              <div class="flex gap-2 items-start">
+                <input type="file" id="doc-passport" accept=".pdf"
+                  class="flex-1 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200" />
+                <button type="button" id="ocr-passport-btn"
+                  class="shrink-0 px-4 py-2 text-xs font-semibold rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 transition-colors disabled:opacity-50 hidden">
+                  Extract OCR
+                </button>
+              </div>
+              <div id="ocr-passport-status" class="hidden mt-2 text-xs rounded-lg px-3 py-2"></div>
             </div>
-          </label>
+            <!-- Country ID Card -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Country ID Card (PDF)</label>
+              <div class="flex gap-2 items-start">
+                <input type="file" id="doc-id-card" accept=".pdf"
+                  class="flex-1 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200" />
+                <button type="button" id="ocr-id-card-btn"
+                  class="shrink-0 px-4 py-2 text-xs font-semibold rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 transition-colors disabled:opacity-50 hidden">
+                  Extract OCR
+                </button>
+              </div>
+              <div id="ocr-id-card-status" class="hidden mt-2 text-xs rounded-lg px-3 py-2"></div>
+            </div>
+            <!-- Profession Certificate -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Profession Certificate (PDF)</label>
+              <input type="file" id="doc-certificate" accept=".pdf"
+                class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200" />
+            </div>
+            <!-- CV / Resume -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">CV / Resume (PDF)</label>
+              <div class="flex gap-2 items-start">
+                <input type="file" id="doc-cv" accept=".pdf"
+                  class="flex-1 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200" />
+                <button type="button" id="ocr-cv-btn"
+                  class="shrink-0 px-4 py-2 text-xs font-semibold rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 transition-colors disabled:opacity-50 hidden">
+                  Extract OCR
+                </button>
+              </div>
+              <div id="ocr-cv-status" class="hidden mt-2 text-xs rounded-lg px-3 py-2"></div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 mt-3">All document uploads are optional. PDF files only.</p>
         </div>
 
-        <!-- Submit -->
-        <button type="submit" id="submit-btn"
-          class="w-full py-4 bg-[#4a7c3f] text-white font-bold text-lg rounded-xl hover:bg-[#2d5a27] transition-colors disabled:opacity-50">
-          Save Profile
-        </button>
+        <!-- Notion Candidate Mode -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 class="font-semibold text-gray-900 text-lg mb-4">Notion Candidate</h2>
+          <div class="flex gap-3 mb-4">
+            <button type="button" id="notion-mode-existing"
+              class="flex-1 py-2.5 text-sm font-semibold rounded-lg border-2 border-[#a9cf54] text-[#588f27] bg-[#a9cf54]/10 transition-colors">
+              Link to Existing
+            </button>
+            <button type="button" id="notion-mode-new"
+              class="flex-1 py-2.5 text-sm font-semibold rounded-lg border-2 border-gray-200 text-gray-500 hover:border-gray-300 transition-colors">
+              Create New Entry
+            </button>
+          </div>
+
+          <!-- Search existing -->
+          <div id="notion-search-section">
+            <p class="text-xs text-gray-400 mb-3">Search and select an existing Notion candidate to attach documents, profile link, and OCR data.</p>
+            <input id="notion-search" type="text" placeholder="Type candidate name to search Notion…"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+            <div id="notion-search-results" class="mt-2 space-y-1 max-h-48 overflow-y-auto"></div>
+            <input type="hidden" id="notion-selected-id" />
+            <div id="notion-selected" class="hidden mt-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-sm text-green-800 flex items-center justify-between">
+              <span id="notion-selected-label"></span>
+              <button type="button" id="notion-clear-selection" class="text-green-600 hover:text-green-800 text-xs font-medium">Change</button>
+            </div>
+          </div>
+
+          <!-- Create new info -->
+          <div id="notion-new-section" class="hidden">
+            <p class="text-xs text-gray-400">A new candidate entry will be created in the Notion Candidates DB with status "WAITING FOR APPROVAL". Documents will be added to the Documents DB.</p>
+          </div>
+
+          <input type="hidden" id="notion-create-mode" value="attach" />
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <button type="button" id="submit-website"
+                class="w-full py-4 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50 text-sm">
+                Submit to Website
+              </button>
+              <div class="mt-2 flex items-start gap-2 px-1">
+                <span class="shrink-0 w-4 h-4 rounded-full bg-[#a9cf54]/20 text-[#588f27] flex items-center justify-center text-xs font-bold mt-0.5">i</span>
+                <p class="text-xs text-gray-400">Saves to <strong>spacompany-indonesia.com</strong> therapist database only. Visible to clients browsing the website.</p>
+              </div>
+            </div>
+            <div>
+              <button type="button" id="submit-notion"
+                class="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 text-sm">
+                Submit to Notion
+              </button>
+              <div class="mt-2 flex items-start gap-2 px-1">
+                <span class="shrink-0 w-4 h-4 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold mt-0.5">i</span>
+                <p class="text-xs text-gray-400">Saves to <strong>Notion</strong> Candidates DB + Documents DB only. For internal recruitment management.</p>
+              </div>
+            </div>
+            <div>
+              <button type="button" id="submit-both"
+                class="w-full py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-50 text-sm">
+                Submit to Both
+              </button>
+              <div class="mt-2 flex items-start gap-2 px-1">
+                <span class="shrink-0 w-4 h-4 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold mt-0.5">i</span>
+                <p class="text-xs text-gray-400">Saves to <strong>both</strong> spacompany-indonesia.com and Notion. Full sync across systems.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reset -->
+          <div class="mt-6 text-center">
+            <button type="button" id="reset-form-btn"
+              class="px-6 py-2 text-sm font-medium text-gray-400 hover:text-red-500 border border-gray-200 hover:border-red-300 rounded-lg transition-colors">
+              Reset Form
+            </button>
+            <div class="mt-1 flex items-center justify-center gap-1.5">
+              <span class="w-3.5 h-3.5 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-[10px] font-bold">i</span>
+              <p class="text-[11px] text-gray-300">Clears all fields, uploads, and selections.</p>
+            </div>
+          </div>
+        </div>
       </form>
       </div>
 
@@ -178,9 +352,9 @@ const ratingFields = [
       <div id="tab-manage" class="hidden">
         <div class="flex flex-wrap items-center gap-4 mb-4">
           <input id="manage-search" type="text" placeholder="Search by name or SC number…"
-            class="w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            class="w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
           <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-            <input type="checkbox" id="filter-mine" class="rounded accent-[#4a7c3f]" />
+            <input type="checkbox" id="filter-mine" class="rounded accent-[#a9cf54]" />
             Show only mine
           </label>
           <span id="manage-count" class="text-xs text-gray-400 ml-auto"></span>
@@ -223,30 +397,30 @@ const ratingFields = [
         <div class="grid grid-cols-2 gap-4">
           <div class="col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-            <input name="editName" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            <input name="editName" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
-            <input name="editAge" required type="number" min="18" max="65" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            <input name="editAge" required type="number" min="18" max="65" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-            <select name="editGender" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]">
+            <select name="editGender" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]">
               <option value="Female">Female</option>
               <option value="Male">Male</option>
             </select>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-            <input name="editLocation" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            <input name="editLocation" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Experience (years)</label>
-            <input name="editExperience" required type="number" min="0" max="40" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            <input name="editExperience" required type="number" min="0" max="40" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
           </div>
           <div class="col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">Desired Work Location</label>
-            <input name="editDesired" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            <input name="editDesired" required type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
           </div>
         </div>
 
@@ -256,7 +430,7 @@ const ratingFields = [
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {skills.map(skill => (
               <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                <input type="checkbox" name="editSkills" value={skill} class="rounded accent-[#4a7c3f]" />
+                <input type="checkbox" name="editSkills" value={skill} class="rounded accent-[#a9cf54]" />
                 {skill}
               </label>
             ))}
@@ -266,13 +440,13 @@ const ratingFields = [
         <!-- YouTube -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">YouTube URL</label>
-          <input name="editYoutube" type="url" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+          <input name="editYoutube" type="url" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
         </div>
 
         <!-- Bio -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-          <textarea name="editBio" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none"></textarea>
+          <textarea name="editBio" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
         </div>
 
         <!-- Assessment -->
@@ -286,7 +460,7 @@ const ratingFields = [
                   <span class="text-sm text-gray-500" id={`edit-r-${key}`}>0</span>
                 </div>
                 <input type="range" name={`editRating-${key}`} min="0" max="20" value="0"
-                  class="w-full accent-[#4a7c3f]" data-display={`edit-r-${key}`} />
+                  class="w-full accent-[#a9cf54]" data-display={`edit-r-${key}`} />
               </div>
             ))}
           </div>
@@ -296,7 +470,7 @@ const ratingFields = [
         <div>
           <div class="flex items-center justify-between mb-3">
             <label class="text-sm font-medium text-gray-700">Work History</label>
-            <button type="button" id="edit-add-work" class="text-sm text-[#4a7c3f] font-medium hover:underline">+ Add Entry</button>
+            <button type="button" id="edit-add-work" class="text-sm text-[#a9cf54] font-medium hover:underline">+ Add Entry</button>
           </div>
           <div id="edit-work-entries" class="space-y-3"></div>
         </div>
@@ -306,12 +480,12 @@ const ratingFields = [
           <label class="block text-sm font-medium text-gray-700 mb-2">Photos</label>
           <div id="edit-photo-grid" class="flex flex-wrap gap-2 mb-3"></div>
           <input type="file" id="edit-photo-input" multiple accept="image/*"
-            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#4a7c3f] file:text-white hover:file:bg-[#2d5a27]" />
+            class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#a9cf54] file:text-white hover:file:bg-[#588f27]" />
           <p class="text-xs text-gray-400 mt-1">Existing photos shown above. Upload new ones to add (won't replace existing).</p>
         </div>
 
         <div id="rec-edit-error" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm"></div>
-        <button type="submit" id="rec-edit-save" class="w-full py-3 bg-[#4a7c3f] text-white font-bold rounded-xl hover:bg-[#2d5a27] transition-colors disabled:opacity-50">
+        <button type="submit" id="rec-edit-save" class="w-full py-3 bg-[#a9cf54] text-white font-bold rounded-xl hover:bg-[#588f27] transition-colors disabled:opacity-50">
           Save Changes
         </button>
       </form>
@@ -323,8 +497,7 @@ const ratingFields = [
 <script>
   import { collection, addDoc, getDocs, doc, getDoc, updateDoc, query, orderBy, limit, serverTimestamp } from 'firebase/firestore';
   import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-  import { getFunctions, httpsCallable } from 'firebase/functions';
-  import { db, storage } from '../lib/firebase.js';
+  import { db, storage, callFunction } from '../lib/firebase.js';
 
   // Get logged-in email from LoginGate
   let loggedInEmail = '';
@@ -342,10 +515,10 @@ const ratingFields = [
   document.querySelectorAll('.rec-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.rec-tab').forEach(b => {
-        b.classList.remove('border-[#4a7c3f]', 'text-[#2d5a27]');
+        b.classList.remove('border-[#a9cf54]', 'text-[#588f27]');
         b.classList.add('border-transparent', 'text-gray-500');
       });
-      btn.classList.add('border-[#4a7c3f]', 'text-[#2d5a27]');
+      btn.classList.add('border-[#a9cf54]', 'text-[#588f27]');
       btn.classList.remove('border-transparent', 'text-gray-500');
       const tab = (btn as HTMLElement).dataset.tab!;
       document.getElementById('tab-add')!.classList.toggle('hidden', tab !== 'add');
@@ -416,7 +589,7 @@ const ratingFields = [
         <tr data-id="${t.id}" data-added-by="${t.addedBy || ''}">
           <td class="px-4 py-3 font-mono text-xs text-gray-500">${scNum}</td>
           <td class="px-4 py-3 font-medium text-gray-900">
-            <a href="/therapist?id=${scNum !== '—' ? scNum : t.id}" target="_blank" class="hover:text-[#4a7c3f] hover:underline">${t.name}</a>
+            <a href="/therapist?id=${scNum !== '—' ? scNum : t.id}" target="_blank" class="hover:text-[#a9cf54] hover:underline">${t.name}</a>
             <div class="text-xs text-gray-400">by ${addedBy}</div>
           </td>
           <td class="px-4 py-3 text-gray-600">${t.age}</td>
@@ -490,11 +663,11 @@ const ratingFields = [
     div.innerHTML = `
       <button type="button" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xs edit-remove-work">✕</button>
       <div class="grid grid-cols-3 gap-2">
-        <input type="text" name="ew-role-${i}" placeholder="Role" value="${data?.role || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
-        <input type="text" name="ew-loc-${i}" placeholder="Location" value="${data?.location || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
-        <input type="text" name="ew-dur-${i}" placeholder="Duration" value="${data?.duration || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+        <input type="text" name="ew-role-${i}" placeholder="Role" value="${data?.role || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        <input type="text" name="ew-loc-${i}" placeholder="Location" value="${data?.location || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
+        <input type="text" name="ew-dur-${i}" placeholder="Duration" value="${data?.duration || ''}" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
       </div>
-      <textarea name="ew-duties-${i}" rows="2" placeholder="Duties (one per line)" class="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none">${data?.duties || ''}</textarea>
+      <textarea name="ew-duties-${i}" rows="2" placeholder="Duties (one per line)" class="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none">${data?.duties || ''}</textarea>
     `;
     div.querySelector('.edit-remove-work')?.addEventListener('click', () => div.remove());
     document.getElementById('edit-work-entries')!.appendChild(div);
@@ -663,24 +836,24 @@ const ratingFields = [
         <div>
           <label class="block text-xs font-medium text-gray-600 mb-1">Role</label>
           <input type="text" name="work-role-${i}" placeholder="e.g. Senior Therapist"
-            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
         </div>
         <div>
           <label class="block text-xs font-medium text-gray-600 mb-1">Location</label>
           <input type="text" name="work-location-${i}" placeholder="e.g. Dubai, UAE"
-            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
         </div>
         <div>
           <label class="block text-xs font-medium text-gray-600 mb-1">Duration</label>
           <input type="text" name="work-duration-${i}" placeholder="e.g. 2 years"
-            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f]" />
+            class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54]" />
         </div>
       </div>
       <div>
         <label class="block text-xs font-medium text-gray-600 mb-1">Duties (one per line)</label>
         <textarea name="work-duties-${i}" rows="3"
-          placeholder="Provided traditional Indonesian massage&#10;Assisted with spa treatments"
-          class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4a7c3f] resize-none"></textarea>
+          placeholder="Provided Balinese massage&#10;Assisted with spa treatments"
+          class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#a9cf54] resize-none"></textarea>
       </div>
     `;
     div.querySelector('.remove-entry')?.addEventListener('click', () => div.remove());
@@ -701,114 +874,525 @@ const ratingFields = [
     });
   });
 
-  // Form submit
-  document.getElementById('recruiter-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('submit-btn') as HTMLButtonElement;
-    btn.disabled = true;
-    btn.textContent = 'Saving…';
+  // ===== SUBMIT HANDLERS =====
+  async function collectFormData() {
+    const form = document.getElementById('recruiter-form') as HTMLFormElement;
+    const data = new FormData(form);
+
+    const workEntries = Array.from(
+      document.querySelectorAll<HTMLElement>('#work-entries [data-entry-index]')
+    ).map(el => {
+      const i = el.dataset.entryIndex!;
+      return {
+        role: (data.get(`work-role-${i}`) as string) || '',
+        location: (data.get(`work-location-${i}`) as string) || '',
+        duration: (data.get(`work-duration-${i}`) as string) || '',
+        duties: (data.get(`work-duties-${i}`) as string) || '',
+      };
+    }).filter(w => w.role);
+
+    return { form, data, workEntries };
+  }
+
+  async function uploadFiles(scNum: number) {
+    const photoInput = document.getElementById('photo-input') as HTMLInputElement;
+    const photoUrls: string[] = [];
+    if (photoInput.files) {
+      for (const file of Array.from(photoInput.files)) {
+        const storageRef = ref(storage, `therapists/${scNum}/${file.name}`);
+        const snap = await uploadBytes(storageRef, file);
+        photoUrls.push(await getDownloadURL(snap.ref));
+      }
+    }
+
+    const documents: Record<string, string> = {};
+    const docInputs = [
+      { id: 'doc-passport', key: 'passport' },
+      { id: 'doc-id-card', key: 'idCard' },
+      { id: 'doc-certificate', key: 'certificate' },
+      { id: 'doc-cv', key: 'cv' },
+    ];
+    for (const { id, key } of docInputs) {
+      const input = document.getElementById(id) as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+        const file = input.files[0];
+        const storageRef = ref(storage, `therapists/${scNum}/docs/${key}_${file.name}`);
+        const snap = await uploadBytes(storageRef, file);
+        documents[key] = await getDownloadURL(snap.ref);
+      }
+    }
+
+    return { photoUrls, documents };
+  }
+
+  function buildTherapistData(data: FormData, workEntries: any[], photoUrls: string[], documents: Record<string, string>, scNum: number) {
+    return {
+      name: data.get('name') as string,
+      age: parseInt(data.get('age') as string),
+      gender: data.get('gender') as string,
+      location: data.get('location') as string,
+      experience: parseInt(data.get('experience') as string),
+      desiredWorkLocation: data.get('desiredWorkLocation') as string,
+      bio: data.get('bio') as string,
+      youtubeUrl: (data.get('youtubeUrl') as string) || '',
+      dateOfBirth: (data.get('dateOfBirth') as string) || '',
+      placeOfBirth: (data.get('placeOfBirth') as string) || '',
+      nationality: (data.get('nationality') as string) || '',
+      passportNumber: (data.get('passportNumber') as string) || '',
+      address: (data.get('address') as string) || '',
+      addressLocal: (data.get('addressLocal') as string) || '',
+      skills: data.getAll('skills') as string[],
+      ratings: {
+        communication: parseInt(data.get('rating-communication') as string),
+        appearance: parseInt(data.get('rating-appearance') as string),
+        proactivity: parseInt(data.get('rating-proactivity') as string),
+        experience: parseInt(data.get('rating-experience') as string),
+        massageSkills: parseInt(data.get('rating-massageSkills') as string),
+      },
+      workHistory: workEntries,
+      photos: photoUrls,
+      documents,
+      status: 'active',
+      wpUserId: scNum,
+      addedBy: loggedInEmail || 'unknown',
+      createdAt: serverTimestamp(),
+    };
+  }
+
+  async function handleSubmit(target: 'website' | 'notion' | 'both') {
+    const allBtns = [
+      document.getElementById('submit-website') as HTMLButtonElement,
+      document.getElementById('submit-notion') as HTMLButtonElement,
+      document.getElementById('submit-both') as HTMLButtonElement,
+    ];
+    const activeBtn = target === 'website' ? allBtns[0] : target === 'notion' ? allBtns[1] : allBtns[2];
+    allBtns.forEach(b => b.disabled = true);
+    activeBtn.textContent = 'Processing…';
     document.getElementById('error-msg')?.classList.add('hidden');
 
     try {
-      const form = e.currentTarget as HTMLFormElement;
-      const data = new FormData(form);
+      const { form, data, workEntries } = await collectFormData();
 
-      const workEntries = Array.from(
-        document.querySelectorAll<HTMLElement>('#work-entries [data-entry-index]')
-      ).map(el => {
-        const i = el.dataset.entryIndex!;
-        return {
-          role: (data.get(`work-role-${i}`) as string) || '',
-          location: (data.get(`work-location-${i}`) as string) || '',
-          duration: (data.get(`work-duration-${i}`) as string) || '',
-          duties: (data.get(`work-duties-${i}`) as string) || '',
-        };
-      }).filter(w => w.role);
-
-      // Auto-generate next SC number
-      btn.textContent = 'Generating SC number…';
+      // Generate SC number
+      activeBtn.textContent = 'Generating SC number…';
       const existingSnap = await getDocs(query(collection(db, 'therapists'), orderBy('wpUserId', 'desc'), limit(1)));
-      let nextScNum = 1602; // default if no therapists exist
+      let nextScNum = 7030;
       if (!existingSnap.empty) {
-        const maxId = existingSnap.docs[0].data().wpUserId || 1601;
+        const maxId = existingSnap.docs[0].data().wpUserId || 7029;
         nextScNum = maxId + 1;
       }
 
-      btn.textContent = 'Uploading photos…';
-      const photoInput = document.getElementById('photo-input') as HTMLInputElement;
-      const photoUrls: string[] = [];
-      if (photoInput.files) {
-        for (const file of Array.from(photoInput.files)) {
-          const storageRef = ref(storage, `therapists/${nextScNum}/${file.name}`);
-          const snap = await uploadBytes(storageRef, file);
-          photoUrls.push(await getDownloadURL(snap.ref));
-        }
+      // Upload files
+      activeBtn.textContent = 'Uploading files…';
+      const { photoUrls, documents } = await uploadFiles(nextScNum);
+      const therapistData = buildTherapistData(data, workEntries, photoUrls, documents, nextScNum);
+
+      const results: string[] = [];
+
+      // Website (Firestore)
+      if (target === 'website' || target === 'both') {
+        activeBtn.textContent = 'Saving to website…';
+        await addDoc(collection(db, 'therapists'), therapistData);
+        results.push('Website ✓');
       }
 
-      btn.textContent = 'Saving profile…';
-      const therapistData = {
-        name: data.get('name') as string,
-        age: parseInt(data.get('age') as string),
-        gender: data.get('gender') as string,
-        location: data.get('location') as string,
-        experience: parseInt(data.get('experience') as string),
-        desiredWorkLocation: data.get('desiredWorkLocation') as string,
-        bio: data.get('bio') as string,
-        youtubeUrl: (data.get('youtubeUrl') as string) || '',
-        skills: data.getAll('skills') as string[],
-        ratings: {
-          communication: parseInt(data.get('rating-communication') as string),
-          appearance: parseInt(data.get('rating-appearance') as string),
-          proactivity: parseInt(data.get('rating-proactivity') as string),
-          experience: parseInt(data.get('rating-experience') as string),
-          massageSkills: parseInt(data.get('rating-massageSkills') as string),
-        },
-        workHistory: workEntries,
-        photos: photoUrls,
-        status: 'active',
-        wpUserId: nextScNum,
-        addedBy: loggedInEmail || 'unknown',
-        createdAt: serverTimestamp(),
-      };
+      // Notion
+      if (target === 'notion' || target === 'both') {
+        const createMode = (document.getElementById('notion-create-mode') as HTMLInputElement).value;
+        const selectedNotionId = (document.getElementById('notion-selected-id') as HTMLInputElement).value;
+        const notionMode = createMode === 'create' ? 'create' : (selectedNotionId ? 'attach' : 'create');
+        activeBtn.textContent = notionMode === 'create' ? 'Creating in Notion…' : 'Syncing to Notion…';
 
-      await addDoc(collection(db, 'therapists'), therapistData);
+        const result = await callFunction('syncToNotion', {
+          mode: notionMode,
+          scNumber: nextScNum,
+          notionPageId: selectedNotionId || null,
+          recruiterEmail: loggedInEmail,
+          therapist: {
+            name: therapistData.name,
+            phone: (data.get('phone') as string) || '',
+            email: (data.get('email') as string) || '',
+            location: therapistData.location,
+            experience: therapistData.experience,
+            desiredWorkLocation: therapistData.desiredWorkLocation,
+            skills: therapistData.skills,
+            youtubeUrl: therapistData.youtubeUrl,
+            dateOfBirth: therapistData.dateOfBirth,
+            placeOfBirth: therapistData.placeOfBirth,
+            nationality: therapistData.nationality,
+            passportNumber: therapistData.passportNumber,
+            address: therapistData.address,
+            addressLocal: therapistData.addressLocal,
+          },
+          documents,
+        }) as { data: { candidatePageId: string; documentsCreated: any[] } };
+        const docsCreated = (result.data.documentsCreated || []).filter((d: any) => d.success).length;
+        const notionPageId = result.data.candidatePageId?.replace(/-/g, '') || '';
+        const notionUrl = notionPageId ? `https://www.notion.so/${notionPageId}` : '';
+        results.push(`<a href="${notionUrl}" target="_blank" class="underline text-blue-600 hover:text-blue-800">Notion ✓</a>${docsCreated > 0 ? ` (${docsCreated} docs)` : ''}`);
+      }
 
-      // Optionally push to Notion
-      const pushToNotion = (data.get('pushToNotion') as string) === 'on';
-      if (pushToNotion) {
-        btn.textContent = 'Creating in Notion…';
-        try {
-          const functions = getFunctions();
-          const createInNotion = httpsCallable(functions, 'createTherapistInNotion');
-          await createInNotion({
-            therapist: {
-              name: therapistData.name,
-              scNumber: `SC-${nextScNum}`,
-              location: therapistData.location,
-              experience: therapistData.experience,
-              desiredWorkLocation: therapistData.desiredWorkLocation,
-            },
-          });
-        } catch (notionErr) {
-          console.error('Notion push failed (profile was saved):', notionErr);
-        }
+      const websiteUrl = `/therapist?id=SC-${nextScNum}`;
+      const links: string[] = [];
+      if (target === 'website' || target === 'both') {
+        links.push(`<a href="${websiteUrl}" target="_blank" class="underline text-[#588f27] hover:text-[#3d6b17]">View on Website →</a>`);
       }
 
       const successEl = document.getElementById('success-msg')!;
-      successEl.innerHTML = `Profile saved as <strong>SC-${nextScNum}</strong>! ${pushToNotion ? '(Also created in Notion) ' : ''}<a href="/therapists" class="underline">View on search page →</a>`;
+      successEl.innerHTML = `<strong>SC-${nextScNum}</strong> saved! ${results.join(' · ')} <span class="mx-1">|</span> ${links.join(' · ')}`;
       successEl.classList.remove('hidden');
       form.reset();
       document.getElementById('photo-previews')!.innerHTML = '';
       document.getElementById('work-entries')!.innerHTML = '';
+      document.getElementById('notion-selected')!.classList.add('hidden');
+      (document.getElementById('notion-selected-id') as HTMLInputElement).value = '';
       addWorkEntry();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       const errEl = document.getElementById('error-msg')!;
-      errEl.textContent = `Error saving profile: ${(err as Error).message}`;
+      errEl.textContent = `Error: ${(err as Error).message}`;
       errEl.classList.remove('hidden');
     } finally {
+      allBtns[0].disabled = false; allBtns[0].textContent = 'Submit to Website';
+      allBtns[1].disabled = false; allBtns[1].textContent = 'Submit to Notion';
+      allBtns[2].disabled = false; allBtns[2].textContent = 'Submit to Both';
+    }
+  }
+
+  document.getElementById('submit-website')?.addEventListener('click', () => handleSubmit('website'));
+  document.getElementById('submit-notion')?.addEventListener('click', () => handleSubmit('notion'));
+  document.getElementById('submit-both')?.addEventListener('click', () => handleSubmit('both'));
+
+  // Reset form
+  document.getElementById('reset-form-btn')?.addEventListener('click', () => {
+    if (!confirm('Clear all fields, uploads, and selections?')) return;
+    const form = document.getElementById('recruiter-form') as HTMLFormElement;
+    form.reset();
+    document.getElementById('photo-previews')!.innerHTML = '';
+    document.getElementById('work-entries')!.innerHTML = '';
+    (document.getElementById('notion-selected-id') as HTMLInputElement).value = '';
+    document.getElementById('notion-selected')!.classList.add('hidden');
+    document.getElementById('ocr-passport-btn')!.classList.add('hidden');
+    document.getElementById('ocr-id-card-btn')!.classList.add('hidden');
+    document.getElementById('ocr-cv-btn')!.classList.add('hidden');
+    document.getElementById('ocr-passport-status')!.classList.add('hidden');
+    document.getElementById('ocr-id-card-status')!.classList.add('hidden');
+    document.getElementById('ocr-cv-status')!.classList.add('hidden');
+    document.getElementById('success-msg')?.classList.add('hidden');
+    document.getElementById('error-msg')?.classList.add('hidden');
+    addWorkEntry();
+  });
+
+  // Photo guide toggle
+  document.getElementById('photo-guide-toggle')?.addEventListener('click', () => {
+    document.getElementById('photo-guide')!.classList.toggle('hidden');
+  });
+
+  // Logout
+  document.getElementById('logout-btn')?.addEventListener('click', () => {
+    localStorage.removeItem('intake_session');
+    window.location.reload();
+  });
+
+  // ===== NOTION MODE TOGGLE =====
+  document.getElementById('notion-mode-existing')?.addEventListener('click', () => {
+    (document.getElementById('notion-create-mode') as HTMLInputElement).value = 'attach';
+    document.getElementById('notion-search-section')!.classList.remove('hidden');
+    document.getElementById('notion-new-section')!.classList.add('hidden');
+    const existingBtn = document.getElementById('notion-mode-existing')!;
+    const newBtn = document.getElementById('notion-mode-new')!;
+    existingBtn.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg border-2 border-[#a9cf54] text-[#588f27] bg-[#a9cf54]/10 transition-colors';
+    newBtn.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg border-2 border-gray-200 text-gray-500 hover:border-gray-300 transition-colors';
+  });
+  document.getElementById('notion-mode-new')?.addEventListener('click', () => {
+    (document.getElementById('notion-create-mode') as HTMLInputElement).value = 'create';
+    document.getElementById('notion-search-section')!.classList.add('hidden');
+    document.getElementById('notion-new-section')!.classList.remove('hidden');
+    // Clear any selection
+    (document.getElementById('notion-selected-id') as HTMLInputElement).value = '';
+    document.getElementById('notion-selected')!.classList.add('hidden');
+    const existingBtn = document.getElementById('notion-mode-existing')!;
+    const newBtn = document.getElementById('notion-mode-new')!;
+    newBtn.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg border-2 border-[#a9cf54] text-[#588f27] bg-[#a9cf54]/10 transition-colors';
+    existingBtn.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg border-2 border-gray-200 text-gray-500 hover:border-gray-300 transition-colors';
+  });
+
+  // ===== NOTION SEARCH =====
+  let notionSearchTimeout: ReturnType<typeof setTimeout>;
+  document.getElementById('notion-search')?.addEventListener('input', () => {
+    clearTimeout(notionSearchTimeout);
+    notionSearchTimeout = setTimeout(async () => {
+      const q = (document.getElementById('notion-search') as HTMLInputElement).value.trim();
+      const resultsEl = document.getElementById('notion-search-results')!;
+
+      if (q.length < 2) {
+        resultsEl.innerHTML = '';
+        return;
+      }
+
+      resultsEl.innerHTML = '<div class="text-xs text-gray-400 py-2">Searching…</div>';
+
+      try {
+        const res = await callFunction('searchNotionCandidates', { query: q }) as { data: { results: any[] } };
+        const results = res.data.results;
+
+        if (results.length === 0) {
+          resultsEl.innerHTML = '<div class="text-xs text-gray-400 py-2">No candidates found.</div>';
+          return;
+        }
+
+        resultsEl.innerHTML = results.map((r: any) => `
+          <button type="button" class="notion-result w-full text-left px-3 py-2 rounded-lg hover:bg-gray-50 border border-gray-100 text-sm transition-colors"
+            data-id="${r.id}" data-name="${r.nameSurname || r.name}">
+            <div class="font-medium text-gray-900">${r.name}</div>
+            ${r.nameSurname ? `<div class="text-xs text-gray-500">${r.nameSurname}</div>` : ''}
+            <div class="text-xs text-gray-400">${r.status || ''}</div>
+          </button>
+        `).join('');
+
+        resultsEl.querySelectorAll('.notion-result').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = (btn as HTMLElement).dataset.id!;
+            const name = (btn as HTMLElement).dataset.name!;
+            (document.getElementById('notion-selected-id') as HTMLInputElement).value = id;
+            document.getElementById('notion-selected-label')!.textContent = name;
+            document.getElementById('notion-selected')!.classList.remove('hidden');
+            resultsEl.innerHTML = '';
+            (document.getElementById('notion-search') as HTMLInputElement).value = '';
+          });
+        });
+      } catch (err) {
+        resultsEl.innerHTML = `<div class="text-xs text-red-400 py-2">Search failed: ${(err as Error).message}</div>`;
+      }
+    }, 300);
+  });
+
+  document.getElementById('notion-clear-selection')?.addEventListener('click', () => {
+    (document.getElementById('notion-selected-id') as HTMLInputElement).value = '';
+    document.getElementById('notion-selected')!.classList.add('hidden');
+    (document.getElementById('notion-search') as HTMLInputElement).focus();
+  });
+
+  // ===== OCR EXTRACT BUTTONS =====
+  // Show OCR button when file is selected
+  document.getElementById('doc-passport')?.addEventListener('change', (e) => {
+    const hasFile = (e.target as HTMLInputElement).files?.length! > 0;
+    document.getElementById('ocr-passport-btn')!.classList.toggle('hidden', !hasFile);
+    document.getElementById('ocr-passport-status')!.classList.add('hidden');
+  });
+  document.getElementById('doc-id-card')?.addEventListener('change', (e) => {
+    const hasFile = (e.target as HTMLInputElement).files?.length! > 0;
+    document.getElementById('ocr-id-card-btn')!.classList.toggle('hidden', !hasFile);
+    document.getElementById('ocr-id-card-status')!.classList.add('hidden');
+  });
+
+  async function runOcr(docType: 'passport' | 'idCard', inputId: string, btnId: string, statusId: string) {
+    const input = document.getElementById(inputId) as HTMLInputElement;
+    const btn = document.getElementById(btnId) as HTMLButtonElement;
+    const statusEl = document.getElementById(statusId)!;
+
+    if (!input.files?.length) return;
+    const file = input.files[0];
+
+    btn.disabled = true;
+    btn.textContent = 'Uploading…';
+    statusEl.classList.add('hidden');
+
+    try {
+      // Upload to temp storage
+      const tempPath = `ocr-temp/${Date.now()}_${file.name}`;
+      const storageRef = ref(storage, tempPath);
+      await uploadBytes(storageRef, file);
+      const fileUrl = await getDownloadURL(storageRef);
+
+      btn.textContent = 'Extracting…';
+
+      // Call OCR function
+      const result = await callFunction('processDocuments', { docType, fileUrl }) as {
+        data: { success: boolean; data: any; error?: string; raw?: string }
+      };
+
+      if (!result.data.success) {
+        statusEl.className = 'mt-2 text-xs rounded-lg px-3 py-2 bg-red-50 text-red-700 border border-red-200';
+        statusEl.textContent = `OCR failed: ${result.data.error || 'Unknown error'}`;
+        statusEl.classList.remove('hidden');
+        return;
+      }
+
+      const d = result.data.data;
+      const form = document.getElementById('recruiter-form') as HTMLFormElement;
+
+      if (docType === 'passport') {
+        // Populate form fields from passport
+        if (d.fullName) (form.querySelector('[name="name"]') as HTMLInputElement).value = d.fullName;
+        if (d.dateOfBirth) (form.querySelector('[name="dateOfBirth"]') as HTMLInputElement).value = d.dateOfBirth;
+        if (d.placeOfBirth) (form.querySelector('[name="placeOfBirth"]') as HTMLInputElement).value = d.placeOfBirth;
+        if (d.nationality) (form.querySelector('[name="nationality"]') as HTMLInputElement).value = d.nationality;
+        if (d.passportNumber) (form.querySelector('[name="passportNumber"]') as HTMLInputElement).value = d.passportNumber;
+        if (d.gender) (form.querySelector('[name="gender"]') as HTMLSelectElement).value = d.gender;
+
+        // Calculate age from DOB
+        if (d.dateOfBirth) {
+          const birth = new Date(d.dateOfBirth);
+          const age = Math.floor((Date.now() - birth.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+          if (age >= 18 && age <= 65) (form.querySelector('[name="age"]') as HTMLInputElement).value = String(age);
+        }
+
+        const fields = [d.fullName && 'Name', d.dateOfBirth && 'DOB', d.passportNumber && 'Passport#', d.nationality && 'Nationality', d.gender && 'Gender', d.placeOfBirth && 'Place of Birth'].filter(Boolean);
+        statusEl.className = 'mt-2 text-xs rounded-lg px-3 py-2 bg-green-50 text-green-700 border border-green-200';
+        statusEl.textContent = `Extracted: ${fields.join(', ')}`;
+      } else {
+        // Populate form fields from ID card
+        if (d.address) (form.querySelector('[name="address"]') as HTMLInputElement).value = d.address;
+        if (d.addressLocal) (form.querySelector('[name="addressLocal"]') as HTMLInputElement).value = d.addressLocal;
+        if (d.placeOfBirth) (form.querySelector('[name="placeOfBirth"]') as HTMLInputElement).value = d.placeOfBirth;
+        if (d.idCardNumber) (form.querySelector('[name="passportNumber"]') as HTMLInputElement).value ||= d.idCardNumber;
+        if (d.dateOfBirth && !(form.querySelector('[name="dateOfBirth"]') as HTMLInputElement).value) {
+          (form.querySelector('[name="dateOfBirth"]') as HTMLInputElement).value = d.dateOfBirth;
+        }
+        if (d.fullName && !(form.querySelector('[name="name"]') as HTMLInputElement).value) {
+          (form.querySelector('[name="name"]') as HTMLInputElement).value = d.fullName;
+        }
+        if (d.gender && !(form.querySelector('[name="gender"]') as HTMLSelectElement).value) {
+          (form.querySelector('[name="gender"]') as HTMLSelectElement).value = d.gender;
+        }
+
+        const fields = [d.address && 'Address', d.addressLocal && 'Address (local)', d.idCardNumber && 'ID#', d.dateOfBirth && 'DOB', d.placeOfBirth && 'Place of Birth'].filter(Boolean);
+        statusEl.className = 'mt-2 text-xs rounded-lg px-3 py-2 bg-green-50 text-green-700 border border-green-200';
+        statusEl.textContent = `Extracted: ${fields.join(', ')}`;
+      }
+
+      statusEl.classList.remove('hidden');
+    } catch (err) {
+      statusEl.className = 'mt-2 text-xs rounded-lg px-3 py-2 bg-red-50 text-red-700 border border-red-200';
+      statusEl.textContent = `Error: ${(err as Error).message}`;
+      statusEl.classList.remove('hidden');
+    } finally {
       btn.disabled = false;
-      btn.textContent = 'Save Profile';
+      btn.textContent = 'Extract OCR';
+    }
+  }
+
+  document.getElementById('ocr-passport-btn')?.addEventListener('click', () =>
+    runOcr('passport', 'doc-passport', 'ocr-passport-btn', 'ocr-passport-status')
+  );
+  document.getElementById('ocr-id-card-btn')?.addEventListener('click', () =>
+    runOcr('idCard', 'doc-id-card', 'ocr-id-card-btn', 'ocr-id-card-status')
+  );
+
+  // CV OCR
+  document.getElementById('doc-cv')?.addEventListener('change', (e) => {
+    const hasFile = (e.target as HTMLInputElement).files?.length! > 0;
+    document.getElementById('ocr-cv-btn')!.classList.toggle('hidden', !hasFile);
+    document.getElementById('ocr-cv-status')!.classList.add('hidden');
+  });
+
+  document.getElementById('ocr-cv-btn')?.addEventListener('click', async () => {
+    const input = document.getElementById('doc-cv') as HTMLInputElement;
+    const btn = document.getElementById('ocr-cv-btn') as HTMLButtonElement;
+    const statusEl = document.getElementById('ocr-cv-status')!;
+
+    if (!input.files?.length) return;
+    const file = input.files[0];
+
+    btn.disabled = true;
+    btn.textContent = 'Uploading…';
+    statusEl.classList.add('hidden');
+
+    try {
+      const tempPath = `ocr-temp/${Date.now()}_${file.name}`;
+      const storageRef = ref(storage, tempPath);
+      await uploadBytes(storageRef, file);
+      const fileUrl = await getDownloadURL(storageRef);
+
+      btn.textContent = 'Extracting…';
+      const result = await callFunction('processDocuments', { docType: 'cv', fileUrl }) as {
+        data: { success: boolean; data: any; error?: string }
+      };
+
+      if (!result.data.success) {
+        statusEl.className = 'mt-2 text-xs rounded-lg px-3 py-2 bg-red-50 text-red-700 border border-red-200';
+        statusEl.textContent = `CV OCR failed: ${result.data.error || 'Unknown error'}`;
+        statusEl.classList.remove('hidden');
+        return;
+      }
+
+      const d = result.data.data;
+      const form = document.getElementById('recruiter-form') as HTMLFormElement;
+      const extracted: string[] = [];
+
+      // Populate work history
+      if (d.workHistory?.length) {
+        document.getElementById('work-entries')!.innerHTML = '';
+        workEntryCount = 0;
+        for (const w of d.workHistory) {
+          addWorkEntry();
+          const i = workEntryCount - 1;
+          const entry = document.querySelector(`[data-entry-index="${i}"]`)!;
+          if (w.role) (entry.querySelector(`[name="work-role-${i}"]`) as HTMLInputElement).value = w.role;
+          if (w.location) (entry.querySelector(`[name="work-location-${i}"]`) as HTMLInputElement).value = w.location;
+          if (w.duration) (entry.querySelector(`[name="work-duration-${i}"]`) as HTMLInputElement).value = w.duration;
+          if (w.duties) {
+            const dutiesText = Array.isArray(w.duties) ? w.duties.join('\n') : w.duties;
+            (entry.querySelector(`[name="work-duties-${i}"]`) as HTMLTextAreaElement).value = dutiesText;
+          }
+        }
+        extracted.push(`${d.workHistory.length} work entries`);
+      }
+
+      // Populate skills
+      if (d.skills?.length) {
+        const skillCheckboxes = form.querySelectorAll<HTMLInputElement>('[name="skills"]');
+        const cvSkills = d.skills.map((s: string) => s.toLowerCase());
+        skillCheckboxes.forEach(cb => {
+          if (cvSkills.some((s: string) => cb.value.toLowerCase().includes(s) || s.includes(cb.value.toLowerCase()))) {
+            cb.checked = true;
+          }
+        });
+        extracted.push(`${d.skills.length} skills`);
+      }
+
+      // Populate email/phone if empty
+      if (d.email && !(form.querySelector('[name="email"]') as HTMLInputElement)?.value) {
+        const emailInput = form.querySelector('[name="email"]') as HTMLInputElement;
+        if (emailInput) emailInput.value = d.email;
+        extracted.push('Email');
+      }
+      if (d.phone && !(form.querySelector('[name="phone"]') as HTMLInputElement)?.value) {
+        const phoneInput = form.querySelector('[name="phone"]') as HTMLInputElement;
+        if (phoneInput) phoneInput.value = d.phone;
+        extracted.push('Phone');
+      }
+
+      // Populate experience
+      if (d.experience) {
+        const expMatch = d.experience.match(/(\d+)/);
+        if (expMatch) {
+          const expInput = form.querySelector('[name="experience"]') as HTMLInputElement;
+          if (!expInput.value) expInput.value = expMatch[1];
+          extracted.push('Experience');
+        }
+      }
+
+      // Populate bio from education + experience summary
+      if (d.education) {
+        const bioInput = form.querySelector('[name="bio"]') as HTMLTextAreaElement;
+        if (!bioInput.value) {
+          bioInput.value = `Education: ${d.education}${d.experience ? `. Experience: ${d.experience}` : ''}`;
+          extracted.push('Education');
+        }
+      }
+
+      statusEl.className = 'mt-2 text-xs rounded-lg px-3 py-2 bg-green-50 text-green-700 border border-green-200';
+      statusEl.textContent = `Extracted: ${extracted.join(', ')}`;
+      statusEl.classList.remove('hidden');
+    } catch (err) {
+      statusEl.className = 'mt-2 text-xs rounded-lg px-3 py-2 bg-red-50 text-red-700 border border-red-200';
+      statusEl.textContent = `Error: ${(err as Error).message}`;
+      statusEl.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Extract OCR';
     }
   });
 </script>

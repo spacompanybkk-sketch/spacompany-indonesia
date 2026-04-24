@@ -14,10 +14,7 @@ export default defineConfig({
     locales: ['id', 'en'],
     routing: {
       prefixDefaultLocale: true,
-      redirectToDefaultLocale: true,
+      redirectToDefaultLocale: false,
     },
-  },
-  redirects: {
-    '/': '/id/',
   },
 });
