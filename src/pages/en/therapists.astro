@@ -74,7 +74,7 @@ import Layout from '../../layouts/Layout.astro';
 </Layout>
 
 <script>
-  import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+  import { collection, getDocs, query, where } from 'firebase/firestore';
   import { db } from '../../lib/firebase.js';
 
   type Therapist = {
@@ -100,6 +100,8 @@ import Layout from '../../layouts/Layout.astro';
   function parseTherapist(d: any, i: number): Therapist {
     const data = d.data();
     const num = data.wpUserId || (2000 + i);
+    const name = data.fullName || data.name || data.firstName || '';
+    const status = data.status === 'published' ? 'active' : (data.status === 'draft' ? 'placed' : data.status);
     const createdDate = data.createdAt?.toDate?.();
     let dateAdded = '';
     if (createdDate) {
@@ -112,13 +114,23 @@ import Layout from '../../layouts/Layout.astro';
       else if (days < 365) dateAdded = `Added ${Math.floor(days / 30)} month${Math.floor(days / 30) > 1 ? 's' : ''} ago`;
       else dateAdded = `Added ${Math.floor(days / 365)} year${Math.floor(days / 365) > 1 ? 's' : ''} ago`;
     }
-    return { id: d.id, ...data, candidateNum: `SC-${num}`, dateAdded } as Therapist;
+    return { id: d.id, ...data, name, status, candidateNum: `SC-${num}`, dateAdded } as Therapist;
   }
 
   async function loadTherapists() {
-    const q = query(collection(db, 'therapists'), orderBy('createdAt', 'desc'));
+    // Read from candidates collection, filtered to Massage + Indonesian
+    const q = query(
+      collection(db, 'candidates'),
+      where('jobPosition', '==', 'Massage'),
+    );
     const snapshot = await getDocs(q);
-    const all = snapshot.docs.map((d, i) => parseTherapist(d, i));
+    const all = snapshot.docs
+      .map((d, i) => parseTherapist(d, i))
+      .filter(t => {
+        const nat = (t as any).nationality;
+        if (Array.isArray(nat)) return nat.includes('Indonesia');
+        return nat === 'Indonesia';
+      });
     activeTherapists = all.filter(t => t.status === 'active');
     placedTherapists = all.filter(t => t.status !== 'active');
     document.getElementById('loading')?.classList.add('hidden');
