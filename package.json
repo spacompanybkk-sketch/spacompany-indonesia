@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
@@ -20,6 +22,9 @@
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "firebase-tools": "^15.14.0"
+    "@storybook-astro/framework": "^1.11.0",
+    "@storybook/builder-vite": "^10.6.0",
+    "firebase-tools": "^15.14.0",
+    "storybook": "^10.6.0"
   }
 }
